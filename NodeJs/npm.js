@@ -12,7 +12,11 @@
  * npm remove axios .- elimina el modulo
  * npm i nodemon -D .- "-D" indica que esta dependencia se usara solo en desarrollo, esto quiere decir que el proyecto no depende de si este modulo esta instalado o no, si el modulo a instalar es pieza clave en el proyecto (si no esta dará error) se debera de instalar sin '-D'.  La D es mayuscula si no lo instalara en devDependencies
  */
-
+/**
+ * npx es un ejecutador de paquetes con este programa podemos descargar modulos y ejecutarlos de inmediato sin tener que guardarlos en el proyecto
+ * npx commands
+ * npx cowsay hello world
+ */
 
 //importamos el modulo que instalamos
 require('colors')
