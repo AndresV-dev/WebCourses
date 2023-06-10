@@ -11,8 +11,30 @@ dotenv.config()
 // se crea la aplicacion obteniendo el contenido y funciones de la funcion express() 
 const app = express()
 
+// en node para poder recibir el body debemos de utilizar esta instruccion indicandole a el server que recibira json
+app.use(express.json())
+// este es cuando se recibira un text
+app.use(express.text())
+// esre cuando se espere un form
+app.use(express.urlencoded({extended: false}))
+
 app.get('/', (req, res) => {
 
+})
+// para dinamizar las rutas de express se colocan como ":variable", y para poder manejarlas se accede con "req.params.variable"
+app.get('/hello/:name', (req, res) => {
+    console.log(req.params)
+    // para hacer estas comillas `` con teclado español -> alt + diagonal(arriba de enter)
+    res.send(`hola ${req.params.name}`)
+})
+
+//tambien podemos aceptar parametros enteros solo que para manejarlos debemos convertirlos a enteros esto lo hacemos con la funcion parseInt() esto solo funciona para strings numericos si intentamos con un string con alguna letra dara error
+app.post('/suma/:x/:y', (req, res) => {
+    // tambien podemos guardar los parametros de ruta en variables con un destructuring como sabemos que las variables vienen en el objeto de req.params solo lo igualamos y de la parte de declaracion colocamos en un array el nombre de las variables, y estas las podremos usar sin el prefijo de req.params
+    const {x,y} = req.params;
+
+    res.send(`Result ${parseInt(x) + parseInt(y)}`)
+//    res.send( `Result: ${parseInt(req.params.x) + parseInt(req.params.y)}`)
 })
 // podemos crear objetos json y enviarlos al cliente, ya sea un objeto creado o una consulta de base de datos
 app.get('/user', (req, res) => {
@@ -26,6 +48,12 @@ app.get('/user', (req, res) => {
             "street": "some street 123"
         }
     })
+})
+
+// el cliente tambien nos puede mandar datos desde algun formulario, para esto usamos el metodo post 
+app.post('/user', (req, res) => {
+    console.log(req.body)
+    res.send('Nuevo usuario Creado')
 })
 
 app.get('/isAlive', (req, res) => {
