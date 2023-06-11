@@ -88,7 +88,10 @@ app.delete('/products', (req, res) => {
 app.patch('/products', (req, res) => {
     res.send('<h1>Actualizando una parte del producto</h1>')
 })
-
+// el metodo .all indica que esta ruta puede acceder desde cualquier metodo get, post, delete, patch, etc. 
+app.all('/info', (req, res) => {
+    res.send('server Info')
+})
 // para manejar una ruta de error tenemos la opcion de proporcionarle el error que queremos que despliegue si llega a esta ruta, en este caso si no esta accediendo a cualquier ruta de arriba accedera por defecto a esta, indicando un error 404 asi como un mensaje de no se encontro la pagina, esto se puede reemprasar por un archivo html con res.sendFile
 app.get((req, res) => {
     res.status(404).send('<h1>No se encontro la pagina Solicitada</h1>')
