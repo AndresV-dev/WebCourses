@@ -1,5 +1,6 @@
 import express from "express";
 import dotenv from 'dotenv';
+import morgan from 'morgan';
 
 dotenv.config();
 
@@ -27,20 +28,24 @@ app.get('/search', (req,res) => {
 // las funciones middleware se pueden usar para cerar un methodo de authenticacion(proteger rutas con un login) en este de evaluaran las credenciales que tenga el usuario loggeado y determinara si lo deja pasar o no muestra la ruta 
 
 // middleware Logger
-app.use((req, res, next) => {
-    console.log(`Route: ${req.url}, Method: ${req.method}`)  
-    next()
-})
+// app.use((req, res, next) => {
+//     console.log(`Route: ${req.url}, Method: ${req.method}`)  
+//     next()
+// })
 
 // Se pueden crear diferentes middleware ya que cada uno es independiente
 // middleware isAuthenticated
-app.use((req, res, next) => {
-    if(req.query.login === 'andres@gmail.com'){
-        next()
-    }else{
-        res.send('No Authenticated')
-    }
- })
+// app.use((req, res, next) => {
+//     if(req.query.login === 'andres@gmail.com'){
+//         next()
+//     }else{
+//         res.send('No Authenticated')
+//     }
+//  })
+
+// tambien existen midleware de terceros(por la comunidad) morgan es un ejemplo este midleware muestra en consola la ruta a la que se accede asi como informacion adicional 
+// el modleware tiene diferentes opciones los cuales repercutiran a la forma y cantidad de informacion que muestra ejemplo "dev, tiny, short, etc"
+app.use(morgan('dev'))
 
 app.get('/profile', (req,res) => {
     res.send('Profile Page')
