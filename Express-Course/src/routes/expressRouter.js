@@ -1,7 +1,7 @@
-import express from "express";
+import {Router} from "express";
  
 // espress.router nos ayuda a no englobar nuestras rutas en una funcion, y solo declararlas, y este router lo exportamos para asi usarlo en nuestro archivo del Server
-const router = express.Router()
+const router = Router()
 
 router.get('/ruta1', (req,res) => {
     res.send('ruta1')        
