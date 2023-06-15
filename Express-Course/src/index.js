@@ -1,12 +1,14 @@
 import express from "express"
-//import path from "path"
-//import {fileURLToPath} from "url"
+import path from "path"
+import {fileURLToPath} from "url"
 import dotenv from 'dotenv'
+import expressRouter from './routes/expressRouter'
+
 dotenv.config()
 
 // al querer acceder al __dirname en un archivo que no esa en la raiz del proyecto, debemos crearla manualmente ya que esta variable no esta diusponible en archivos dentro de carpetas para eso usamos las libreroas de path y url creando 2 variables para asi construir la variable __dirname
-//const __filename = fileURLToPath(import.meta.url)
-//const __dirname = path.dirname(__filename)
+const __filename = fileURLToPath(import.meta.url)
+const __dirname = path.dirname(__filename)
 
 // se crea la aplicacion obteniendo el contenido y funciones de la funcion express() 
 const app = express()
@@ -17,9 +19,22 @@ app.use(express.json())
 app.use(express.text())
 // esre cuando se espere un form
 app.use(express.urlencoded({extended: false}))
+// este use indica las rutas creadas en el archivo expressRouter, las cuales pueden ser accedidas
+app.use(expressRouter);
+// ----------------------------------- Rutas creadas en un archivo aparte -----------------------------------
+import HomeRoutes from './routes/home'
+import UserRoutes from './routes/users'
 
+// Inicializa las rutas definidas en el archivo de HomeRoutes, las cuales van a poder ser accedidas
+HomeRoutes(app);
+// Inicializa las rutas definidas en el archivo de UserRoutes, las cuales van a poder ser accedidas
+UserRoutes(app); 
+// -------------------------Routes creadas en el archivo donde se configura el server  --------------------------------------------
 app.get('/', (req, res) => {
-
+    //res.sendFile envia al cliente un archivo en este caso un html pora que el navegador lo visualize
+    res.sendFile('./public/index.html', {
+        root: __dirname
+    })
 })
 // para dinamizar las rutas de express se colocan como ":variable", y para poder manejarlas se accede con "req.params.variable"
 app.get('/hello/:name', (req, res) => {
@@ -96,6 +111,10 @@ app.all('/info', (req, res) => {
 app.get((req, res) => {
     res.status(404).send('<h1>No se encontro la pagina Solicitada</h1>')
 })
+
+app.use('/public', express.static(path.join(__dirname, './public')))
+app.use('/uploads', express.static(path.join(__dirname, './uploads')))
+
 // puerto por el que accederan a el
 // al deployear un proyecto el servicio puede o no darte un puerto por el cual desplegarlo, para accesar a el dinamicamente de utiliza la funcion process.env.PORT si esta es null se correra por el puerto default 3000
 app.listen(process.env.PORT || 3000)
