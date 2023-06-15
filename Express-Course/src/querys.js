@@ -1,8 +1,13 @@
 import express from "express";
 import dotenv from 'dotenv';
 import morgan from 'morgan';
+import path from 'path';
+import {fileURLToPath} from "url";
 
 dotenv.config();
+
+const __filename = fileURLToPath(import.meta.url)
+const __dirname = path.dirname(__filename)
 
 const app = express()
 
@@ -58,5 +63,8 @@ app.get('/dashboard', (req,res) => {
 app.get('/user', (req,res) => {
     res.send('user Page')
 })
+
+app.use('/public', express.static(path.join(__dirname, './public')))
+app.use('/uploads', express.static(path.join(__dirname, './uploads')))
 
 app.listen(3000)
