@@ -1,6 +1,6 @@
 function UserRoutes(app) {
-    app.get('/getUser', (req,res) => {
-        res.send('info Del Usuario')
+    app.get('/users', (req,res) => {
+        res.render('users')
     })
 
     app.get('/getUserPhone', (req,res) => {
@@ -8,4 +8,4 @@ function UserRoutes(app) {
     })
 }
 
-export default UserRoutes;
+export default UserRoutes
