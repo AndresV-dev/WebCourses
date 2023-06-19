@@ -1,0 +1,25 @@
+<%# al trabajar con ejs veremos que en las plantillas se repite codigo por ejemplo el inicio y el final de un archivo html (header, footer) es por eso que podemos tener este codigo de manera independiente para usarlo como un componente, para esto usamos los partials para utilizarlos debemos generar el archivo en una carpeta llamada partials dentro de views y una ves tengamos las porciones de codigo repetida solo faltaria importarlas como se indica a continuacion %>
+
+<%- include('partials/header'); %>
+<h1>
+    <%- title %>
+</h1>
+
+<%# en esta plantilla de puede utilizar logica, por lo cual podemos utilizar un if-else para visualizar o no determinara etiqueta %>
+
+<% if(isActive) {%>
+    <p>El Servidor esta Activo </p>
+<%}else {%>
+    <p>El Servidor esta Inctivo </p>
+<%}%>
+
+<%# Tambien podemos utilizar funciones por ejemplo esta para que muestre una fecha%>
+
+<%- new Date() %>
+
+<ul>
+    <% for(let i = 0; i < users.lenght; i++) { %>
+        <li><%- users[i]. %> <%- users[i].name %> <%- users[i].lastname %></li>
+    <%}%>
+</ul>
+<%- include('partials/footer'); %>

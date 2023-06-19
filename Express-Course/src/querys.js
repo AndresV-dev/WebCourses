@@ -3,6 +3,9 @@ import dotenv from 'dotenv';
 import morgan from 'morgan';
 import path from 'path';
 import {fileURLToPath} from "url";
+import router from './routes/expressRouter.js';
+import UserRoutes from './routes/users.js';
+import HomeRoutes from './routes/home.js'
 
 dotenv.config();
 
@@ -10,6 +13,19 @@ const __filename = fileURLToPath(import.meta.url)
 const __dirname = path.dirname(__filename)
 
 const app = express()
+
+//middlewares
+app.use(router)
+UserRoutes(app)
+HomeRoutes(app)
+app.use(morgan('dev'))
+
+//Configurarions
+app.set('case sensitive routing', true) // Inidca que las rutas deberan de calzar perfectamente, incluidas Mayusculas
+app.set('appName', 'Express Course') // indica el nombre del proyecto
+app.set('port', 3000) // indica el puerto
+app.set('view engine', 'ejs') // indica el motor de vistas que usara el server
+app.set('views', path.join(__dirname, 'views')) // indica donde accedera a las views 
 
 app.get('/add/:x/:y', (req,res) => {
     const {x,y} = req.params;
@@ -50,14 +66,13 @@ app.get('/search', (req,res) => {
 
 // tambien existen midleware de terceros(por la comunidad) morgan es un ejemplo este midleware muestra en consola la ruta a la que se accede asi como informacion adicional 
 // el modleware tiene diferentes opciones los cuales repercutiran a la forma y cantidad de informacion que muestra ejemplo "dev, tiny, short, etc"
-app.use(morgan('dev'))
 
 app.get('/profile', (req,res) => {
     res.send('Profile Page')
 })
 
 app.get('/dashboard', (req,res) => {
-    res.send('Dashboard Page')
+    res.render('dashboard')
 })
 
 app.get('/user', (req,res) => {
@@ -67,4 +82,5 @@ app.get('/user', (req,res) => {
 app.use('/public', express.static(path.join(__dirname, './public')))
 app.use('/uploads', express.static(path.join(__dirname, './uploads')))
 
-app.listen(3000)
+app.listen(app.get('port'))
+console.log(`Proyecto ${app.get('appName')} iniciado en el puerto ${app.get('port')}`)
