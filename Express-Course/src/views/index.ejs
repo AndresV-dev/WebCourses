@@ -18,8 +18,8 @@
 <%- new Date() %>
 
 <ul>
-    <% for(let i = 0; i < users.lenght; i++) { %>
-        <li><%- users[i]. %> <%- users[i].name %> <%- users[i].lastname %></li>
+    <% for(let i = 0; i < users.length; i++) { %>
+        <li><%- users[i].id %> <%- users[i].name %> <%- users[i].lastname %></li>
     <%}%>
 </ul>
 <%- include('partials/footer'); %>

@@ -1,3 +1,5 @@
+import axios from 'axios';
+
 function HomeRoutes(app) {
     app.get('/', (req, res) => {
         // al usar plantillas ejs podemos pasarle variables ya seab boleanos o tambien objetos
@@ -23,6 +25,14 @@ function HomeRoutes(app) {
 
     app.all('/about', (req, res) => {
         res.render('about')
+    })
+
+    app.get('/posts', async(req, res) => {
+
+        const response = await axios.get('https://jsonplaceholder.typicode.com/posts');
+        res.render('posts', {
+            posts: response.data
+        })
     })
 }
 
