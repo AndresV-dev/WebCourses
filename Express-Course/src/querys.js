@@ -6,8 +6,11 @@ import {fileURLToPath} from "url";
 import router from './routes/expressRouter.js';
 import UserRoutes from './routes/users.js';
 import HomeRoutes from './routes/home.js'
+import connectionDb from "./db.js";
 
 dotenv.config();
+// antes de iniciar la aplicacion o server se debe declarar que la conneccion a db debe suceder
+connectionDb();
 
 const __filename = fileURLToPath(import.meta.url)
 const __dirname = path.dirname(__filename)
