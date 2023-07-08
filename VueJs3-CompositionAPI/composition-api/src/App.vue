@@ -3,8 +3,19 @@
     <router-link to="/">Home</router-link> |
     <router-link to="/about">About</router-link>
   </nav>
-  <router-view/>
+  <router-view />
 </template>
+
+<script>
+
+import store from '@/store/index.js'
+import { provide } from 'vue';
+export default {
+  setup() {
+    provide('store', store)
+  }
+}
+</script>
 
 <style>
 #app {
