@@ -1,2 +1,5 @@
 # WebCourses
-Practices for learning of Diferent technologies 
+
+Practices for learning of Diferent languages
+
+VueJs, NodeJs, Express
