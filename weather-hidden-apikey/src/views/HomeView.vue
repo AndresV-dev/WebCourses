@@ -27,12 +27,11 @@ export default {
       weather: null
     })
     // Separamos en variables independientes la apikey y la apiUrl
-    const apiUrl = 'https://api.openweathermap.org/data/2.5/weather';
-    const apiKey = '290e7420daf2ecbb1e0dbc785a571d31';
+    const apiUrl = 'http://localhost:3000/';
 
     // Se hace la consulta a la api del clima, y se guarda la informacion en la variable weather dentro de data el cual mostrara el div oculto 
     const getWeather = () => {
-      axios(`${apiUrl}?units=metric&q=${data.city}&appid=${apiKey}`).then(response => { data.weather = response.data })
+      axios(`${apiUrl}?units=metric&q=${data.city}`).then(response => { data.weather = response.data })
     }
 
     // retornamos las variables data y la funcion getWeather
