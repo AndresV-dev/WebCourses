@@ -10,7 +10,7 @@ async function IndexPage() {
   const users = await fetchUsers();
   return (
     <div>
-      <div>Index Page</div>
+      <div className="text-2xl font-bold ">Lista de Usuarios</div>
 
       <div className="mt-10">
         <Users users={users} />
