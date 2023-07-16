@@ -14,7 +14,7 @@ export default function RootLayout({ children }) {
     <html lang="en">
       <body className={inter.className}>
         <Navigation />
-        {children}
+        <div className="container mx-auto mt-20 p-4 border rounded-2xl justify-self-center">{children}</div>
       </body>
     </html>
   );
