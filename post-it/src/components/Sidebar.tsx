@@ -1,3 +1,5 @@
+import '../assets/css/sidebar.css';
+
 function Sidebar() {
   //for test now
   const user = {
@@ -16,7 +18,7 @@ function Sidebar() {
     <nav className="sidebar">
       <ul className="user">
         <li>
-          <image src="https://cdn-icons-png.flaticon.com/512/6326/6326055.png" alt="User Profile Image" />
+          <img src="https://cdn-icons-png.flaticon.com/512/6326/6326055.png" alt="User Profile Image" />
         </li>
         <li>{user.username}</li>
       </ul>
