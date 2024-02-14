@@ -8,6 +8,7 @@ export interface User {
     username: string,
     password: string,
     email: string,
+    token: string,
     json?: JSON,
     created_at: Date,
     userImage?: string,
