@@ -1,11 +1,28 @@
+import { useEffect, useState } from 'react';
 import '../assets/css/sidebar.css';
-import { User } from '../types';
+import { User, UserTaskCollections } from '../types';
 
 interface SidebarProps {
   user: User
 }
 
 function Sidebar(props: SidebarProps) {
+  const [collections, setCollections] = useState<UserTaskCollections[]>([]);
+
+  useEffect(() => {
+    fetch('http://localhost:8081/v1/user/collection/list', {
+      method: 'GET',
+      headers: new Headers({
+        'Content-type': 'application/json',
+        'Accept': 'application/json',
+        'Authorization': 'Bearer ' + (props.user.token !== undefined ? props.user.token : "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0ZXN0IiwiZXhwIjoxNzA3OTY2NjI0LCJpYXQiOjE3MDc4ODAyMjR9.Go5rBTs_c2nSj7dSDeRSJCK3CwzzcQSr21GdpgSss68")
+      })
+    })
+    .then(response => response.json())
+    .then(res => setCollections(res));
+  
+  }, []);
+
   return (
     <nav className="sidebar">
       <ul className="user">
