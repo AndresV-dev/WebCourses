@@ -7,28 +7,27 @@ import Task from "../components/Task";
 
 function Dashboard() {
   const [tasks, setTask] = useState<Array<Task>>();
+  const [user, setUser] = useState<User>();
 
-  const user: User = {
-    id: 1,
-    uuid: "UD25F-6DH21-1JNHD-143H",
-    role: 'ADMIN',
-    name: "Andres",
-    lastname: "Vargas",
-    age: 26,
-    email: "avargas@gmail.com",
-    username: "AndresVargas",
-    password: "hjsdgfhjsdj32476jknsadbf",
-    created_at: new Date(),
-    userImage: "https://cdn-icons-png.flaticon.com/512/6326/6326055.png"
-  } 
+  if (sessionStorage.getItem('error') !== null || sessionStorage.getItem('error')){
+    (
+      alert(sessionStorage.getItem('error'))
+    )
+  }
+
+  if(sessionStorage.getItem('error') === null && sessionStorage.getItem('user') !== null){
+  
+    console.log(sessionStorage.getItem('user') as unknown as User);
+  }
 
   useEffect(() => {
+    console.log(import.meta.env)
     fetch('http://localhost:8081/v1/tasks/list', {
       method: 'GET',
       headers: new Headers({
         'Content-type': 'application/json',
         'Accept': 'application/json',
-        'Authorization': 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0ZXN0IiwiZXhwIjoxNzA3OTY2NjI0LCJpYXQiOjE3MDc4ODAyMjR9.Go5rBTs_c2nSj7dSDeRSJCK3CwzzcQSr21GdpgSss68'
+        'Authorization': 'Bearer ' + ( sessionStorage.getItem('token') !== null ? sessionStorage.getItem('token') : process.env.VITE_TOKEN)
       })
     })
     .then(response => response.json())
@@ -36,14 +35,9 @@ function Dashboard() {
   
   }, [])
 
-  console.log(tasks);
-
   return (
     <div className="Dashboard">
-      <Sidebar user={user} />
-      <div>
-        <img src="%PUBLIC%" alt="Background" />
-      </div>
+      <Sidebar user={user}/>
     </div>
   );
 }
