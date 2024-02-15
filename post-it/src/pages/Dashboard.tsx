@@ -21,12 +21,13 @@ function Dashboard() {
   }
 
   useEffect(() => {
+    console.log(import.meta.env)
     fetch('http://localhost:8081/v1/tasks/list', {
       method: 'GET',
       headers: new Headers({
         'Content-type': 'application/json',
         'Accept': 'application/json',
-        'Authorization': 'Bearer ' + ( sessionStorage.getItem('token') !== null ? sessionStorage.getItem('token') : 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0ZXN0IiwiZXhwIjoxNzA4MDYwNDg4LCJpYXQiOjE3MDc5NzQwODh9.gY8t5GIb1uj-pgJCUfQSCJBkN0y5XX07EI5pLE2kNqk')
+        'Authorization': 'Bearer ' + ( sessionStorage.getItem('token') !== null ? sessionStorage.getItem('token') : process.env.VITE_TOKEN)
       })
     })
     .then(response => response.json())

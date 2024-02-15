@@ -9,13 +9,13 @@ interface SidebarProps {
 function Sidebar(props: SidebarProps) {
   const [collections, setCollections] = useState<UserTaskCollections[]>([]);
 
-  useEffect(() => {
+    useEffect(() => {
     fetch('http://localhost:8081/v1/user/collection/list', {
       method: 'GET',
       headers: new Headers({
         'Content-type': 'application/json',
         'Accept': 'application/json',
-        'Authorization': 'Bearer ' + (props.user?.token !== undefined ? props.user?.token : "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0ZXN0IiwiZXhwIjoxNzA4MDYwNDg4LCJpYXQiOjE3MDc5NzQwODh9.gY8t5GIb1uj-pgJCUfQSCJBkN0y5XX07EI5pLE2kNqk")
+        'Authorization': 'Bearer ' + (props.user?.token !== undefined ? props.user?.token : process.env.VITE_TOKEN)
       })
     })
     .then(response => response.json())
@@ -26,9 +26,9 @@ function Sidebar(props: SidebarProps) {
     <nav className="sidebar">
       <ul className="user">
         <li id='userImage'>
-          <img src={props.user?.userImage} alt="User Profile Image" />
+          <img src={props.user?.userImage || process.env.VITE_USERIMAGEURL} alt="User Profile Image" />
         </li>
-        <li id='username'>{props.user?.username}</li>
+        <li id='username'>{props.user?.username || process.env.VITE_USERNANE}</li>
       </ul>
       <ul className="">
         <li id='addTask' className="links">Add Task</li>
@@ -39,12 +39,12 @@ function Sidebar(props: SidebarProps) {
       {
         collections.map((collection, i) => {
           return(
-            <ul id={`collection ${i}`}>
-              <li className='collection' id={`name-${collection.name}`}>{collection.name}</li>
+            <ul key={`collection ${i}`}>
+              <li className='collection' key={`name-${collection.name}`}>{collection.name}</li>
               {
                 collection.categories.map((category: Category, index: number) => {
                   return (
-                    <li id={`category ${index}`} className='category'>{ category.name}</li>
+                    <li key={`category ${index}`} className='category'>{ category.name}</li>
                   )
                 })
               }             
