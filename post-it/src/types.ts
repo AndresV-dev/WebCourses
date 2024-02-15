@@ -8,7 +8,7 @@ export interface User {
     username: string,
     password: string,
     email: string,
-    token: string,
+    token?: string,
     json?: JSON,
     created_at: Date,
     userImage?: string,
@@ -19,7 +19,15 @@ export interface UserTaskCollections {
     id: number,
     description: string,
     name: string,
+    categories: Category[],
     user_id: number
+}
+
+export interface Category {
+    id: number,
+    name: string,
+    description: string,
+    collection_id: number
 }
 
 export interface Task {
