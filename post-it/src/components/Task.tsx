@@ -1,19 +1,23 @@
+import { Category } from "../types";
+
 interface Task {
-  tittle: String,
+  id: number,
+  title: String,
   description: String,
-  endDate: Date,
-  category: String
+  endAt: Date,
+  category: Category
 }
 
-function Task(Task:Task) {
+function Task(task:Task) {
+  console.log(task)
     return (
       <div className="Task">
-        <h3>Title Task {Task.tittle}</h3>
+        <h3>Title Task {task.title}</h3>
         <div>
-          <p>Description of task {Task.description}</p>
-          <p>End Date {Task.endDate.toUTCString()}</p>
+          <p>Description of task {task.description}</p>
+          <p>End Date {new Date(task.endAt).toUTCString()}</p>
         </div>
-        <p>category {Task.category}</p>
+        <p>category {task.category.name}</p>
       </div>
     );
   }

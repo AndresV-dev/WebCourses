@@ -1,5 +1,4 @@
 import { useEffect, useState } from 'react';
-import '../assets/css/sidebar.css';
 import { Category, User, UserTaskCollections } from '../types';
 
 interface SidebarProps {
