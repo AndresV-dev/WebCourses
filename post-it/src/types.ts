@@ -33,14 +33,15 @@ export interface Category {
 export interface Task {
     id: number,
     uuid: string,
-    tittle: string,
+    title: string,
     description: string,
-    created_at: Date,
-    end_at?: Date,
-    user_id: number,
-    priority_id?: number,
-    collection_id?: number,
-    category_id?: number
+    createdAt: Date,
+    endAt?: Date,
+    userId: number,
+    priorityId?: number,
+    collectionId?: number,
+    categoryId?: number,
+    category?: Category
 }
 
 export interface TaskPriority {
