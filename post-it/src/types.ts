@@ -40,8 +40,7 @@ export interface Task {
     userId: number,
     priorityId?: number,
     collectionId?: number,
-    categoryId?: number,
-    category?: Category
+    categoryId?: number
 }
 
 export interface TaskPriority {

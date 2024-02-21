@@ -16,7 +16,7 @@ li {
 body {
     background-color: var(--principal-color);
 }
-
+/*                  Sidebar Styles              */
 .sidebar {
     background-color: var(--secundary-color);
 }
@@ -66,8 +66,15 @@ img {
     width: 60%;
 }
 
+/*              Dashboard Styles            */
+
 .dashboard {
     display: grid;
     grid-template-columns: 1fr 3fr;
     gap: 1rem;
+}
+
+/*              TaskComponet Task           */
+.task {
+    border: 1px solid;
 }

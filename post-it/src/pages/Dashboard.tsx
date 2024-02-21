@@ -15,8 +15,7 @@ function Dashboard() {
   }
 
   if(sessionStorage.getItem('error') === null && sessionStorage.getItem('user') !== null){
-  
-    console.log(sessionStorage.getItem('user') as unknown as User);
+    setUser(sessionStorage.getItem("user") as unknown as User);
   }
 
   useEffect(() => {
@@ -32,19 +31,28 @@ function Dashboard() {
     .then(res => setTask(res));
   }, [])
 
-  console.log(tasks);
-
   return (
     <div className="dashboard">
       <Sidebar user={user}/>
       <main className="taskList">
-          {
+        <header>
+        <h1>Today</h1>
+        <div className="filter"> 
+          <h3>Sort By:</h3>
+          <select name="sort" id="sort">
+            <option value=""></option>
+          </select>
+        </div>
+        </header>
+        <div className="todayTasks">
+        {
             tasks.map((task, i) => {
               return(
-                <Task id={i} title={task.title} description={task.description} endAt={task.endAt} category={task.category} />
+                <Task id={i} title={task.title} description={task.description} endAt={task.endAt} categoryId={task.categoryId} />
               )
             })
           }
+        </div>
       </main>
     </div>
   );

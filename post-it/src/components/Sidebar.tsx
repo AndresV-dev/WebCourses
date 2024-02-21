@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { Category, User, UserTaskCollections } from '../types';
+import { downloadCataloges } from '../router/Router';
 
 interface SidebarProps {
   user?: User
@@ -8,8 +9,10 @@ interface SidebarProps {
 function Sidebar(props: SidebarProps) {
   const [collections, setCollections] = useState<UserTaskCollections[]>([]);
 
+  downloadCataloges();
     useEffect(() => {
-    fetch('http://localhost:8081/v1/user/collection/list', {
+
+      fetch('http://localhost:8081/v1/user/collection/list', {
       method: 'GET',
       headers: new Headers({
         'Content-type': 'application/json',
@@ -18,8 +21,12 @@ function Sidebar(props: SidebarProps) {
       })
     })
     .then(response => response.json())
-    .then(res => setCollections(res));  
+    .then(res => setCollections(res))
   }, []);
+
+  if(collections !== null){
+    sessionStorage.setItem("collections", JSON.stringify(collections));
+  }
 
   return (
     <nav className="sidebar">
