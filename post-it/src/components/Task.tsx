@@ -1,4 +1,3 @@
-import { useState } from "react";
 import { Category } from "../types";
 
 interface Task {
@@ -11,7 +10,6 @@ interface Task {
 
 function Task(task:Task) {
   const categories: Category[] = JSON.parse(sessionStorage.getItem("categories") as string);
-  console.log(task)
   return (
       <div className="task">
         <h3>Title Task {task.title}</h3>
