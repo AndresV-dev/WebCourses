@@ -15,8 +15,9 @@ li {
 
 body {
     background-color: var(--principal-color);
+    font-size: medium;
 }
-
+/*                  Sidebar Styles              */
 .sidebar {
     background-color: var(--secundary-color);
 }
@@ -45,11 +46,14 @@ li {
     flex-direction: column;
     align-items: center;
 }
-.user img {
-    align-self: center;
-    width:70%
+img {
+    display: flex;
+    border-radius: 30%;
+    width:100%
 }
-
+.links {
+    padding-left: 1rem;
+}
 li:hover {
     color: brown;
 }
@@ -57,17 +61,76 @@ li:hover {
 nav {
     width: 15rem;
     height: 100vh;
-    padding-left: 2rem;
     display: flexbox;
     position: sticky;
 }
 
-img {
-    width: 60%;
+.btn-handler{
+    width: 1.5rem;
+    height: 1.5rem;
+    border-radius: 4px;
+    cursor: pointer;
+    color: #fff;
 }
+.user {
+    padding: 0;
+}
+img {
+    height: 7rem;
+}
+
+/*              Dashboard Styles            */
 
 .dashboard {
     display: grid;
-    grid-template-columns: 1fr 3fr;
+    grid-template-columns: 15rem 1fr; /* Size of Navbar and 1 rem for padding*/
     gap: 1rem;
+}
+
+/*              TaskComponet Task           */
+.todayTask{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.task {
+    border: 1px solid;
+    width: 70vw;
+}
+
+/*              Responsive Queries */
+
+@media(width > 1400px) { /* Nornal Styling*/
+
+}
+@media(width < 1400px) {
+    body {
+        font-size: small;
+    }
+    nav {
+        width: 10rem;
+    }
+    .dashboard {
+        grid-template-columns: 10rem 1fr;/* Size of Navbar and 1 rem for padding*/
+    }
+    img {
+        height: 5rem;
+    }
+}
+
+@media(width < 768px) {
+    body {
+        font-size: x-small;
+    }
+    nav {
+        gap: 1rem;
+        width: 6rem;
+    }
+    img {
+        height: 3rem;
+    }
+    .dashboard {
+        grid-template-columns: 6rem 1fr;/* Size of Navbar and 1 rem for padding*/
+    }
 }

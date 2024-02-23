@@ -5,19 +5,23 @@ interface Task {
   title: String,
   description: String,
   endAt: Date,
-  category: Category
+  categoryId: number
 }
 
 function Task(task:Task) {
-  console.log(task)
-    return (
-      <div className="Task">
+  const categories: Category[] = JSON.parse(sessionStorage.getItem("categories") as string);
+  return (
+      <div className="task">
         <h3>Title Task {task.title}</h3>
         <div>
           <p>Description of task {task.description}</p>
           <p>End Date {new Date(task.endAt).toUTCString()}</p>
         </div>
-        <p>category {task.category.name}</p>
+        <p>category 
+          {
+            categories.find((cat) => cat.id === task.categoryId)?.name
+          }
+        </p>
       </div>
     );
   }

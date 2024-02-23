@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { Category, User, UserTaskCollections } from '../types';
+import { downloadCataloges } from '../router/Router';
 
 interface SidebarProps {
   user?: User
@@ -8,8 +9,10 @@ interface SidebarProps {
 function Sidebar(props: SidebarProps) {
   const [collections, setCollections] = useState<UserTaskCollections[]>([]);
 
+  downloadCataloges();
     useEffect(() => {
-    fetch('http://localhost:8081/v1/user/collection/list', {
+      if(collections.length === 0){
+        fetch('http://localhost:8081/v1/user/collection/list', {
       method: 'GET',
       headers: new Headers({
         'Content-type': 'application/json',
@@ -18,8 +21,13 @@ function Sidebar(props: SidebarProps) {
       })
     })
     .then(response => response.json())
-    .then(res => setCollections(res));  
-  }, []);
+    .then(res => setCollections(res))
+  }
+      }, []);
+
+  if(collections !== null){
+    sessionStorage.setItem("collections", JSON.stringify(collections));
+  }
 
   return (
     <nav className="sidebar">
@@ -29,7 +37,7 @@ function Sidebar(props: SidebarProps) {
         </li>
         <li id='username'>{props.user?.username || process.env.VITE_USERNANE}</li>
       </ul>
-      <ul className="">
+      <ul className="links">
         <li id='addTask' className="links">Add Task</li>
         <li id='dashboard' className="links">Dashboard</li>
         <li id='search' className="links">Search</li>
@@ -38,7 +46,7 @@ function Sidebar(props: SidebarProps) {
       {
         collections.map((collection, i) => {
           return(
-            <ul key={`collection ${i}`}>
+            <ul key={`collection ${i}`} className='links'>
               <li className='collection' key={`name-${collection.name}`}>{collection.name}</li>
               {
                 collection.categories.map((category: Category, index: number) => {
