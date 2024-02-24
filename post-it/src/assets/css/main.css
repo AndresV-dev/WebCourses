@@ -9,51 +9,18 @@
     --principal-text-color: #000;
 }
 
-li {
-    text-decoration: none;
-}
-
-body {
-    background-color: var(--principal-color);
-    font-size: medium;
-}
-/*                  Sidebar Styles              */
-.sidebar {
-    background-color: var(--secundary-color);
-}
-  
 ul {
     border-top: solid 1px;
 }
 
-.collection {
-    font-family: 'Times New Roman', Times, serif;
-    font-size: larger;
-    font-weight: 550;
-}
-.category {
-    margin-left: 1rem;
-}
-
 li {
+    text-decoration: none;
     display: flex;
     cursor: pointer;
     line-height: 2;
+    padding: 0;
 }
 
-.user {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}
-img {
-    display: flex;
-    border-radius: 30%;
-    width:100%
-}
-.links {
-    padding-left: 1rem;
-}
 li:hover {
     color: brown;
 }
@@ -65,26 +32,39 @@ nav {
     position: sticky;
 }
 
-.btn-handler{
-    width: 1.5rem;
-    height: 1.5rem;
-    border-radius: 4px;
-    cursor: pointer;
-    color: #fff;
-}
-.user {
-    padding: 0;
-}
 img {
+    display: flex;
+    border-radius: 30%;
+    width:100%;
     height: 7rem;
 }
-
-.error-popup {
-    background-color: #000;
-    display: flex;
-    
+body {
+    background-color: var(--principal-color);
+    font-size: medium;
 }
 
+/*                  Sidebar Styles              */
+.sidebar {
+    background-color: var(--secundary-color);
+}
+  
+.collection {
+    font-family: 'Times New Roman', Times, serif;
+    font-size: larger;
+    font-weight: 550;
+}
+.category {
+    margin-left: 1rem;
+}
+
+.user {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.links {
+    padding-left: 1rem;
+}
 /*              Dashboard Styles            */
 .dashboard {
     display: grid;
@@ -94,7 +74,7 @@ img {
 .header-dashboard {
     display: flex;
     justify-content: space-between;
-    padding: 10rem 0 2rem 0;
+    padding-top: 8rem;
 }
 .filter {
     display: flex;
@@ -128,7 +108,7 @@ img {
     border-bottom-right-radius: 10px ;
     display: flex;
     flex-direction: column;
-    padding-left: 3rem;
+    padding: 2rem 0 0 3rem;
 }
 .task-title {
     font-size: large;
@@ -138,7 +118,7 @@ img {
     padding-left: 1rem;
 }
 .task-date {
-
+    padding: 0.5rem 0 0 1rem;
 }
 .task-category {
     align-self: flex-end;
@@ -156,6 +136,9 @@ img {
     }
     nav {
         width: 10rem;
+    }
+    .header-dashboard {
+        padding-top: 6rem;
     }
     .dashboard {
         grid-template-columns: 10rem 1fr;/* Size of Navbar and 1 rem for padding*/
@@ -175,6 +158,9 @@ img {
     }
     img {
         height: 3rem;
+    }
+    .header-dashboard {
+        padding-top: 4rem;
     }
     .dashboard {
         grid-template-columns: 6rem 1fr;/* Size of Navbar and 1 rem for padding*/
