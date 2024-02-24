@@ -1,25 +1,21 @@
-import { Category } from "../types";
+import { Category, Task } from "../types";
 
-interface Task {
-  id: number,
-  title: String,
-  description: String,
-  endAt: Date,
-  categoryId: number
+interface TaskData {
+  task: Task
 }
 
-function Task(task:Task) {
+function Task(props: TaskData) {
   const categories: Category[] = JSON.parse(sessionStorage.getItem("categories") as string);
   return (
-      <div className="task">
-        <h3>Title Task {task.title}</h3>
+      <div className={"task " + props.task.status}>
+        <h3 className="task-title">{props.task.title}</h3>
         <div>
-          <p>Description of task {task.description}</p>
-          <p>End Date {new Date(task.endAt).toUTCString()}</p>
+          <p className="task-description">{props.task.description}</p>
+          <p className="task-date">{props.task.endAt.toString()}</p>
         </div>
-        <p>category 
+        <p className="task-category"> 
           {
-            categories.find((cat) => cat.id === task.categoryId)?.name
+            categories.find((cat) => cat.id === props.task.categoryId)?.name
           }
         </p>
       </div>
