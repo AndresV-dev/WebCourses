@@ -3,9 +3,11 @@ import { Task } from "../types";
 
 import Select from "../components/Select"
 import Button from "../components/Button";
+import formatDate from "../util/formatter";
 
 interface HeaderProps {
     getTask: (task: Task[]) => void;
+    label: string
 }
 
 export default function Header(props: HeaderProps){
@@ -21,10 +23,14 @@ export default function Header(props: HeaderProps){
 
 
     function searchTask(){
-        let body = {
-          [filter.sortBy] : filter.value
-        }
-    
+        let today = new Date();
+        let tomorrow = new Date();
+        tomorrow.setDate(today.getDate() + 1)
+        let body = JSON.stringify({
+          [filter.sortBy] : filter.value,
+          endAt: props.label === "Today" ? formatDate(new Date(), false) : props.label === "Tomorrow" ? formatDate(tomorrow, false) : undefined
+        })
+
         fetch('http://localhost:8081/v1/tasks/list/filtered', {
           method: 'POST',
           headers: new Headers({
@@ -32,7 +38,7 @@ export default function Header(props: HeaderProps){
             'Accept': 'application/json',
             'Authorization': 'Bearer ' + ( sessionStorage.getItem('token') !== null ? sessionStorage.getItem('token') : process.env.VITE_TOKEN)
           }),
-          body: JSON.stringify(body)
+          body: body
         })
         .then(response => response.json())
         .then(res => props.getTask(res))
@@ -56,7 +62,7 @@ export default function Header(props: HeaderProps){
 
     return(
     <header className="header-dashboard">
-    <h1>Today</h1>
+    <h1>{props.label}</h1>
     <div className="filter"> 
       <h2>Sort By:</h2>
       <div>
