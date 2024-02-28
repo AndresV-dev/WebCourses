@@ -92,7 +92,12 @@ body {
 .filter div select {
     margin-bottom: 0.4rem;
 }
-
+.noTasks {
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
 /*              TaskComponet Task           */
 .todayTask{
     display: flex;
