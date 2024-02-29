@@ -1,7 +1,11 @@
+import Modal from "../components/Modal";
+
 function Register() {
     return (
       <div className="register">
-        <p>This is a Register Component</p>
+        <h1>Example of Modal Open</h1>
+        <button>Open</button>
+        <Modal content="createTask"/>
       </div>
     );
   }
