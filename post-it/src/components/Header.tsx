@@ -49,13 +49,13 @@ export default function Header(props: HeaderProps){
     function optionHandler(filter: string) {
       switch(filter){
         case "category":
-          setSelectedFilterOptions(JSON.parse(sessionStorage.getItem("categories") || ""));
+          setSelectedFilterOptions(JSON.parse(sessionStorage.getItem("categories") || "{}"));
           break;
         case "priority":
-          setSelectedFilterOptions(JSON.parse(sessionStorage.getItem("priorities") || ""));
+          setSelectedFilterOptions(JSON.parse(sessionStorage.getItem("priorities") || "{}"));
           break;
         case "collection":
-          setSelectedFilterOptions(JSON.parse(sessionStorage.getItem("collections") || ""));
+          setSelectedFilterOptions(JSON.parse(sessionStorage.getItem("collections") || "{}"));
           break;
       }
     }
