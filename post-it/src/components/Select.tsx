@@ -13,7 +13,7 @@ export default function Select(props: SelectProps){
             <option value="option" hidden>------ Select an Option ------</option>
               {
                 props.options.map((value: any, i: number) => {
-                  return <option key={i} value={value.id as number}>{value.name}</option>
+                  return <option key={i} value={value.id}>{value.name}</option>
                 })
               }
             </select>
