@@ -1,9 +1,11 @@
 import { useEffect, useState } from 'react';
 import { Category, User, UserTaskCollections } from '../types';
 import { downloadCataloges } from '../router/Router';
+import Button from './Button';
 
 interface SidebarProps {
-  user?: User
+  user?: User,
+  handleModal: () => void
 }
 
 function Sidebar(props: SidebarProps) {
@@ -38,7 +40,7 @@ function Sidebar(props: SidebarProps) {
         <li id='username'>{props.user?.username || process.env.VITE_USERNANE}</li>
       </ul>
       <ul className="links">
-        <li id='addTask' className="links">Add Task</li>
+        <Button label={"Add Task"} type='button' key={"AddTask"} onClick={props.handleModal}/>
         <li id='dashboard' className="links">Dashboard</li>
         <li id='search' className="links">Search</li>
         <li id='otherDays' className="links">Other Days</li>
