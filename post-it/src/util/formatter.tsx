@@ -3,9 +3,9 @@ export default function formatDate(date: Date, withTime: boolean) {
         date.getFullYear(),
         padTo2Digits(date.getMonth() + 1),
         padTo2Digits(date.getDate()),
-      ].join('-');      
+      ].join('-');
 
-      withTime? dateFormated + ' ' + // Validate If need to add the time on the variable
+      withTime? dateFormated += ' ' + // Validate If need to add the time on the variable
       [
        padTo2Digits(date.getHours()),
        padTo2Digits(date.getMinutes()),

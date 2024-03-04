@@ -6,11 +6,13 @@ import formatDate from "../util/formatter";
 import Task from "../components/Task";
 import TaskList from "../components/TaskList";
 import Header from "../components/Header";
+import Modal from "../components/Modal";
 
 function Dashboard() {
   const [task, setTask] = useState<Array<Task>>([]);
   const [task2, setTask2] = useState<Array<Task>>([]);
   const [user, setUser] = useState<User>();
+  const [isShown, setIsShown] = useState(false);
 
   if (sessionStorage.getItem('error') !== null || sessionStorage.getItem('error')){
     (
@@ -39,7 +41,8 @@ function Dashboard() {
 
   return (
     <div className="dashboard">
-      <Sidebar user={user}/>
+      <Modal content="createTask" isShown={isShown} handleClose={() => setIsShown(!isShown)}/>
+      <Sidebar user={user} handleModal={() => setIsShown(!isShown)}/>
       <main className="taskList">
         {
           task.length != 0 ? 
