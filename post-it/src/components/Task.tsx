@@ -15,7 +15,7 @@ function Task(props: TaskData) {
         </div>
         <p className="task-category"> 
           {
-            categories.find((cat) => cat.id === props.task.categoryId)?.name
+            categories.length != undefined ? categories.find((cat) => cat.id === props.task.categoryId)?.name : "Data Not Available"
           }
         </p>
       </div>

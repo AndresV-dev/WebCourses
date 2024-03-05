@@ -52,7 +52,7 @@ function selectContent(content: string){
                         </div>
                         <div className="field">
                             <label htmlFor="endAt">Finishes At:</label>
-                            <input type="datetime-local" name="date" id="date" placeholder="Date to Finish" onChange={e => taskData.endAt = formatDate(new Date(e.target.value), true)} value={taskData.endAt}/>
+                            <input type="datetime-local" name="date" id="date" placeholder="Date to Finish" onChange={e => taskData.endAt = formatDate(new Date(e.target.value), true)}/>
                         </div>
                         <div className="relations">
                             <div className="collections">

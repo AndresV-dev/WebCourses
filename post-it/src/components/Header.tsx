@@ -12,6 +12,7 @@ interface HeaderProps {
 
 export default function Header(props: HeaderProps){
     const [selectedFilterOptions, setSelectedFilterOptions] = useState<Array<any>>([]);
+    const [comboIsShown, setComboIsShown] = useState(false)
     const [filterOptions] = useState([
       {id: "category",name: "Category"}, {id: "priority",name: "Priority"}, {id: "collection",name: "Collection"}
     ])
@@ -58,6 +59,7 @@ export default function Header(props: HeaderProps){
           setSelectedFilterOptions(JSON.parse(sessionStorage.getItem("collections") || "{}"));
           break;
       }
+      setComboIsShown(true);
     }
 
     return(
@@ -74,6 +76,7 @@ export default function Header(props: HeaderProps){
         options={filterOptions} />
 
         <Select 
+        className={comboIsShown ? "" : "isHidden"}
         name="options" 
         defaultValue="option" 
         id={"selectedFilterOptions"} 
