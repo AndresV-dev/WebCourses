@@ -4,6 +4,7 @@ import { Task } from "../types";
 import Select from "../components/Select"
 import Button from "../components/Button";
 import formatDate from "../util/formatter";
+import { getTasksFilters } from "../api/TaskApi";
 
 interface HeaderProps {
     getTask: (task: Task[]) => void;
@@ -32,19 +33,8 @@ export default function Header(props: HeaderProps){
           endAt: props.label === "Today" ? formatDate(new Date(), false) : props.label === "Tomorrow" ? formatDate(tomorrow, false) : undefined
         })
 
-        fetch('http://localhost:8081/v1/tasks/list/filtered', {
-          method: 'POST',
-          headers: new Headers({
-            'Content-type': 'application/json',
-            'Accept': 'application/json',
-            'Authorization': 'Bearer ' + ( sessionStorage.getItem('token') !== null ? sessionStorage.getItem('token') : process.env.VITE_TOKEN)
-          }),
-          body: body
-        })
-        .then(response => response.json())
-        .then(res => props.getTask(res))
-        .catch(error => alert(error));
-        
+        let tasks = getTasksFilters(body);
+        props.getTask(tasks);
       }
 
     function optionHandler(filter: string) {
