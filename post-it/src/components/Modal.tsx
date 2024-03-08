@@ -29,7 +29,8 @@ export default function Modal(props: ModalProps) {
 
     const handleSubmit = async (e: { preventDefault: () => void; }) => {
         e.preventDefault();
-        await saveTask(JSON.stringify(taskData));
+        saveTask(JSON.stringify(taskData));
+        props.handleClose
       }
     
 function selectContent(content: string){
