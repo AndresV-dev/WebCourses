@@ -1,4 +1,4 @@
-import { Task } from "../types";
+import { Task, User } from "../types";
 
 let token = sessionStorage.getItem('token');
 
@@ -76,4 +76,25 @@ export function getPriorities(){
     .then(response => response.json())
     .then(res => sessionStorage.setItem("priorities", JSON.stringify(res)))
     .catch(err => sessionStorage.setItem('error', err + " from Priorities"))
+}
+
+export function login(loginInfo: string){
+  fetch('http://localhost:8081/v1/auth/user/token', {
+      method: 'POST',
+      headers: {
+        'Content-type': 'application/json',
+        'Accept': 'application/json'
+      },
+      body: loginInfo
+    })
+    .then(response => response.json())
+    .then(res => () => {
+      sessionStorage.setItem('user', JSON.stringify(res))
+
+      let user: User = res as User;
+
+      if (user.token !== undefined)
+        sessionStorage.setItem('token', user.token)
+    })
+    .catch(error => sessionStorage.setItem('error: ', error))
 }

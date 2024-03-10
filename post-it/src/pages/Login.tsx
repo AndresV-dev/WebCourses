@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import Button from "../components/Button";
-import { User } from "../types";
+import { login } from "../api/TaskApi";
 
 function Login() {
 
@@ -9,31 +9,9 @@ function Login() {
     password: ""
   }
   
-  async function loginFunction() {
-    return fetch('http://localhost:8081/v1/auth/user/token', {
-      method: 'POST',
-      headers: {
-        'Content-type': 'application/json',
-        'Accept': 'application/json'
-      },
-      body: JSON.stringify(loginInfo)
-    })
-    .then(response => response.json())
-    .then(res => () => {
-      sessionStorage.setItem('user', JSON.stringify(res))
-
-      let user: User = res as User;
-
-      if (user.token !== undefined)
-        sessionStorage.setItem('token', user.token)
-    })
-    .catch(error => {
-      sessionStorage.setItem('error', error)})
-  }
-
   const handleSubmit = async (e: { preventDefault: () => void; }) => {
     e.preventDefault();
-    await loginFunction();
+    login(JSON.stringify(loginInfo));
   }
 
   return (
@@ -47,6 +25,7 @@ function Login() {
         </div>
         <div className="buttonContainer">
           <Button type="submit" label="Login" />
+          <Link to={"/dashboard"} />
           <p>Don't Have an Account? <Link to={'/register'}>Register</Link></p>
         </div>
       </form>

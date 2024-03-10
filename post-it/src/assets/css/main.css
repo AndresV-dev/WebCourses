@@ -16,12 +16,17 @@ ul {
 li {
     text-decoration: none;
     display: flex;
+}
+
+ul a {
+    text-decoration: none;
+    display: flex;
     cursor: pointer;
     line-height: 2;
     padding: 0;
 }
 
-li:hover {
+ul a:hover {
     color: brown;
 }
 
