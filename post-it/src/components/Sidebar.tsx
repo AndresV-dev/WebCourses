@@ -10,15 +10,16 @@ interface SidebarProps {
 }
 
 function Sidebar(props: SidebarProps) {
-
   const [collections, setCollections] = useState<UserTaskCollections[]>(JSON.parse(sessionStorage.collections || "{}"));
 
-    useEffect(() => {
-      if(collections.length === 0){
-        getCollections();
-        setCollections(JSON.parse(sessionStorage.collections || "{}"));
-      }
-      }, []);
+  if(collections.length === 0){
+    getCollections();
+    setCollections(JSON.parse(sessionStorage.collections || "{}"));
+  }
+
+  useEffect(() => {
+      
+  }, []);
 
   return (
     <nav className="sidebar">

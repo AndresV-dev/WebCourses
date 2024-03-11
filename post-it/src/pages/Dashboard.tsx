@@ -15,7 +15,7 @@ function Dashboard() {
   const [user, setUser] = useState<User>();
   const [isShown, setIsShown] = useState(false);
 
-  if (sessionStorage.error !== null){
+  if (sessionStorage.error !== null && sessionStorage.error !== undefined){
     alert(sessionStorage.error)
     sessionStorage.removeItem('error')
   }
