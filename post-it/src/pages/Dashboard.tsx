@@ -15,20 +15,20 @@ function Dashboard() {
   const [user, setUser] = useState<User>();
   const [isShown, setIsShown] = useState(false);
 
-  if (sessionStorage.getItem('error') !== null || sessionStorage.getItem('error')){
-    alert(sessionStorage.getItem('error'))
+  if (sessionStorage.error !== null && sessionStorage.error !== undefined){
+    alert(sessionStorage.error)
     sessionStorage.removeItem('error')
   }
 
-  if(sessionStorage.getItem('error') === null && sessionStorage.getItem('user') !== null){
-    setUser(sessionStorage.getItem("user") as unknown as User);
+  if(sessionStorage.error === null && sessionStorage.user !== null){
+    setUser(sessionStorage.user as User);
   }
 
   useEffect(() => {
     if(task.length === 0){
       let tasks = getTasksFilters(JSON.stringify({"endAt" : formatDate(new Date(), false)}));
       setTask(tasks)
-  }}, [])
+  }},[])
 
   return (
     <div className="dashboard">

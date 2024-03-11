@@ -13,9 +13,10 @@ interface ModalProps {
 }
 
 export default function Modal(props: ModalProps) {
-    let priorities = JSON.parse(sessionStorage.getItem("priorities") || "{}") ;
-    let myCollCategories = JSON.parse(sessionStorage.getItem("categories")  || "{}");
-    let myCollections = JSON.parse(sessionStorage.getItem("collections")  || "{}");
+    let priorities = JSON.parse(sessionStorage.priorities || "{}") ;
+    let myCollCategories = JSON.parse(sessionStorage.categories  || "{}");
+    let myCollections = JSON.parse(sessionStorage.collections  || "{}");
+
     const [taskData, setTaskData] = useState({
         status: "Nueva",
         title: "",
