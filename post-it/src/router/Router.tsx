@@ -4,8 +4,7 @@ import { createBrowserRouter } from "react-router-dom";
 import Dashboard from "../pages/Dashboard";
 import Login from "../pages/Login";
 import Register from "../pages/Register";
-import { useEffect, useState} from "react";
-import { Category, TaskPriority } from "../types";
+import { getCategories, getCollections, getPriorities } from "../api/TaskApi";
 
 export default createBrowserRouter([
   {
@@ -21,41 +20,15 @@ export default createBrowserRouter([
 ]);
 
 export function downloadCataloges() {
-  const [categories, setCategories] = useState<Category[]>([]);
-  const [priorities, setPriorities] = useState<TaskPriority[]>([]);
-  useEffect(() => {
-    if(sessionStorage.getItem("categories") === null){
-      fetch('http://localhost:8081/v1/category/list', {
-        method: 'GET',
-        headers: new Headers({
-          'Content-type': 'application/json',
-          'Accept': 'application/json',
-          'Authorization': 'Bearer ' + ( sessionStorage.getItem('token') !== null ? sessionStorage.getItem('token') : process.env.VITE_TOKEN)
-          })
-        })
-      .then(response => response.json())
-      .then(res => setCategories(res))
+  if(sessionStorage.getItem("categories") === null){
+    getCategories()
+  }
 
-      if(categories.length !== 0){
-        sessionStorage.setItem("categories", JSON.stringify(categories))
-      }
-    }
-  
-    if(sessionStorage.getItem("priorities") === null){
-      fetch('http://localhost:8081/v1/tasks/priority/list', {
-        method: 'GET',
-        headers: new Headers({
-          'Content-type': 'application/json',
-          'Accept': 'application/json',
-          'Authorization': 'Bearer ' + ( sessionStorage.getItem('token') !== null ? sessionStorage.getItem('token') : process.env.VITE_TOKEN)
-        })
-      })
-      .then(response => response.json())
-      .then(res => setPriorities(res));
+  if(sessionStorage.getItem("collections") === null){
+    getCollections()
+  }
 
-      if(priorities.length !== 0){
-        sessionStorage.setItem("priorities", JSON.stringify(priorities));
-      }
-    }
-  });
+  if(sessionStorage.getItem("priorities") === null){
+    getPriorities()
+  }
 }

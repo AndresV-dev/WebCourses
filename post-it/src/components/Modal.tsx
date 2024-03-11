@@ -13,9 +13,10 @@ interface ModalProps {
 }
 
 export default function Modal(props: ModalProps) {
-    let priorities = JSON.parse(sessionStorage.getItem("priorities") || "{}") ;
-    let myCollCategories = JSON.parse(sessionStorage.getItem("categories")  || "{}");
-    let myCollections = JSON.parse(sessionStorage.getItem("collections")  || "{}");
+    let priorities = JSON.parse(sessionStorage.priorities || "{}") ;
+    let myCollCategories = JSON.parse(sessionStorage.categories  || "{}");
+    let myCollections = JSON.parse(sessionStorage.collections  || "{}");
+
     const [taskData, setTaskData] = useState({
         status: "Nueva",
         title: "",
@@ -29,7 +30,8 @@ export default function Modal(props: ModalProps) {
 
     const handleSubmit = async (e: { preventDefault: () => void; }) => {
         e.preventDefault();
-        await saveTask(JSON.stringify(taskData));
+        saveTask(JSON.stringify(taskData));
+        props.handleClose
       }
     
 function selectContent(content: string){
@@ -52,7 +54,7 @@ function selectContent(content: string){
                         </div>
                         <div className="field">
                             <label htmlFor="endAt">Finishes At:</label>
-                            <input type="datetime-local" name="date" id="date" placeholder="Date to Finish" onChange={e => taskData.endAt = formatDate(new Date(e.target.value), true)} value={taskData.endAt}/>
+                            <input type="datetime-local" name="date" id="date" placeholder="Date to Finish" onChange={e => taskData.endAt = formatDate(new Date(e.target.value), true)}/>
                         </div>
                         <div className="relations">
                             <div className="collections">

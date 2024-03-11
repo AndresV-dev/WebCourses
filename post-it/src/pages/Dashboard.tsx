@@ -2,11 +2,12 @@ import Sidebar from "../components/Sidebar";
 
 import { User } from "../types";
 import { useEffect, useState } from "react";
-import formatDate from "../util/formatter";
+import { getTasksFilters } from "../api/TaskApi";
 import Task from "../components/Task";
 import TaskList from "../components/TaskList";
 import Header from "../components/Header";
 import Modal from "../components/Modal";
+import formatDate from "../util/formatter";
 
 function Dashboard() {
   const [task, setTask] = useState<Array<Task>>([]);
@@ -14,30 +15,20 @@ function Dashboard() {
   const [user, setUser] = useState<User>();
   const [isShown, setIsShown] = useState(false);
 
-  if (sessionStorage.getItem('error') !== null || sessionStorage.getItem('error')){
-    (
-      alert(sessionStorage.getItem('error'))
-    )
+  if (sessionStorage.error !== null && sessionStorage.error !== undefined){
+    alert(sessionStorage.error)
+    sessionStorage.removeItem('error')
   }
 
-  if(sessionStorage.getItem('error') === null && sessionStorage.getItem('user') !== null){
-    setUser(sessionStorage.getItem("user") as unknown as User);
+  if(sessionStorage.error === null && sessionStorage.user !== null){
+    setUser(sessionStorage.user as User);
   }
 
   useEffect(() => {
     if(task.length === 0){
-      fetch('http://localhost:8081/v1/tasks/list/filtered', {
-      method: 'POST',
-      headers: new Headers({
-        'Content-type': 'application/json',
-        'Accept': 'application/json',
-        'Authorization': 'Bearer ' + ( sessionStorage.getItem('token') !== null ? sessionStorage.getItem('token') : process.env.VITE_TOKEN)
-      }),
-      body: JSON.stringify({ "endAt": formatDate(new Date(), false)})
-    })
-    .then(response => response.json())
-    .then(res => setTask(res));
-  }}, [])
+      let tasks = getTasksFilters(JSON.stringify({"endAt" : formatDate(new Date(), false)}));
+      setTask(tasks)
+  }},[])
 
   return (
     <div className="dashboard">
