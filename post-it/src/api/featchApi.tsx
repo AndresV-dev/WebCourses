@@ -2,6 +2,7 @@ import { Task, User } from "../types";
 
 let token = sessionStorage.getItem("token");
 
+// Endpoint to Save a Task
 export function saveTask(taskData: string) {
   fetch(process.env.VITE_APIURL + "tasks/register", {
     method: "PUT",
@@ -16,7 +17,7 @@ export function saveTask(taskData: string) {
     .then(() => alert("your Task has been Saved Successfully"))
     .catch((err) => alert("There was an error on Saving The Task, error:" + err));
 }
-
+// Endpoint to Get a TaskList with filters
 export function getTasksFilters(filters: string) {
   let tasks: Array<Task> = [];
 
@@ -35,7 +36,7 @@ export function getTasksFilters(filters: string) {
 
   return tasks;
 }
-
+// Enpoint to get the Collections of the user
 export function getCollections() {
   fetch(process.env.VITE_APIURL + "user/collection/list", {
     method: "GET",
@@ -49,7 +50,7 @@ export function getCollections() {
     .then((res) => sessionStorage.setItem("collections", JSON.stringify(res)))
     .catch((err) => sessionStorage.setItem("error", err + " from Collections"));
 }
-
+// Endpoint to get The Catalog for Categories
 export function getCategories() {
   fetch(process.env.VITE_APIURL + "category/list", {
     method: "GET",
@@ -63,7 +64,7 @@ export function getCategories() {
     .then((res) => sessionStorage.setItem("categories", JSON.stringify(res)))
     .catch((err) => sessionStorage.setItem("error", err + " from Categories"));
 }
-
+// Endpoint to Get The Catalog for Priorities
 export function getPriorities() {
   fetch(process.env.VITE_APIURL + "tasks/priority/list", {
     method: "GET",
@@ -77,7 +78,7 @@ export function getPriorities() {
     .then((res) => sessionStorage.setItem("priorities", JSON.stringify(res)))
     .catch((err) => sessionStorage.setItem("error", err + " from Priorities"));
 }
-
+// Endpoint to Do the login
 export function login(loginInfo: string) {
   fetch("http://localhost:8081/v1/auth/user/token", {
     method: "POST",
@@ -97,7 +98,7 @@ export function login(loginInfo: string) {
     })
     .catch((error) => sessionStorage.setItem("error: ", error));
 }
-
+// Endpoint to Save a new User
 export function register(registerInfo: string) {
   fetch("http://localhost:8081/v1/auth/user/register", {
     method: "POST",

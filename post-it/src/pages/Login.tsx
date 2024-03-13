@@ -1,7 +1,8 @@
 import { FaRegEyeSlash } from "react-icons/fa6";
 import Button from "../components/Button";
-import { login, register } from "../api/TaskApi";
+import { login, register } from "../api/featchApi";
 import { useState } from "react";
+import { Link } from "react-router-dom";
 
 function Login() {
   const [typeForm, setTypeForm] = useState("login");
@@ -64,6 +65,7 @@ function Login() {
             </div>
             <div className="buttonContainer">
               <Button type="submit" label="Login" />
+              <Link to="/dashboard"> Join As Guest</Link>
             </div>
           </form>
         ) : (
