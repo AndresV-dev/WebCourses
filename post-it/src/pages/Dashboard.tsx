@@ -25,6 +25,7 @@ function Dashboard() {
   }
 
   useEffect(() => {
+    console.log(history.state);
     if (task.length === 0) {
       let tasks = getTasksFilters(JSON.stringify({ endAt: formatDate(new Date(), false) }));
       setTask(tasks);
