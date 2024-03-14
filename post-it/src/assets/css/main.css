@@ -11,6 +11,10 @@
     --font-text-default: 'Times New Roman'
 }
 
+a {
+    text-decoration: none;
+}
+
 li {
     text-decoration: none;
     display: flex;
@@ -304,6 +308,14 @@ form .relations {
     display: flex;
     gap: 3rem;
 }
+.buttonContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0.5rem;
+    margin: 0 5rem;
+    text-align: center;
+}
 .loginContainer {
     background-color: var(--secundary-color);
     display: flex;
@@ -341,6 +353,7 @@ form .relations {
     display: flex;
     flex-direction: row;
 }
+
 /*              Responsive Queries */
 
 @media(width > 1400px) { /* Nornal Styling*/

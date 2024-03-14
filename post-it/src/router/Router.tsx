@@ -21,16 +21,16 @@ export default createBrowserRouter([
   },
 ]);
 
-export function downloadCataloges() {
+export async function downloadCataloges() {
   if (sessionStorage.getItem("categories") === null) {
-    getCategories();
+    await getCategories();
   }
 
   if (sessionStorage.getItem("collections") === null) {
-    getCollections();
+    await getCollections();
   }
 
   if (sessionStorage.getItem("priorities") === null) {
-    getPriorities();
+    await getPriorities();
   }
 }

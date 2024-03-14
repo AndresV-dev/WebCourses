@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import { Category, User, UserTaskCollections } from "../types";
-import Button from "./Button";
 import { getCollections } from "../api/featchApi";
 import { Link } from "react-router-dom";
 
@@ -10,7 +9,7 @@ interface SidebarProps {
 }
 
 function Sidebar(props: SidebarProps) {
-  const [collections, setCollections] = useState<UserTaskCollections[]>(JSON.parse(sessionStorage.collections || "{}"));
+  const [collections, setCollections] = useState<UserTaskCollections[]>(JSON.parse(sessionStorage.collections || "[]"));
 
   if (collections.length === 0) {
     getCollections();

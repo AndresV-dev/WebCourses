@@ -1,3 +1,3 @@
 import { downloadCataloges } from "../router/Router";
 
-downloadCataloges();
+await downloadCataloges();

@@ -37,7 +37,7 @@ export function getTasksFilters(filters: string) {
   return tasks;
 }
 // Enpoint to get the Collections of the user
-export function getCollections() {
+export async function getCollections() {
   fetch(process.env.VITE_APIURL + "user/collection/list", {
     method: "GET",
     headers: new Headers({
@@ -51,7 +51,7 @@ export function getCollections() {
     .catch((err) => sessionStorage.setItem("error", err + " from Collections"));
 }
 // Endpoint to get The Catalog for Categories
-export function getCategories() {
+export async function getCategories() {
   fetch(process.env.VITE_APIURL + "category/list", {
     method: "GET",
     headers: new Headers({
@@ -65,7 +65,7 @@ export function getCategories() {
     .catch((err) => sessionStorage.setItem("error", err + " from Categories"));
 }
 // Endpoint to Get The Catalog for Priorities
-export function getPriorities() {
+export async function getPriorities() {
   fetch(process.env.VITE_APIURL + "tasks/priority/list", {
     method: "GET",
     headers: new Headers({
@@ -79,8 +79,8 @@ export function getPriorities() {
     .catch((err) => sessionStorage.setItem("error", err + " from Priorities"));
 }
 // Endpoint to Do the login
-export function login(loginInfo: string) {
-  fetch("http://localhost:8081/v1/auth/user/token", {
+export async function login(loginInfo: string) {
+  return fetch("http://localhost:8081/v1/auth/user/token", {
     method: "POST",
     headers: {
       "Content-type": "application/json",
@@ -89,15 +89,15 @@ export function login(loginInfo: string) {
     body: loginInfo,
   })
     .then((response) => response.json())
-    .then((res) => () => {
+    .then((res) => {
       sessionStorage.setItem("user", JSON.stringify(res));
+      let user: User = res;
 
-      let user: User = res as User;
-
-      if (user.token !== undefined) sessionStorage.setItem("token", user.token);
+      if (user.token !== null || user.token !== undefined) sessionStorage.setItem("token", user.token as string);
     })
     .catch((error) => sessionStorage.setItem("error: ", error));
 }
+
 // Endpoint to Save a new User
 export function register(registerInfo: string) {
   fetch("http://localhost:8081/v1/auth/user/register", {
@@ -111,9 +111,11 @@ export function register(registerInfo: string) {
     .then((response) => response.json())
     .then((res) => () => {
       sessionStorage.setItem("user", JSON.stringify(res));
-
+      console.log("session user" + sessionStorage.getItem("user"));
+      console.log("res " + res);
       let user: User = res as User;
 
+      console.log("user" + user);
       if (user.token !== undefined) sessionStorage.setItem("token", user.token);
     })
     .catch((error) => sessionStorage.setItem("error: ", error));
