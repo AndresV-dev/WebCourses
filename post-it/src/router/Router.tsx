@@ -3,32 +3,34 @@ import { createBrowserRouter } from "react-router-dom";
 // Imports For Components/Pages
 import Dashboard from "../pages/Dashboard";
 import Login from "../pages/Login";
-import Register from "../pages/Register";
-import { getCategories, getCollections, getPriorities } from "../api/TaskApi";
+import { getCategories, getCollections, getPriorities } from "../api/featchApi";
+import NotFoundPage from "../pages/NotFoundPage";
 
 export default createBrowserRouter([
   {
     path: "/",
-    Component: Dashboard
-  },{
-    path: "/login",
-    Component: Login
-  },{
-    path: "/register",
-    Component: Register
-  }
+    Component: Login,
+  },
+  {
+    path: "/dashboard",
+    Component: Dashboard,
+  },
+  {
+    path: "*",
+    Component: NotFoundPage,
+  },
 ]);
 
-export function downloadCataloges() {
-  if(sessionStorage.getItem("categories") === null){
-    getCategories()
+export async function downloadCataloges() {
+  if (sessionStorage.getItem("categories") === null) {
+    await getCategories();
   }
 
-  if(sessionStorage.getItem("collections") === null){
-    getCollections()
+  if (sessionStorage.getItem("collections") === null) {
+    await getCollections();
   }
 
-  if(sessionStorage.getItem("priorities") === null){
-    getPriorities()
+  if (sessionStorage.getItem("priorities") === null) {
+    await getPriorities();
   }
 }

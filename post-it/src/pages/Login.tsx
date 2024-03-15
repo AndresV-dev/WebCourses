@@ -1,27 +1,32 @@
 import { FaRegEyeSlash } from "react-icons/fa6";
 import Button from "../components/Button";
-import { login, register } from "../api/TaskApi";
+import { login, register } from "../api/featchApi";
 import { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
 
 function Login() {
+  const navigate = useNavigate();
   const [typeForm, setTypeForm] = useState("login");
-  const [typeInput, setTypeInput] = useState("text");
-  const loginInfo = {
+  const [typeInput, setTypeInput] = useState("password");
+  const [loginInfo, setLoginInfo] = useState({
     username: "",
     password: "",
-  };
-  const registerInfo = {
+  });
+  const [registerInfo, setRegisterInfo] = useState({
     name: "",
     lastname: "",
     age: "",
     email: "",
     username: "",
     password: "",
-  };
+  });
 
   const handleSubmitLogin = async (e: { preventDefault: () => void }) => {
     e.preventDefault();
-    login(JSON.stringify(loginInfo));
+
+    await login(JSON.stringify(loginInfo)).then(() => {
+      navigate(`/dashboard`);
+    });
   };
 
   const handleSubmitRegister = async (e: { preventDefault: () => void }) => {
@@ -41,13 +46,13 @@ function Login() {
           <form action="/dashboard" onSubmit={handleSubmitLogin}>
             <div className="fieldsContainer">
               <div className="inputContainer">
-                <input id="username" type="text" required onChange={(e) => (loginInfo.username = e.target.value)} />
+                <input id="username" type="text" required onChange={(e) => setLoginInfo({ ...loginInfo, username: e.target.value })} />
                 <label className="label" htmlFor="username">
                   Username / Email:
                 </label>
               </div>
               <div className="inputContainer password">
-                <input id="password" type={typeInput} required onChange={(e) => (loginInfo.password = e.target.value)} />
+                <input id="password" type={typeInput} required onChange={(e) => setLoginInfo({ ...loginInfo, password: e.target.value })} />
                 <label htmlFor="password" className="label">
                   Password:
                 </label>
@@ -64,42 +69,45 @@ function Login() {
             </div>
             <div className="buttonContainer">
               <Button type="submit" label="Login" />
+              <Link to="/dashboard" className="basic-button ">
+                Join As Guest
+              </Link>
             </div>
           </form>
         ) : (
-          <form action="" onSubmit={handleSubmitRegister}>
+          <form action="/login" onSubmit={handleSubmitRegister}>
             <div className="inputContainer">
-              <input id="name" type="text" required onChange={(e) => (registerInfo.name = e.target.value)} />
+              <input id="name" type="text" required onChange={(e) => setRegisterInfo({ ...registerInfo, name: e.target.value })} />
               <label className="label" htmlFor="name">
                 Name:
               </label>
             </div>
             <div className="inputContainer">
-              <input id="lastname" type="text" required onChange={(e) => (registerInfo.lastname = e.target.value)} />
+              <input id="lastname" type="text" required onChange={(e) => setRegisterInfo({ ...registerInfo, lastname: e.target.value })} />
               <label className="label" htmlFor="lastname">
                 LastName:
               </label>
             </div>
             <div className="inputContainer">
-              <input id="email" type="text" required onChange={(e) => (registerInfo.email = e.target.value)} />
+              <input id="email" type="text" required onChange={(e) => setRegisterInfo({ ...registerInfo, email: e.target.value })} />
               <label className="label" htmlFor="email">
                 E-Mail:
               </label>
             </div>
             <div className="inputContainer">
-              <input id="age" type="text" required onChange={(e) => (registerInfo.age = e.target.value)} />
+              <input id="age" type="text" required onChange={(e) => setRegisterInfo({ ...registerInfo, age: e.target.value })} />
               <label className="label" htmlFor="age">
                 Age:
               </label>
             </div>
             <div className="inputContainer">
-              <input id="username" type="text" required onChange={(e) => (registerInfo.username = e.target.value)} />
+              <input id="username" type="text" required onChange={(e) => setRegisterInfo({ ...registerInfo, username: e.target.value })} />
               <label className="label" htmlFor="username">
                 Username:
               </label>
             </div>
             <div className="inputContainer password">
-              <input id="password" type={typeInput} required onChange={(e) => (loginInfo.password = e.target.value)} />
+              <input id="password" type={typeInput} required onChange={(e) => setRegisterInfo({ ...registerInfo, password: e.target.value })} />
               <label htmlFor="password" className="label">
                 Password:
               </label>
