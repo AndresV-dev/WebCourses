@@ -1,8 +1,8 @@
 import { FaRegEyeSlash } from "react-icons/fa6";
 import Button from "../components/Button";
-import { login, register } from "../api/featchApi";
+import { getCollections, login, register } from "../api/featchApi";
 import { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 function Login() {
   const navigate = useNavigate();
@@ -21,10 +21,36 @@ function Login() {
     password: "",
   });
 
+  const handleChangeLogin = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setLoginInfo({
+      ...loginInfo,
+      [e.target.name]: e.target.value,
+    });
+  };
+
+  const handleChangeRegister = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setRegisterInfo({
+      ...registerInfo,
+      [e.target.name]: e.target.value,
+    });
+  };
+
+  const loginDefault = async () => {
+    await login(
+      JSON.stringify({
+        username: process.env.VITE_USERNANE,
+        password: process.env.VITE_PASSWORD,
+      })
+    );
+    await getCollections().then(() => {
+      navigate(`/dashboard`);
+    });
+  };
+
   const handleSubmitLogin = async (e: { preventDefault: () => void }) => {
     e.preventDefault();
-
-    await login(JSON.stringify(loginInfo)).then(() => {
+    await login(JSON.stringify(loginInfo));
+    await getCollections().then(() => {
       navigate(`/dashboard`);
     });
   };
@@ -46,13 +72,13 @@ function Login() {
           <form action="/dashboard" onSubmit={handleSubmitLogin}>
             <div className="fieldsContainer">
               <div className="inputContainer">
-                <input id="username" type="text" required onChange={(e) => setLoginInfo({ ...loginInfo, username: e.target.value })} />
+                <input name="username" type="text" required onChange={handleChangeLogin} />
                 <label className="label" htmlFor="username">
                   Username / Email:
                 </label>
               </div>
               <div className="inputContainer password">
-                <input id="password" type={typeInput} required onChange={(e) => setLoginInfo({ ...loginInfo, password: e.target.value })} />
+                <input name="password" type={typeInput} required onChange={handleChangeLogin} />
                 <label htmlFor="password" className="label">
                   Password:
                 </label>
@@ -68,46 +94,44 @@ function Login() {
               </div>
             </div>
             <div className="buttonContainer">
-              <Button type="submit" label="Login" />
-              <Link to="/dashboard" className="basic-button ">
-                Join As Guest
-              </Link>
+              <Button name="login" type="submit" label="Login" />
+              <Button name="guest" type="button" onClick={loginDefault} label="Join As Guest" />
             </div>
           </form>
         ) : (
           <form action="/login" onSubmit={handleSubmitRegister}>
             <div className="inputContainer">
-              <input id="name" type="text" required onChange={(e) => setRegisterInfo({ ...registerInfo, name: e.target.value })} />
+              <input name="name" type="text" required onChange={handleChangeRegister} />
               <label className="label" htmlFor="name">
                 Name:
               </label>
             </div>
             <div className="inputContainer">
-              <input id="lastname" type="text" required onChange={(e) => setRegisterInfo({ ...registerInfo, lastname: e.target.value })} />
+              <input name="lastname" type="text" required onChange={handleChangeRegister} />
               <label className="label" htmlFor="lastname">
                 LastName:
               </label>
             </div>
             <div className="inputContainer">
-              <input id="email" type="text" required onChange={(e) => setRegisterInfo({ ...registerInfo, email: e.target.value })} />
+              <input name="email" type="text" required onChange={handleChangeRegister} />
               <label className="label" htmlFor="email">
                 E-Mail:
               </label>
             </div>
             <div className="inputContainer">
-              <input id="age" type="text" required onChange={(e) => setRegisterInfo({ ...registerInfo, age: e.target.value })} />
+              <input name="age" type="text" required onChange={handleChangeRegister} />
               <label className="label" htmlFor="age">
                 Age:
               </label>
             </div>
             <div className="inputContainer">
-              <input id="username" type="text" required onChange={(e) => setRegisterInfo({ ...registerInfo, username: e.target.value })} />
+              <input name="username" type="text" required onChange={handleChangeRegister} />
               <label className="label" htmlFor="username">
                 Username:
               </label>
             </div>
             <div className="inputContainer password">
-              <input id="password" type={typeInput} required onChange={(e) => setRegisterInfo({ ...registerInfo, password: e.target.value })} />
+              <input name="password" type={typeInput} required onChange={handleChangeRegister} />
               <label htmlFor="password" className="label">
                 Password:
               </label>
