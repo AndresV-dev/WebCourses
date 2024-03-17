@@ -1,14 +1,15 @@
 import { useEffect, useState } from "react";
 import { Category, User, UserTaskCollections } from "../types";
+import Button from "./Button";
+import Modal from "./Modal";
 import { Link } from "react-router-dom";
 
-interface SidebarProps {
-  handleModal: () => void;
-}
+interface SidebarProps {}
 
 function Sidebar(props: SidebarProps) {
   const [collections, setCollections] = useState<UserTaskCollections[]>();
   const [user, setUser] = useState<User>();
+  const [isShownTask, setIsShownTask] = useState(false);
 
   useEffect(() => {
     setCollections(JSON.parse(sessionStorage.collections));
@@ -26,9 +27,8 @@ function Sidebar(props: SidebarProps) {
         </Link>
       </ul>
       <ul className="links section">
-        <button type="button" key={"AddTask"} className={"btn-addtask"} onClick={props.handleModal}>
-          Add Task
-        </button>
+        <Modal content="createTask" isShown={isShownTask} handleClose={() => setIsShownTask(!isShownTask)} />
+        <Button type="button" label={"Add Task"} key={"AddTask"} className={"btn-add"} onClick={() => setIsShownTask(!isShownTask)} />
         <Link id="dashboard" to={"/dashboard"}>
           Dashboard
         </Link>
