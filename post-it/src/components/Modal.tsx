@@ -1,5 +1,5 @@
-import { useState } from "react";
-import { saveTask } from "../api/featchApi";
+import { useEffect, useState } from "react";
+import { saveTask, saveCollection } from "../api/featchApi";
 import formatDate from "../util/formatter";
 
 import Select from "./Select";
@@ -13,9 +13,15 @@ interface ModalProps {
 }
 
 export default function Modal(props: ModalProps) {
-  let priorities = JSON.parse(sessionStorage.priorities || "{}");
-  let myCollCategories = JSON.parse(sessionStorage.categories || "{}");
-  let myCollections = JSON.parse(sessionStorage.collections || "{}");
+  const [priorities, setPriorities] = useState(JSON.parse(sessionStorage.priorities) || []);
+  const [myCollCategories, setMyCollCategories] = useState(JSON.parse(sessionStorage.categories) || []);
+  const [myCollections, setMyCollections] = useState(JSON.parse(sessionStorage.collections) || []);
+
+  useEffect(() => {
+    setPriorities(JSON.parse(sessionStorage.priorities));
+    setMyCollCategories(JSON.parse(sessionStorage.categories));
+    setMyCollections(JSON.parse(sessionStorage.collections));
+  }, [sessionStorage.collections, sessionStorage.categories, sessionStorage.priorities]);
 
   const [taskData, setTaskData] = useState({
     status: "Nueva",
@@ -28,9 +34,25 @@ export default function Modal(props: ModalProps) {
     userId: 2, // id from the default user (Test User)
   });
 
-  const handleSubmit = async (e: { preventDefault: () => void }) => {
+  const [collectionData, setCollectionData] = useState({
+    status: "Nueva",
+    title: "",
+    description: "",
+    endAt: "",
+    collectionId: 1,
+    categoryId: 1,
+    priorityId: 3,
+    userId: 2, // id from the default user (Test User)
+  });
+
+  const handleSubmitTask = async (e: { preventDefault: () => void }) => {
     e.preventDefault();
     saveTask(JSON.stringify(taskData));
+    props.handleClose;
+  };
+  const handleSubmitCollection = async (e: { preventDefault: () => void }) => {
+    e.preventDefault();
+    saveCollection(JSON.stringify(collectionData));
     props.handleClose;
   };
 
@@ -45,7 +67,7 @@ export default function Modal(props: ModalProps) {
             <div className="title">
               <h3>Add New Task</h3>
             </div>
-            <form onSubmit={handleSubmit}>
+            <form onSubmit={handleSubmitTask}>
               <div className="field">
                 <label htmlFor="title">Title:</label>
                 <input type="text" name="title" id="title" placeholder="Name your New Task" onChange={(e) => (taskData.title = e.target.value)} />
@@ -76,9 +98,35 @@ export default function Modal(props: ModalProps) {
             </form>
           </div>
         );
+      case "createCollection":
+        return (
+          <div className="modalContainer">
+            <div className="modal-button">
+              <Button label={"X"} type="button" onClick={props.handleClose} />
+            </div>
+            <div className="title">
+              <h3>Add New Collection</h3>
+            </div>
+            <form onSubmit={handleSubmitCollection}>
+              <div className="field">
+                <label htmlFor="title">Title:</label>
+                <input type="text" name="title" id="title" placeholder="Name your New Task" onChange={(e) => (taskData.title = e.target.value)} />
+              </div>
+              <div className="field">
+                <label htmlFor="description">Description:</label>
+                <input type="text" name="description" id="description" placeholder="(Optional) describe your Task" onChange={(e) => (taskData.description = e.target.value)} />
+              </div>
+              <div className="field">
+                <label htmlFor="endAt">Finishes At:</label>
+                <input type="datetime-local" name="date" id="date" placeholder="Date to Finish" onChange={(e) => (taskData.endAt = formatDate(new Date(e.target.value), true))} />
+              </div>
+              <Button type="submit" label={"Save"} />
+            </form>
+          </div>
+        );
       default:
         return <div>There Is Not a Modal For This Required Content</div>;
     }
   }
-  return <div className={`modalBackground ${props.className} ${props.isShown ? "" : "isHidden"}`}>{selectContent(props.content)}</div>;
+  return <div className={`modalBackground ${props.className || ""} ${props.isShown ? "" : "isHidden"}`}>{selectContent(props.content)}</div>;
 }
