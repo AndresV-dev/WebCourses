@@ -1,6 +1,6 @@
 import { Task, User } from "../types";
 
-let token = sessionStorage.getItem("token");
+let token = sessionStorage.token;
 
 // Endpoint to Save a Task
 export function saveTask(taskData: string) {
@@ -9,7 +9,7 @@ export function saveTask(taskData: string) {
     headers: new Headers({
       "Content-type": "application/json",
       Accept: "application/json",
-      Authorization: "Bearer " + (token !== null ? token : process.env.VITE_TOKEN),
+      Authorization: "Bearer " + (token !== undefined ? token : process.env.VITE_TOKEN),
     }),
     body: taskData,
   })
@@ -26,7 +26,7 @@ export function getTasksFilters(filters: string) {
     headers: new Headers({
       "Content-type": "application/json",
       Accept: "application/json",
-      Authorization: "Bearer " + (token !== null ? token : process.env.VITE_TOKEN),
+      Authorization: "Bearer " + (token !== undefined ? token : process.env.VITE_TOKEN),
     }),
     body: filters,
   })
@@ -38,12 +38,12 @@ export function getTasksFilters(filters: string) {
 }
 // Enpoint to get the Collections of the user
 export async function getCollections() {
-  fetch(process.env.VITE_APIURL + "user/collection/list", {
+  return fetch(process.env.VITE_APIURL + "user/collection/list", {
     method: "GET",
     headers: new Headers({
       "Content-type": "application/json",
       Accept: "application/json",
-      Authorization: "Bearer " + (token !== null ? token : process.env.VITE_TOKEN),
+      Authorization: "Bearer " + (token !== undefined ? token : process.env.VITE_TOKEN),
     }),
   })
     .then((response) => response.json())
@@ -57,7 +57,7 @@ export async function getCategories() {
     headers: new Headers({
       "Content-type": "application/json",
       Accept: "application/json",
-      Authorization: "Bearer " + (token !== null ? token : process.env.VITE_TOKEN),
+      Authorization: "Bearer " + (token !== undefined ? token : process.env.VITE_TOKEN),
     }),
   })
     .then((response) => response.json())
@@ -71,7 +71,7 @@ export async function getPriorities() {
     headers: new Headers({
       "Content-type": "application/json",
       Accept: "application/json",
-      Authorization: "Bearer " + (token !== null ? token : process.env.VITE_TOKEN),
+      Authorization: "Bearer " + (token !== undefined ? token : process.env.VITE_TOKEN),
     }),
   })
     .then((response) => response.json())
@@ -93,7 +93,7 @@ export async function login(loginInfo: string) {
       sessionStorage.setItem("user", JSON.stringify(res));
       let user: User = res;
 
-      if (user.token !== null || user.token !== undefined) sessionStorage.setItem("token", user.token as string);
+      if (user.token !== null || user.token !== undefined) token = user.token;
     })
     .catch((error) => sessionStorage.setItem("error: ", error));
 }
