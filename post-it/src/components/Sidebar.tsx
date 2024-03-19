@@ -10,6 +10,7 @@ function Sidebar(props: SidebarProps) {
   const [collections, setCollections] = useState<UserTaskCollections[]>();
   const [user, setUser] = useState<User>();
   const [isShownTask, setIsShownTask] = useState(false);
+  const [isShownCollection, setIsShownCollection] = useState(false);
 
   useEffect(() => {
     setCollections(JSON.parse(sessionStorage.collections));
@@ -55,6 +56,10 @@ function Sidebar(props: SidebarProps) {
           </ul>
         );
       })}
+      <ul>
+        <Modal content="createCollection" isShown={isShownCollection} handleClose={() => setIsShownCollection(!isShownCollection)} />
+        <Button type="button" label={"Add Collection"} key={"AddCollection"} className={"btn-add"} onClick={() => setIsShownCollection(!isShownCollection)} />
+      </ul>
     </nav>
   );
 }
