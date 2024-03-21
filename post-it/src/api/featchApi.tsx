@@ -34,6 +34,22 @@ export function saveCollection(collectionData: string) {
     .catch((err) => alert("There was an error on Saving The Task, error:" + err));
 }
 
+// Endpoint to Save a Collection
+export function saveCategory(categoryData: string) {
+  fetch(process.env.VITE_APIURL + "collection/register", {
+    method: "PUT",
+    headers: new Headers({
+      "Content-type": "application/json",
+      Accept: "application/json",
+      Authorization: "Bearer " + (token !== undefined ? token : process.env.VITE_TOKEN),
+    }),
+    body: categoryData,
+  })
+    .then((response) => response.json())
+    .then(() => alert("your Task has been Saved Successfully"))
+    .catch((err) => alert("There was an error on Saving The Task, error:" + err));
+}
+
 // Endpoint to Get a TaskList with filters
 export function getTasksFilters(filters: string) {
   let tasks: Array<Task> = [];

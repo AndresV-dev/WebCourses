@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { saveTask, saveCollection } from "../api/featchApi";
+import { saveTask, saveCollection, saveCategory } from "../api/featchApi";
 import formatDate from "../util/formatter";
 
 import Select from "./Select";
@@ -45,6 +45,17 @@ export default function Modal(props: ModalProps) {
     userId: 2, // id from the default user (Test User)
   });
 
+  const [categoryData, setCategoryData] = useState({
+    status: "Nueva",
+    title: "",
+    description: "",
+    endAt: "",
+    collectionId: 1,
+    categoryId: 1,
+    priorityId: 3,
+    userId: 2, // id from the default user (Test User)
+  });
+
   const handleSubmitTask = async (e: { preventDefault: () => void }) => {
     e.preventDefault();
     saveTask(JSON.stringify(taskData));
@@ -53,6 +64,11 @@ export default function Modal(props: ModalProps) {
   const handleSubmitCollection = async (e: { preventDefault: () => void }) => {
     e.preventDefault();
     saveCollection(JSON.stringify(collectionData));
+    props.handleClose;
+  };
+  const handleSubmitCategory = async (e: { preventDefault: () => void }) => {
+    e.preventDefault();
+    saveCategory(JSON.stringify(categoryData));
     props.handleClose;
   };
 
@@ -124,6 +140,33 @@ export default function Modal(props: ModalProps) {
             </form>
           </div>
         );
+      case "createCategory":
+        return (
+          <div className="modalContainer">
+            <div className="modal-button">
+              <Button label={"X"} type="button" onClick={props.handleClose} />
+            </div>
+            <div className="title">
+              <h3>Add New Category</h3>
+            </div>
+            <form onSubmit={handleSubmitCategory}>
+              <div className="field">
+                <label htmlFor="title">Title:</label>
+                <input type="text" name="title" id="title" placeholder="Name your New Task" onChange={(e) => (taskData.title = e.target.value)} />
+              </div>
+              <div className="field">
+                <label htmlFor="description">Description:</label>
+                <input type="text" name="description" id="description" placeholder="(Optional) describe your Task" onChange={(e) => (taskData.description = e.target.value)} />
+              </div>
+              <div className="field">
+                <label htmlFor="endAt">Finishes At:</label>
+                <input type="datetime-local" name="date" id="date" placeholder="Date to Finish" onChange={(e) => (taskData.endAt = formatDate(new Date(e.target.value), true))} />
+              </div>
+              <Button type="submit" label={"Save"} />
+            </form>
+          </div>
+        );
+
       default:
         return <div>There Is Not a Modal For This Required Content</div>;
     }
