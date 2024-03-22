@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import { saveTask, saveCollection, saveCategory } from "../api/featchApi";
-import formatDate from "../util/formatter";
 
 import Select from "./Select";
 import Button from "./Button";
@@ -16,11 +15,12 @@ export default function Modal(props: ModalProps) {
   const [priorities, setPriorities] = useState(JSON.parse(sessionStorage.priorities) || []);
   const [myCollCategories, setMyCollCategories] = useState(JSON.parse(sessionStorage.categories) || []);
   const [myCollections, setMyCollections] = useState(JSON.parse(sessionStorage.collections) || []);
-
+  const [user, setUser] = useState(JSON.parse(sessionStorage.user));
   useEffect(() => {
     setPriorities(JSON.parse(sessionStorage.priorities));
     setMyCollCategories(JSON.parse(sessionStorage.categories));
     setMyCollections(JSON.parse(sessionStorage.collections));
+    setUser(JSON.parse(sessionStorage.user));
   }, [sessionStorage.collections, sessionStorage.categories, sessionStorage.priorities]);
 
   const [taskData, setTaskData] = useState({
@@ -31,29 +31,19 @@ export default function Modal(props: ModalProps) {
     collectionId: 1,
     categoryId: 1,
     priorityId: 3,
-    userId: 2, // id from the default user (Test User)
+    userId: user.id || 2, // id from the default user (Test User)
   });
 
   const [collectionData, setCollectionData] = useState({
-    status: "Nueva",
-    title: "",
+    name: "",
     description: "",
-    endAt: "",
-    collectionId: 1,
-    categoryId: 1,
-    priorityId: 3,
-    userId: 2, // id from the default user (Test User)
+    user_id: user.id,
   });
 
   const [categoryData, setCategoryData] = useState({
-    status: "Nueva",
-    title: "",
+    name: "",
     description: "",
-    endAt: "",
-    collectionId: 1,
-    categoryId: 1,
-    priorityId: 3,
-    userId: 2, // id from the default user (Test User)
+    collection_id: 0,
   });
 
   const handleSubmitTask = async (e: { preventDefault: () => void }) => {
@@ -72,6 +62,26 @@ export default function Modal(props: ModalProps) {
     props.handleClose;
   };
 
+  const handleChangeTaskData = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setTaskData({
+      ...taskData,
+      [e.target.name]: e.target.value,
+    });
+  };
+
+  const handleChangeCollectionData = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setCollectionData({
+      ...collectionData,
+      [e.target.name]: e.target.value,
+    });
+  };
+
+  const handleChangeCategoryData = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setCategoryData({
+      ...categoryData,
+      [e.target.name]: e.target.value,
+    });
+  };
   function selectContent(content: string) {
     switch (content) {
       case "createTask":
@@ -86,28 +96,28 @@ export default function Modal(props: ModalProps) {
             <form onSubmit={handleSubmitTask}>
               <div className="field">
                 <label htmlFor="title">Title:</label>
-                <input type="text" name="title" id="title" placeholder="Name your New Task" onChange={(e) => (taskData.title = e.target.value)} />
+                <input type="text" name="title" id="title" placeholder="Name your New Task" onChange={handleChangeTaskData} />
               </div>
               <div className="field">
                 <label htmlFor="description">Description:</label>
-                <input type="text" name="description" id="description" placeholder="(Optional) describe your Task" onChange={(e) => (taskData.description = e.target.value)} />
+                <input type="text" name="description" id="description" placeholder="(Optional) describe your Task" onChange={handleChangeTaskData} />
               </div>
               <div className="field">
                 <label htmlFor="endAt">Finishes At:</label>
-                <input type="datetime-local" name="date" id="date" placeholder="Date to Finish" onChange={(e) => (taskData.endAt = formatDate(new Date(e.target.value), true))} />
+                <input type="datetime-local" name="date" id="date" placeholder="Date to Finish" onChange={handleChangeTaskData} />
               </div>
               <div className="relations">
                 <div className="collections">
                   <label htmlFor="collections">Collection</label>
-                  <Select id={"1"} name="collections" key={1} defaultValue="option" options={myCollections} onChange={(e) => setTaskData({ ...taskData, collectionId: Number(e.target.options[e.target.selectedIndex].value) })} />
+                  <Select id={"1"} name="collections" key={1} defaultValue="option" options={myCollections} onChange={handleChangeTaskData} />
                 </div>
                 <div className="categories">
                   <label htmlFor="categories">Categories</label>
-                  <Select id={"2"} name="categories" key={2} defaultValue="option" options={myCollCategories} onChange={(e) => setTaskData({ ...taskData, categoryId: Number(e.target.options[e.target.selectedIndex].value) })} />
+                  <Select id={"2"} name="categories" key={2} defaultValue="option" options={myCollCategories} onChange={handleChangeTaskData} />
                 </div>
                 <div className="priorities">
                   <label htmlFor="priotities">Priority</label>
-                  <Select id={"3"} name="priorities" key={3} defaultValue="option" options={priorities} onChange={(e) => setTaskData({ ...taskData, priorityId: Number(e.target.options[e.target.selectedIndex].value) })} />
+                  <Select id={"3"} name="priorities" key={3} defaultValue="option" options={priorities} onChange={handleChangeTaskData} />
                 </div>
               </div>
               <Button type="submit" label={"Save"} />
@@ -125,16 +135,12 @@ export default function Modal(props: ModalProps) {
             </div>
             <form onSubmit={handleSubmitCollection}>
               <div className="field">
-                <label htmlFor="title">Title:</label>
-                <input type="text" name="title" id="title" placeholder="Name your New Task" onChange={(e) => (taskData.title = e.target.value)} />
+                <label htmlFor="name">Title:</label>
+                <input type="text" name="name" id="name" placeholder="Name your New Collection" onChange={handleChangeCollectionData} />
               </div>
               <div className="field">
                 <label htmlFor="description">Description:</label>
-                <input type="text" name="description" id="description" placeholder="(Optional) describe your Task" onChange={(e) => (taskData.description = e.target.value)} />
-              </div>
-              <div className="field">
-                <label htmlFor="endAt">Finishes At:</label>
-                <input type="datetime-local" name="date" id="date" placeholder="Date to Finish" onChange={(e) => (taskData.endAt = formatDate(new Date(e.target.value), true))} />
+                <input type="text" name="description" id="description" placeholder="(Optional) describe your Collection" onChange={handleChangeCollectionData} />
               </div>
               <Button type="submit" label={"Save"} />
             </form>
@@ -150,17 +156,17 @@ export default function Modal(props: ModalProps) {
               <h3>Add New Category</h3>
             </div>
             <form onSubmit={handleSubmitCategory}>
-              <div className="field">
-                <label htmlFor="title">Title:</label>
-                <input type="text" name="title" id="title" placeholder="Name your New Task" onChange={(e) => (taskData.title = e.target.value)} />
+              <div className="collections">
+                <label htmlFor="collections">Collection</label>
+                <Select id={"1"} name="collections" key={1} defaultValue="option" options={myCollections} onChange={handleChangeCategoryData} required={true} />
               </div>
               <div className="field">
-                <label htmlFor="description">Description:</label>
-                <input type="text" name="description" id="description" placeholder="(Optional) describe your Task" onChange={(e) => (taskData.description = e.target.value)} />
+                <label htmlFor="name">Name: </label>
+                <input type="text" name="name" id="name" placeholder="Name your New Category" onChange={handleChangeCategoryData} required />
               </div>
               <div className="field">
-                <label htmlFor="endAt">Finishes At:</label>
-                <input type="datetime-local" name="date" id="date" placeholder="Date to Finish" onChange={(e) => (taskData.endAt = formatDate(new Date(e.target.value), true))} />
+                <label htmlFor="description">Description: </label>
+                <input type="text" name="description" id="description" placeholder="(Optional) describe your Category" onChange={handleChangeCategoryData} required />
               </div>
               <Button type="submit" label={"Save"} />
             </form>
