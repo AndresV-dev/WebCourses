@@ -3,6 +3,7 @@ import Button from "../components/Button";
 import { getCollections, login, register } from "../api/featchApi";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { downloadCataloges } from "../router/Router";
 
 function Login() {
   const navigate = useNavigate();
@@ -42,6 +43,7 @@ function Login() {
         password: process.env.VITE_PASSWORD,
       })
     );
+    await downloadCataloges();
     await getCollections().then(() => {
       navigate(`/dashboard`);
     });

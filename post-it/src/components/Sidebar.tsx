@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { Category, User, UserTaskCollections } from "../types";
+import { MdCollections, MdOutlineAddToPhotos } from "react-icons/md";
 import Button from "./Button";
 import Modal from "./Modal";
 import { Link } from "react-router-dom";
@@ -11,6 +12,7 @@ function Sidebar(props: SidebarProps) {
   const [user, setUser] = useState<User>();
   const [isShownTask, setIsShownTask] = useState(false);
   const [isShownCollection, setIsShownCollection] = useState(false);
+  const [isShownCategory, setIsShownCategory] = useState(false);
 
   useEffect(() => {
     setCollections(JSON.parse(sessionStorage.collections));
@@ -40,6 +42,21 @@ function Sidebar(props: SidebarProps) {
           Other Days
         </Link>
       </ul>
+      {
+        <div className="collectionsTitle">
+          <h3>Collections</h3>
+          <div>
+            <Modal content="createCollection" isShown={isShownCollection} handleClose={() => setIsShownCollection(!isShownCollection)} />
+            <button type="button" className={"btn-icons"} title="Add Collection" onClick={() => setIsShownCollection(!isShownCollection)}>
+              <MdCollections />
+            </button>
+            <Modal content="createCategory" isShown={isShownCategory} handleClose={() => setIsShownCategory(!isShownCategory)} />
+            <button type="button" className={"btn-icons"} title="Add Category" onClick={() => setIsShownCategory(!isShownCategory)}>
+              <MdOutlineAddToPhotos />
+            </button>
+          </div>
+        </div>
+      }
       {collections?.map((collection, i) => {
         return (
           <ul key={`collection ${i}`} className="links">
@@ -56,10 +73,6 @@ function Sidebar(props: SidebarProps) {
           </ul>
         );
       })}
-      <ul>
-        <Modal content="createCollection" isShown={isShownCollection} handleClose={() => setIsShownCollection(!isShownCollection)} />
-        <Button type="button" label={"Add Collection"} key={"AddCollection"} className={"btn-add"} onClick={() => setIsShownCollection(!isShownCollection)} />
-      </ul>
     </nav>
   );
 }

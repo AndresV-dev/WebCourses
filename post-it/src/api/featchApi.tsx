@@ -85,7 +85,7 @@ export async function getCollections() {
 }
 // Endpoint to get The Catalog for Categories
 export async function getCategories() {
-  fetch(process.env.VITE_APIURL + "category/list", {
+  fetch(process.env.VITE_APIURL + "user/categories/list", {
     method: "GET",
     headers: new Headers({
       "Content-type": "application/json",
