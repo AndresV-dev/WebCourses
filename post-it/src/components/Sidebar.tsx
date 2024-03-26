@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { Category, User, UserTaskCollections } from "../types";
 import { MdCollections, MdOutlineAddToPhotos } from "react-icons/md";
+import { parseJson } from "../util/functions";
 import Button from "./Button";
 import Modal from "./Modal";
 import { Link } from "react-router-dom";
@@ -8,16 +9,17 @@ import { Link } from "react-router-dom";
 interface SidebarProps {}
 
 function Sidebar(props: SidebarProps) {
-  const [collections, setCollections] = useState<UserTaskCollections[]>();
+  const [collections, setCollections] = useState(parseJson(sessionStorage.collections) as Array<UserTaskCollections>);
   const [user, setUser] = useState<User>();
   const [isShownTask, setIsShownTask] = useState(false);
   const [isShownCollection, setIsShownCollection] = useState(false);
   const [isShownCategory, setIsShownCategory] = useState(false);
 
   useEffect(() => {
-    setCollections(JSON.parse(sessionStorage.collections));
-    setUser(JSON.parse(sessionStorage.user) as User);
-  }, [sessionStorage.user]);
+    setCollections(parseJson(sessionStorage.collections));
+    setUser(parseJson(sessionStorage.user) as User);
+    console.log(collections);
+  }, [sessionStorage.user, sessionStorage.collections]);
 
   return (
     <nav className="sidebar">
@@ -63,7 +65,7 @@ function Sidebar(props: SidebarProps) {
             <Link className="collection" key={`name-${collection.name}`} to={"/my-collections/" + collection.name}>
               {collection.name}
             </Link>
-            {collection.categories.map((category: Category, index: number) => {
+            {collection.categories?.map((category: Category, index: number) => {
               return (
                 <Link to={"/" + category.name} key={`category ${index}`} className="category">
                   {category.name}
