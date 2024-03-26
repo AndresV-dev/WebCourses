@@ -1,6 +1,7 @@
-import { Task, User } from "../types";
+import { Task, User, UserTaskCollections } from "../types";
+import { parseJson, parseJsonUnd, stringifyJson } from "../util/functions";
 
-let token = sessionStorage.token;
+let token = parseJsonUnd(sessionStorage.user)?.token || sessionStorage.token;
 
 // Endpoint to Save a Task
 export function saveTask(taskData: string) {
@@ -20,7 +21,7 @@ export function saveTask(taskData: string) {
 
 // Endpoint to Save a Collection
 export function saveCollection(collectionData: string) {
-  fetch(process.env.VITE_APIURL + "collection/register", {
+  fetch(process.env.VITE_APIURL + "user/collection/register", {
     method: "PUT",
     headers: new Headers({
       "Content-type": "application/json",
@@ -30,13 +31,19 @@ export function saveCollection(collectionData: string) {
     body: collectionData,
   })
     .then((response) => response.json())
-    .then(() => alert("your Task has been Saved Successfully"))
+    .then((res) => {
+      let collectionsJson: Array<UserTaskCollections> = JSON.parse(sessionStorage.collections);
+      collectionsJson.push(res as unknown as UserTaskCollections);
+      sessionStorage.collections = stringifyJson(collectionsJson as unknown as string);
+      alert("your Task has been Saved Successfully");
+    })
     .catch((err) => alert("There was an error on Saving The Task, error:" + err));
 }
 
 // Endpoint to Save a Collection
 export function saveCategory(categoryData: string) {
-  fetch(process.env.VITE_APIURL + "collection/register", {
+  console.log(token);
+  fetch(process.env.VITE_APIURL + "user/collection/category/register", {
     method: "PUT",
     headers: new Headers({
       "Content-type": "application/json",
@@ -46,8 +53,8 @@ export function saveCategory(categoryData: string) {
     body: categoryData,
   })
     .then((response) => response.json())
-    .then(() => alert("your Task has been Saved Successfully"))
-    .catch((err) => alert("There was an error on Saving The Task, error:" + err));
+    .then(() => alert("your Category has been Saved Successfully"))
+    .catch((err) => alert("There was an error on Saving The Category, error:" + err));
 }
 
 // Endpoint to Get a TaskList with filters
@@ -80,7 +87,7 @@ export async function getCollections() {
     }),
   })
     .then((response) => response.json())
-    .then((res) => sessionStorage.setItem("collections", JSON.stringify(res)))
+    .then((res) => (sessionStorage.collections = JSON.stringify(res)))
     .catch((err) => sessionStorage.setItem("error", err + " from Collections"));
 }
 // Endpoint to get The Catalog for Categories
