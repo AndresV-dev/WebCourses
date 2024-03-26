@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
-import { saveTask, saveCollection, saveCategory } from "../api/featchApi";
+import { saveTask, saveCollection, saveCategory, getCollections, getCategories } from "../api/featchApi";
+import { parseJson } from "../util/functions";
 
 import Select from "./Select";
 import Button from "./Button";
@@ -12,16 +13,16 @@ interface ModalProps {
 }
 
 export default function Modal(props: ModalProps) {
-  const [priorities, setPriorities] = useState(JSON.parse(sessionStorage.priorities) || []);
-  const [myCollCategories, setMyCollCategories] = useState(JSON.parse(sessionStorage.categories) || []);
-  const [myCollections, setMyCollections] = useState(JSON.parse(sessionStorage.collections) || []);
-  const [user, setUser] = useState(JSON.parse(sessionStorage.user));
+  const [priorities, setPriorities] = useState(parseJson(sessionStorage.priorities));
+  const [myCollections, setMyCollections] = useState(parseJson(sessionStorage.collections));
+  const [myCollCategories, setMyCollCategories] = useState(parseJson(sessionStorage.collections?.categories));
+  const [user, setUser] = useState(parseJson(sessionStorage.user));
   useEffect(() => {
-    setPriorities(JSON.parse(sessionStorage.priorities));
-    setMyCollCategories(JSON.parse(sessionStorage.categories));
-    setMyCollections(JSON.parse(sessionStorage.collections));
-    setUser(JSON.parse(sessionStorage.user));
-  }, [sessionStorage.collections, sessionStorage.categories, sessionStorage.priorities]);
+    setPriorities(parseJson(sessionStorage.priorities));
+    setMyCollections(parseJson(sessionStorage.collections));
+    setMyCollCategories(parseJson(sessionStorage.collections?.categories));
+    setUser(parseJson(sessionStorage.user));
+  }, [sessionStorage.collections, sessionStorage.priorities]);
 
   const [taskData, setTaskData] = useState({
     status: "Nueva",
@@ -37,7 +38,7 @@ export default function Modal(props: ModalProps) {
   const [collectionData, setCollectionData] = useState({
     name: "",
     description: "",
-    user_id: user.id,
+    userId: user.id,
   });
 
   const [categoryData, setCategoryData] = useState({
@@ -49,17 +50,17 @@ export default function Modal(props: ModalProps) {
   const handleSubmitTask = async (e: { preventDefault: () => void }) => {
     e.preventDefault();
     saveTask(JSON.stringify(taskData));
-    props.handleClose;
+    props.handleClose();
   };
   const handleSubmitCollection = async (e: { preventDefault: () => void }) => {
     e.preventDefault();
     saveCollection(JSON.stringify(collectionData));
-    props.handleClose;
+    props.handleClose();
   };
   const handleSubmitCategory = async (e: { preventDefault: () => void }) => {
     e.preventDefault();
     saveCategory(JSON.stringify(categoryData));
-    props.handleClose;
+    props.handleClose();
   };
 
   const handleChangeTaskData = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -158,7 +159,7 @@ export default function Modal(props: ModalProps) {
             <form onSubmit={handleSubmitCategory}>
               <div className="collections">
                 <label htmlFor="collections">Collection</label>
-                <Select id={"1"} name="collections" key={1} defaultValue="option" options={myCollections} onChange={handleChangeCategoryData} required={true} />
+                <Select id={"collection_id"} name="collection_id" key={1} defaultValue="option" options={myCollections} onChange={handleChangeCategoryData} required={true} />
               </div>
               <div className="field">
                 <label htmlFor="name">Name: </label>

@@ -1,9 +1,8 @@
 import { FaRegEyeSlash } from "react-icons/fa6";
 import Button from "../components/Button";
-import { getCollections, login, register } from "../api/featchApi";
+import { getCategories, getCollections, getPriorities, login, register } from "../api/featchApi";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { downloadCataloges } from "../router/Router";
 
 function Login() {
   const navigate = useNavigate();
@@ -43,7 +42,8 @@ function Login() {
         password: process.env.VITE_PASSWORD,
       })
     );
-    await downloadCataloges();
+    await getPriorities();
+    await getCategories();
     await getCollections().then(() => {
       navigate(`/dashboard`);
     });
@@ -52,6 +52,9 @@ function Login() {
   const handleSubmitLogin = async (e: { preventDefault: () => void }) => {
     e.preventDefault();
     await login(JSON.stringify(loginInfo));
+
+    await getPriorities();
+    await getCategories();
     await getCollections().then(() => {
       navigate(`/dashboard`);
     });
