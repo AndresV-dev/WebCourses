@@ -1,7 +1,9 @@
 import { Task, User, UserTaskCollections } from "../types";
-import { parseJson, parseJsonUnd, stringifyJson } from "../util/functions";
+import { parseJsonUnd, stringifyJson } from "../util/functions";
+import { useNavigate } from "react-router-dom";
 
 let token = parseJsonUnd(sessionStorage.user)?.token || sessionStorage.token;
+const navigate = useNavigate();
 
 // Endpoint to Save a Task
 export function saveTask(taskData: string) {
@@ -159,4 +161,13 @@ export function register(registerInfo: string) {
       if (user.token !== undefined) sessionStorage.setItem("token", user.token);
     })
     .catch((error) => sessionStorage.setItem("error: ", error));
+}
+// delete all the user info from the session Storage
+export function logout() {
+  sessionStorage.removeItem("user");
+  sessionStorage.removeItem("token");
+  sessionStorage.removeItem("collections");
+  sessionStorage.removeItem("Categories");
+
+  navigate(`/login`);
 }
