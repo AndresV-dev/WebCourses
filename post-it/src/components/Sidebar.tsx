@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { Category, User, UserTaskCollections } from "../types";
 import { MdCollections, MdOutlineAddToPhotos } from "react-icons/md";
 import { parseJson } from "../util/functions";
+import { logout } from "../api/featchApi";
 import Button from "./Button";
 import Modal from "./Modal";
 import { Link } from "react-router-dom";
@@ -18,7 +19,6 @@ function Sidebar(props: SidebarProps) {
   useEffect(() => {
     setCollections(parseJson(sessionStorage.collections));
     setUser(parseJson(sessionStorage.user) as User);
-    console.log(collections);
   }, [sessionStorage.user, sessionStorage.collections]);
 
   return (
@@ -75,6 +75,7 @@ function Sidebar(props: SidebarProps) {
           </ul>
         );
       })}
+      <Button label={"Logout"} type="button" onClick={() => logout} name="logout" />
     </nav>
   );
 }
