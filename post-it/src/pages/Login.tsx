@@ -51,13 +51,17 @@ function Login() {
 
   const handleSubmitLogin = async (e: { preventDefault: () => void }) => {
     e.preventDefault();
-    await login(JSON.stringify(loginInfo));
+    login(JSON.stringify(loginInfo));
 
-    await getPriorities();
-    await getCategories();
-    await getCollections().then(() => {
-      navigate(`/dashboard`);
-    });
+    if (sessionStorage.error !== undefined) {
+      sessionStorage.removeItem("error");
+    } else {
+      await getPriorities();
+      await getCategories();
+      await getCollections().then(() => {
+        navigate(`/dashboard`);
+      });
+    }
   };
 
   const handleSubmitRegister = async (e: { preventDefault: () => void }) => {
