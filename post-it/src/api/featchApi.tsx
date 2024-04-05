@@ -3,7 +3,6 @@ import { parseJsonUnd, stringifyJson } from "../util/functions";
 import { useNavigate } from "react-router-dom";
 
 let token = parseJsonUnd(sessionStorage.user)?.token || sessionStorage.token;
-const navigate = useNavigate();
 
 // Endpoint to Save a Task
 export function saveTask(taskData: string) {
@@ -122,7 +121,7 @@ export async function getPriorities() {
 }
 // Endpoint to Do the login
 export async function login(loginInfo: string) {
-  return fetch("http://localhost:8081/v1/auth/user/token", {
+  return fetch(process.env.VITE_APIURL + "auth/user/token", {
     method: "POST",
     headers: {
       "Content-type": "application/json",
@@ -132,17 +131,19 @@ export async function login(loginInfo: string) {
   })
     .then((response) => response.json())
     .then((res) => {
-      sessionStorage.setItem("user", JSON.stringify(res));
-      let user: User = res;
+      if (res.code === 200) {
+        sessionStorage.setItem("user", JSON.stringify(res));
+        let user: User = res;
 
-      if (user.token !== null || user.token !== undefined) token = user.token;
+        if (user.token !== null || user.token !== undefined) token = user.token;
+      } else sessionStorage.setItem("error", JSON.stringify(res));
     })
-    .catch((error) => sessionStorage.setItem("error: ", error));
+    .catch((error) => sessionStorage.setItem("error", error));
 }
 
 // Endpoint to Save a new User
 export function register(registerInfo: string) {
-  fetch("http://localhost:8081/v1/auth/user/register", {
+  fetch(process.env.VITE_APIURL + "auth/user/register", {
     method: "POST",
     headers: {
       "Content-type": "application/json",
@@ -166,8 +167,9 @@ export function register(registerInfo: string) {
 export function logout() {
   sessionStorage.removeItem("user");
   sessionStorage.removeItem("token");
-  sessionStorage.removeItem("collections");
+  sessionStorage.removeItem("Collections");
   sessionStorage.removeItem("Categories");
+  const navigate = useNavigate();
 
   navigate(`/login`);
 }
