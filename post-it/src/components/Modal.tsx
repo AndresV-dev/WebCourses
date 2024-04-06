@@ -1,9 +1,10 @@
 import { useEffect, useState } from "react";
-import { saveTask, saveCollection, saveCategory, getCollections, getCategories } from "../api/featchApi";
+import { saveTask, saveCollection, saveCategory } from "../api/featchApi";
 import { parseJson } from "../util/functions";
 
 import Select from "./Select";
 import Button from "./Button";
+import { Category, TaskPriority, User, UserTaskCollections } from "../types";
 
 interface ModalProps {
   content: string;
@@ -13,16 +14,19 @@ interface ModalProps {
 }
 
 export default function Modal(props: ModalProps) {
-  const [priorities, setPriorities] = useState(parseJson(sessionStorage.priorities));
-  const [myCollections, setMyCollections] = useState(parseJson(sessionStorage.collections));
-  const [myCollCategories, setMyCollCategories] = useState(parseJson(sessionStorage.collections?.categories));
-  const [user, setUser] = useState(parseJson(sessionStorage.user));
+  const [priorities, setPriorities] = useState<Array<TaskPriority>>([]);
+  const [myCollections, setMyCollections] = useState<Array<UserTaskCollections>>([]);
+  const [myCollCategories, setMyCollCategories] = useState<Array<Category>>([]);
+  const [user, setUser] = useState<User>();
+
   useEffect(() => {
-    setPriorities(parseJson(sessionStorage.priorities));
-    setMyCollections(parseJson(sessionStorage.collections));
-    setMyCollCategories(parseJson(sessionStorage.collections?.categories));
-    setUser(parseJson(sessionStorage.user));
-  }, [sessionStorage.collections, sessionStorage.priorities]);
+    if (sessionStorage.user) {
+      setPriorities(parseJson(sessionStorage.priorities));
+      setMyCollections(parseJson(sessionStorage.collections));
+      setMyCollCategories(parseJson(sessionStorage.collections?.categories));
+      setUser(parseJson(sessionStorage.user));
+    }
+  }, [sessionStorage.user]);
 
   const [taskData, setTaskData] = useState({
     status: "Nueva",
@@ -32,13 +36,13 @@ export default function Modal(props: ModalProps) {
     collectionId: 1,
     categoryId: 1,
     priorityId: 3,
-    userId: user.id || 2, // id from the default user (Test User)
+    userId: user?.id || 2, // id from the default user (Test User)
   });
 
   const [collectionData, setCollectionData] = useState({
     name: "",
     description: "",
-    userId: user.id,
+    userId: user?.id,
   });
 
   const [categoryData, setCategoryData] = useState({
