@@ -386,8 +386,23 @@ form .relations {
     display: flex;
     flex-direction: row;
 }
-
-/*              Responsive Queries */
+/*              Notifications Styles    */
+.notiContainer {
+    background-color: var(--principal-color);
+    padding: 1rem;
+    display: flex;
+    position: fixed;
+    top: 1rem;
+    right: 3rem;
+    font-size: small;
+    flex-direction: column;
+    transform: translateX(15rem);
+    transition: 1s ease-in-out
+}
+.showNotification {
+    transform:  translateX(0);
+}
+/*              Responsive Queries      */
 
 @media(width > 1400px) { /* Nornal Styling*/
 

@@ -154,14 +154,12 @@ export function register(registerInfo: string) {
     .then((response) => response.json())
     .then((res) => () => {
       sessionStorage.setItem("user", JSON.stringify(res));
-      console.log("session user" + sessionStorage.getItem("user"));
-      console.log("res " + res);
       let user: User = res as User;
 
       console.log("user" + user);
       if (user.token !== undefined) sessionStorage.setItem("token", user.token);
     })
-    .catch((error) => sessionStorage.setItem("error: ", error));
+    .catch((error) => sessionStorage.setItem("error", error));
 }
 // delete all the user info from the session Storage
 export function logout() {

@@ -10,16 +10,18 @@ import { Link } from "react-router-dom";
 interface SidebarProps {}
 
 function Sidebar(props: SidebarProps) {
-  const [collections, setCollections] = useState(parseJson(sessionStorage.collections) as Array<UserTaskCollections>);
+  const [collections, setCollections] = useState<Array<UserTaskCollections>>();
   const [user, setUser] = useState<User>();
   const [isShownTask, setIsShownTask] = useState(false);
   const [isShownCollection, setIsShownCollection] = useState(false);
   const [isShownCategory, setIsShownCategory] = useState(false);
 
   useEffect(() => {
-    setCollections(parseJson(sessionStorage.collections));
-    setUser(parseJson(sessionStorage.user) as User);
-  }, [sessionStorage.user, sessionStorage.collections]);
+    if (sessionStorage.user) {
+      setCollections(parseJson(sessionStorage.collections));
+      setUser(parseJson(sessionStorage.user) as User);
+    }
+  }, [sessionStorage.user]);
 
   return (
     <nav className="sidebar">
