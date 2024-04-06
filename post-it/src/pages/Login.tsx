@@ -1,5 +1,6 @@
 import { FaRegEyeSlash } from "react-icons/fa6";
 import Button from "../components/Button";
+import Notification from "../components/Notification";
 import { getCategories, getCollections, getPriorities, login, register } from "../api/featchApi";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
@@ -51,13 +52,17 @@ function Login() {
 
   const handleSubmitLogin = async (e: { preventDefault: () => void }) => {
     e.preventDefault();
-    await login(JSON.stringify(loginInfo));
+    login(JSON.stringify(loginInfo));
 
-    await getPriorities();
-    await getCategories();
-    await getCollections().then(() => {
-      navigate(`/dashboard`);
-    });
+    if (sessionStorage.error !== undefined) {
+      sessionStorage.removeItem("error");
+    } else {
+      await getPriorities();
+      await getCategories();
+      await getCollections().then(() => {
+        navigate(`/dashboard`);
+      });
+    }
   };
 
   const handleSubmitRegister = async (e: { preventDefault: () => void }) => {
@@ -67,6 +72,7 @@ function Login() {
 
   return (
     <div className="loginContainer">
+      <Notification template={"error"} json={sessionStorage.error} isVisible={sessionStorage.error != undefined} />
       <div className="login">
         <h1>Post It</h1>
         <header className="loginHeader">
