@@ -17,5 +17,5 @@ export default function Notification(props: NotificationProps) {
     }
   }
 
-  return <div className={`${props.isVisible ? "" : "isHidden"}`}>{notification(props.template)}</div>;
+  return <div className={`${props.isVisible ? "" : "isHidden"}`}>{props.isVisible ? notification(props.template) : ""}</div>;
 }

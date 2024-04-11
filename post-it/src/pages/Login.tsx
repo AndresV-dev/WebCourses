@@ -7,6 +7,7 @@ import { useNavigate } from "react-router-dom";
 
 function Login() {
   const navigate = useNavigate();
+  const [error, setError] = useState("{}");
   const [typeForm, setTypeForm] = useState("login");
   const [typeInput, setTypeInput] = useState("password");
   const [loginInfo, setLoginInfo] = useState({
@@ -52,9 +53,10 @@ function Login() {
 
   const handleSubmitLogin = async (e: { preventDefault: () => void }) => {
     e.preventDefault();
-    login(JSON.stringify(loginInfo));
+    await login(JSON.stringify(loginInfo));
 
     if (sessionStorage.error !== undefined) {
+      setError(sessionStorage.error);
       sessionStorage.removeItem("error");
     } else {
       await getPriorities();
@@ -72,7 +74,7 @@ function Login() {
 
   return (
     <div className="loginContainer">
-      <Notification template={"error"} json={sessionStorage.error} isVisible={sessionStorage.error != undefined} />
+      <Notification template={"error"} json={sessionStorage.error || "{}"} isVisible={sessionStorage.error != undefined} />
       <div className="login">
         <h1>Post It</h1>
         <header className="loginHeader">

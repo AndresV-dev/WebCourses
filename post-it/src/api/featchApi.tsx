@@ -88,7 +88,13 @@ export async function getCollections() {
     }),
   })
     .then((response) => response.json())
-    .then((res) => (sessionStorage.collections = JSON.stringify(res)))
+    .then((res) => {
+      if (res.code === 200) {
+        sessionStorage.collections = JSON.stringify(res);
+      } else {
+        sessionStorage.setItem("error", res);
+      }
+    })
     .catch((err) => sessionStorage.setItem("error", err + " from Collections"));
 }
 // Endpoint to get The Catalog for Categories
@@ -102,7 +108,13 @@ export async function getCategories() {
     }),
   })
     .then((response) => response.json())
-    .then((res) => sessionStorage.setItem("categories", JSON.stringify(res)))
+    .then((res) => {
+      if (res.code === 200) {
+        sessionStorage.setItem("categories", JSON.stringify(res));
+      } else {
+        sessionStorage.setItem("error", res);
+      }
+    })
     .catch((err) => sessionStorage.setItem("error", err + " from Categories"));
 }
 // Endpoint to Get The Catalog for Priorities
@@ -116,7 +128,13 @@ export async function getPriorities() {
     }),
   })
     .then((response) => response.json())
-    .then((res) => sessionStorage.setItem("priorities", JSON.stringify(res)))
+    .then((res) => {
+      if (res.code === 200) {
+        sessionStorage.setItem("priorities", JSON.stringify(res));
+      } else {
+        sessionStorage.setItem("error", res);
+      }
+    })
     .catch((err) => sessionStorage.setItem("error", err + " from Priorities"));
 }
 // Endpoint to Do the login
@@ -136,7 +154,10 @@ export async function login(loginInfo: string) {
         let user: User = res;
 
         if (user.token !== null || user.token !== undefined) token = user.token;
-      } else sessionStorage.setItem("error", JSON.stringify(res));
+      } else {
+        sessionStorage.setItem("error", JSON.stringify(res));
+        console.log(sessionStorage.error);
+      }
     })
     .catch((error) => sessionStorage.setItem("error", error));
 }
