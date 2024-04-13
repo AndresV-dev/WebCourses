@@ -1,9 +1,10 @@
 import Sidebar from "../components/Sidebar";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Task from "../components/Task";
 import TaskList from "../components/TaskList";
 import Header from "../components/Header";
+import { getCategories, getCollections, getPriorities } from "../api/featchApi";
 
 function Dashboard() {
   const [task, setTask] = useState<Array<Task>>([]);
@@ -13,6 +14,15 @@ function Dashboard() {
     alert(sessionStorage.error);
     sessionStorage.removeItem("error");
   }
+
+  useEffect(() => {
+    console.log(sessionStorage.user);
+    if (sessionStorage.user != undefined) {
+      if (sessionStorage.categories) getCategories();
+      if (sessionStorage.collections) getCollections();
+      if (sessionStorage.priorities) getPriorities();
+    }
+  }, []);
 
   return (
     <div className="dashboard">

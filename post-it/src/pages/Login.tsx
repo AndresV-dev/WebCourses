@@ -2,17 +2,19 @@ import { FaRegEyeSlash } from "react-icons/fa6";
 import Button from "../components/Button";
 import Notification from "../components/Notification";
 import { getCategories, getCollections, getPriorities, login, register } from "../api/featchApi";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 function Login() {
   const navigate = useNavigate();
+  const [isVisible, setIsVisible] = useState(false);
   const [typeForm, setTypeForm] = useState("login");
   const [typeInput, setTypeInput] = useState("password");
   const [loginInfo, setLoginInfo] = useState({
     username: "",
     password: "",
   });
+
   const [registerInfo, setRegisterInfo] = useState({
     name: "",
     lastname: "",
@@ -52,10 +54,15 @@ function Login() {
 
   const handleSubmitLogin = async (e: { preventDefault: () => void }) => {
     e.preventDefault();
-    login(JSON.stringify(loginInfo));
+    await login(JSON.stringify(loginInfo));
 
     if (sessionStorage.error !== undefined) {
-      sessionStorage.removeItem("error");
+      setIsVisible(true);
+
+      setTimeout(() => {
+        setIsVisible(false);
+        sessionStorage.removeItem("error");
+      }, 10000);
     } else {
       await getPriorities();
       await getCategories();
@@ -72,7 +79,7 @@ function Login() {
 
   return (
     <div className="loginContainer">
-      <Notification template={"error"} json={sessionStorage.error} isVisible={sessionStorage.error != undefined} />
+      <Notification template={"error"} isVisible={isVisible} />
       <div className="login">
         <h1>Post It</h1>
         <header className="loginHeader">
