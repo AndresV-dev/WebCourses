@@ -389,18 +389,24 @@ form .relations {
 /*              Notifications Styles    */
 .notiContainer {
     background-color: var(--principal-color);
-    padding: 1rem;
+    border-radius: 1rem;    
+    border-top-left-radius: 3rem;
+    border-bottom-right-radius: 3rem;
+    padding: 1.3rem;
     display: flex;
     position: fixed;
     top: 1rem;
-    right: 3rem;
+    right: -35rem;
     font-size: small;
     flex-direction: column;
     transform: translateX(15rem);
     transition: 1s ease-in-out
 }
+
 .showNotification {
-    transform:  translateX(0);
+    right: 0;
+    transition: 0.2s ease-in ;
+    transform:  translateX(-10rem)
 }
 /*              Responsive Queries      */
 
