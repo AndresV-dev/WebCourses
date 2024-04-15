@@ -1,6 +1,5 @@
 import { Task, User, UserTaskCollections } from "../types";
 import { parseJsonUnd, stringifyJson } from "../util/functions";
-import { useNavigate } from "react-router-dom";
 
 let token = parseJsonUnd(sessionStorage.user)?.token || sessionStorage.token;
 
@@ -31,7 +30,10 @@ export function saveCollection(collectionData: string) {
     }),
     body: collectionData,
   })
-    .then((response) => response.json())
+    .then(async (response) => {
+      if (!response.ok) throw new Error(JSON.stringify(await response.json()));
+      return response.json();
+    })
     .then((res) => {
       let collectionsJson: Array<UserTaskCollections> = JSON.parse(sessionStorage.collections);
       collectionsJson.push(res as unknown as UserTaskCollections);
@@ -53,7 +55,10 @@ export function saveCategory(categoryData: string) {
     }),
     body: categoryData,
   })
-    .then((response) => response.json())
+    .then(async (response) => {
+      if (!response.ok) throw new Error(JSON.stringify(await response.json()));
+      return response.json();
+    })
     .then(() => alert("your Category has been Saved Successfully"))
     .catch((err) => alert("There was an error on Saving The Category, error:" + err));
 }
@@ -71,7 +76,10 @@ export function getTasksFilters(filters: string) {
     }),
     body: filters,
   })
-    .then((response) => response.json())
+    .then(async (response) => {
+      if (!response.ok) throw new Error(JSON.stringify(await response.json()));
+      return response.json();
+    })
     .then((res) => (tasks = res))
     .catch((err) => sessionStorage.setItem("error", err + " from Task by Filters"));
 
@@ -87,13 +95,12 @@ export async function getCollections() {
       Authorization: "Bearer " + (token !== undefined ? token : process.env.VITE_TOKEN),
     }),
   })
-    .then((response) => response.json())
+    .then(async (response) => {
+      if (!response.ok) throw new Error(JSON.stringify(await response.json()));
+      return response.json();
+    })
     .then((res) => {
-      if (res.code === 200) {
-        sessionStorage.collections = JSON.stringify(res);
-      } else {
-        sessionStorage.setItem("error", res);
-      }
+      sessionStorage.collections = JSON.stringify(res);
     })
     .catch((err) => sessionStorage.setItem("error", err + " from Collections"));
 }
@@ -107,13 +114,12 @@ export async function getCategories() {
       Authorization: "Bearer " + (token !== undefined ? token : process.env.VITE_TOKEN),
     }),
   })
-    .then((response) => response.json())
+    .then(async (response) => {
+      if (!response.ok) throw new Error(JSON.stringify(await response.json()));
+      return response.json();
+    })
     .then((res) => {
-      if (res.code === 200) {
-        sessionStorage.setItem("categories", JSON.stringify(res));
-      } else {
-        sessionStorage.setItem("error", res);
-      }
+      sessionStorage.setItem("categories", JSON.stringify(res));
     })
     .catch((err) => sessionStorage.setItem("error", err + " from Categories"));
 }
@@ -127,15 +133,14 @@ export async function getPriorities() {
       Authorization: "Bearer " + (token !== undefined ? token : process.env.VITE_TOKEN),
     }),
   })
-    .then((response) => response.json())
-    .then((res) => {
-      if (res.code === 200) {
-        sessionStorage.setItem("priorities", JSON.stringify(res));
-      } else {
-        sessionStorage.setItem("error", res);
-      }
+    .then(async (response) => {
+      if (!response.ok) throw new Error(JSON.stringify(await response.json()));
+      return response.json();
     })
-    .catch((err) => sessionStorage.setItem("error", err + " from Priorities"));
+    .then((res) => {
+      sessionStorage.setItem("priorities", JSON.stringify(res));
+    })
+    .catch((err) => sessionStorage.setItem("error", err.message + " from Priorities"));
 }
 // Endpoint to Do the login
 export async function login(loginInfo: string) {
@@ -147,19 +152,18 @@ export async function login(loginInfo: string) {
     },
     body: loginInfo,
   })
-    .then((response) => response.json())
-    .then((res) => {
-      if (res.code === 200) {
-        sessionStorage.setItem("user", JSON.stringify(res));
-        let user: User = res;
-
-        if (user.token !== null || user.token !== undefined) token = user.token;
-      } else {
-        sessionStorage.setItem("error", JSON.stringify(res));
-        console.log(sessionStorage.error);
-      }
+    .then(async (response) => {
+      if (!response.ok) throw new Error(JSON.stringify(await response.json()));
+      return response.json();
     })
-    .catch((error) => sessionStorage.setItem("error", error));
+    .then((res) => {
+      sessionStorage.setItem("user", JSON.stringify(res));
+      let user: User = res;
+      if (user.token !== null || user.token !== undefined) token = user.token;
+    })
+    .catch((error) => {
+      sessionStorage.setItem("error", error.message);
+    });
 }
 
 // Endpoint to Save a new User
@@ -172,7 +176,10 @@ export function register(registerInfo: string) {
     },
     body: registerInfo,
   })
-    .then((response) => response.json())
+    .then(async (response) => {
+      if (!response.ok) throw new Error(JSON.stringify(await response.json()));
+      return response.json();
+    })
     .then((res) => () => {
       sessionStorage.setItem("user", JSON.stringify(res));
       let user: User = res as User;
@@ -186,9 +193,9 @@ export function register(registerInfo: string) {
 export function logout() {
   sessionStorage.removeItem("user");
   sessionStorage.removeItem("token");
-  sessionStorage.removeItem("Collections");
-  sessionStorage.removeItem("Categories");
-  const navigate = useNavigate();
+  sessionStorage.removeItem("collections");
+  sessionStorage.removeItem("categories");
+  sessionStorage.loggedOut = true;
 
-  navigate(`/login`);
+  console.log("Logged Out");
 }
