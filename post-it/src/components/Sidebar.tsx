@@ -5,11 +5,12 @@ import { parseJson } from "../util/functions";
 import { logout } from "../api/featchApi";
 import Button from "./Button";
 import Modal from "./Modal";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 interface SidebarProps {}
 
 function Sidebar(props: SidebarProps) {
+  const navigate = useNavigate();
   const [collections, setCollections] = useState<Array<UserTaskCollections>>();
   const [user, setUser] = useState<User>();
   const [isShownTask, setIsShownTask] = useState(false);
@@ -23,6 +24,10 @@ function Sidebar(props: SidebarProps) {
     }
   }, [sessionStorage.user]);
 
+  const logoutFunction = () => {
+    logout();
+    navigate(`/login`);
+  };
   return (
     <nav className="sidebar">
       <ul className="user">
@@ -77,7 +82,7 @@ function Sidebar(props: SidebarProps) {
           </ul>
         );
       })}
-      <Button label={"Logout"} type="button" onClick={() => logout} name="logout" />
+      <Button label={"Logout"} type="button" onClick={() => logoutFunction()} name="logout" />
     </nav>
   );
 }
