@@ -11,6 +11,10 @@ export default createBrowserRouter([
     Component: Login,
   },
   {
+    path: "/login",
+    Component: Login,
+  },
+  {
     path: "/dashboard",
     Component: Dashboard,
   },

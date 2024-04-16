@@ -11,7 +11,6 @@ function Dashboard() {
   const [task2, setTask2] = useState<Array<Task>>([]);
 
   if (sessionStorage.error !== null && sessionStorage.error !== undefined) {
-    alert(sessionStorage.error);
     sessionStorage.removeItem("error");
   }
 

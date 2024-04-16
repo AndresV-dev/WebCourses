@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import error from "../util/NotificationTemplates";
+import { error, loggedOut } from "../util/NotificationTemplates";
 
 interface NotificationProps {
   template: string;
@@ -9,24 +9,22 @@ interface NotificationProps {
 }
 
 export default function Notification(props: NotificationProps) {
-  const [errorStr, setErrorStr] = useState("{}");
+  const [infoNoti, setInfoNoti] = useState("{}");
 
-  console.log(props.isVisible);
-  console.log(sessionStorage.error);
-  console.log(errorStr);
   useEffect(() => {
-    sessionStorage.error !== undefined
-      ? setErrorStr(sessionStorage.error)
+    props.json !== undefined
+      ? setInfoNoti(props.json)
       : setTimeout(() => {
-          setErrorStr("{}");
+          setInfoNoti("{}");
         }, 1000);
   }, [props.isVisible]);
 
   function notification(template: string) {
-    console.log(errorStr);
     switch (template) {
       case "error":
-        return error(errorStr, props.isVisible);
+        return error(infoNoti, props.isVisible);
+      case "loggedout":
+        return loggedOut();
       default:
         return <></>;
     }

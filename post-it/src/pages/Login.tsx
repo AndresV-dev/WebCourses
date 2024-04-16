@@ -8,6 +8,8 @@ import { useNavigate } from "react-router-dom";
 function Login() {
   const navigate = useNavigate();
   const [isVisible, setIsVisible] = useState(false);
+  const [infoNoti, setInfoNoti] = useState("{}");
+  const [template, setTemplate] = useState("loggedout");
   const [typeForm, setTypeForm] = useState("login");
   const [typeInput, setTypeInput] = useState("password");
   const [loginInfo, setLoginInfo] = useState({
@@ -52,17 +54,30 @@ function Login() {
     });
   };
 
+  useEffect(() => {
+    if (sessionStorage.loggedOut !== undefined) {
+      setTemplate("loggedout");
+      setIsVisible(true);
+      setTimeout(() => {
+        sessionStorage.removeItem("loggedOut");
+        setIsVisible(false);
+      }, 2000);
+    }
+  }, []);
+
   const handleSubmitLogin = async (e: { preventDefault: () => void }) => {
     e.preventDefault();
     await login(JSON.stringify(loginInfo));
 
     if (sessionStorage.error !== undefined) {
       setIsVisible(true);
+      setTemplate("error");
+      setInfoNoti(sessionStorage.error);
 
       setTimeout(() => {
         setIsVisible(false);
         sessionStorage.removeItem("error");
-      }, 10000);
+      }, 5000);
     } else {
       await getPriorities();
       await getCategories();
@@ -79,7 +94,7 @@ function Login() {
 
   return (
     <div className="loginContainer">
-      <Notification template={"error"} isVisible={isVisible} />
+      <Notification template={template} isVisible={isVisible} json={infoNoti} />
       <div className="login">
         <h1>Post It</h1>
         <header className="loginHeader">
