@@ -33,9 +33,6 @@ ul a:hover {
 }
 
 nav {
-    width: 15rem;
-    height: 100vh;
-    display: flexbox;
     position: sticky;
 }
 
@@ -52,6 +49,9 @@ body {
 /*                  Sidebar Styles              */
 .sidebar {
     background-color: var(--secundary-color);
+    width: max-content;
+    display: grid;
+    grid-template-rows: 7rem 10rem 3fr 0.5fr;
 }
   
 .collection {
@@ -61,6 +61,8 @@ body {
 }
 .category {
     margin-left: 1rem;
+    font-size: small;
+    font-weight: 100;
 }
 
 .user {
@@ -74,6 +76,11 @@ body {
 
 .section {
     margin: 2rem 0;
+}
+
+.logoutSection {
+    align-self: center;
+    justify-self: center;
 }
 /*          Buttons Styles              */
 .basic-button {
@@ -100,6 +107,7 @@ body {
     vertical-align: middle;
     white-space: nowrap;
     word-wrap: break-word;
+    display: flex;
   }
   
   .basic-button:hover {
@@ -417,9 +425,6 @@ form .relations {
     body {
         font-size: small;
     }
-    nav {
-        width: 12rem;
-    }
     .header-dashboard {
         padding-top: 6rem;
     }
@@ -435,17 +440,23 @@ form .relations {
     body {
         font-size: x-small;
     }
-    nav {
-        gap: 1rem;
-        width: 6rem;
-    }
-    img {
-        height: 3rem;
-    }
     .header-dashboard {
         padding-top: 4rem;
     }
     .dashboard {
         grid-template-columns: 6rem 1fr;/* Size of Navbar and 1 rem for padding*/
+    }
+}
+
+/**/
+@media(height < 815px) {
+    .sidebar {
+        grid-template-rows: 7rem 10rem 1fr 0.25fr;
+    }
+}
+
+@media(height > 815px) {
+    .sidebar {
+        grid-template-rows: 9rem 14rem 1fr 0.25fr;
     }
 }
