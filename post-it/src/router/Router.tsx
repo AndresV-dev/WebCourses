@@ -4,6 +4,7 @@ import { createBrowserRouter } from "react-router-dom";
 import Dashboard from "../pages/Dashboard";
 import Login from "../pages/Login";
 import NotFoundPage from "../pages/NotFoundPage";
+import TasksView from "../pages/TasksView";
 
 export default createBrowserRouter([
   {
@@ -17,6 +18,10 @@ export default createBrowserRouter([
   {
     path: "/dashboard",
     Component: Dashboard,
+  },
+  {
+    path: "my-collections/:collection",
+    Component: TasksView,
   },
   {
     path: "*",
