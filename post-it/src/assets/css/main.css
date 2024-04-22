@@ -75,12 +75,16 @@ body {
 }
 
 .section {
-    margin: 2rem 0;
 }
 
 .logoutSection {
     align-self: center;
     justify-self: center;
+    width: 100%;
+}
+.logoutSection button {
+    justify-content: center;
+    font-size: medium;
 }
 /*          Buttons Styles              */
 .basic-button {
@@ -108,6 +112,7 @@ body {
     white-space: nowrap;
     word-wrap: break-word;
     display: flex;
+    justify-content: center;
   }
   
   .basic-button:hover {
@@ -137,17 +142,19 @@ body {
     display: none;
   }
   
-.btn-addtask {
+.btn-add {
     background-color: transparent;
-    text-align: start;
     border: none;
     box-shadow: none;
     cursor: pointer;
     width: 100%;
     height: max-content;
+    justify-content: start;
+    padding-left: 0;
 }
-.btn-addtask:hover {
+.btn-add:hover {
     color: var(--details-color);
+    background-color: var(--secundary-color);
 }
 .collectionsTitle {
     display: flex;

@@ -55,7 +55,7 @@ function Sidebar(props: SidebarProps) {
           </Link>
         </ul>
       </section>
-      <section className="collectionSection">
+      <section className="collectionSection section">
         {
           <div className="collectionsTitle">
             <h3>Collections</h3>
@@ -74,12 +74,12 @@ function Sidebar(props: SidebarProps) {
         {collections?.map((collection, i) => {
           return (
             <ul key={`collection ${i}`} className="links">
-              <Link className="collection" key={`name-${collection.name}`} to={"/my-collections/" + collection.name}>
+              <Link className="collection" key={`name-${collection.name}`} to={"/my-collections/" + collection.name} state={{ collectionId: collection.id, test: JSON.stringify(collection) }}>
                 {collection.name}
               </Link>
               {collection.categories?.map((category: Category, index: number) => {
                 return (
-                  <Link to={"/" + category.name} key={`category ${index}`} className="category">
+                  <Link to={"/" + collection.name + "/" + category.name} key={`category ${index}`} className="category">
                     {category.name}
                   </Link>
                 );
@@ -89,7 +89,7 @@ function Sidebar(props: SidebarProps) {
         })}
       </section>
       <section className="logoutSection">
-        <Button label={"Logout"} type="button" className={"testButton"} onClick={() => logoutFunction()} name="logout" />
+        <Button label={"Logout"} type="button" className={"btn-add"} onClick={() => logoutFunction()} name="logout" />
       </section>
     </nav>
   );
