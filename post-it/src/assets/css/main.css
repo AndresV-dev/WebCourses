@@ -86,7 +86,6 @@ body {
     justify-content: center;
     font-size: medium;
 }
-
 /*          Buttons Styles              */
 .basic-button {
     appearance: none;
@@ -445,6 +444,9 @@ form .relations {
 }
 
 @media(width < 768px) {
+    body {
+        font-size: x-small;
+    }
     .header-dashboard {
         padding-top: 4rem;
     }
