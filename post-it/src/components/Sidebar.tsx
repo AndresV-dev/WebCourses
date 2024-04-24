@@ -18,7 +18,7 @@ function Sidebar(props: SidebarProps) {
   const [isShownCategory, setIsShownCategory] = useState(false);
 
   useEffect(() => {
-    if (sessionStorage.user) {
+    if (sessionStorage.user !== undefined) {
       setCollections(parseJson(sessionStorage.collections));
       setUser(parseJson(sessionStorage.user) as User);
     }

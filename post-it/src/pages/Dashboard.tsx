@@ -17,9 +17,9 @@ function Dashboard() {
   useEffect(() => {
     console.log(sessionStorage.user);
     if (sessionStorage.user != undefined) {
-      if (sessionStorage.categories) getCategories();
-      if (sessionStorage.collections) getCollections();
-      if (sessionStorage.priorities) getPriorities();
+      if (sessionStorage.categories === undefined) getCategories();
+      if (sessionStorage.collections === undefined) getCollections();
+      if (sessionStorage.priorities === undefined) getPriorities();
     }
   }, []);
 
