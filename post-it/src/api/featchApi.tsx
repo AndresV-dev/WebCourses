@@ -80,7 +80,9 @@ export function getTasksFilters(filters: string) {
       if (!response.ok) throw new Error(JSON.stringify(await response.json()));
       return response.json();
     })
-    .then((res) => (tasks = res))
+    .then((res) => {
+      tasks = res;
+    })
     .catch((err) => sessionStorage.setItem("error", err + " from Task by Filters"));
 
   return tasks;
