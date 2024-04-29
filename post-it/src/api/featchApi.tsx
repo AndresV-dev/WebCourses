@@ -65,9 +65,7 @@ export function saveCategory(categoryData: string) {
 
 // Endpoint to Get a TaskList with filters
 export function getTasksFilters(filters: string) {
-  let tasks: Array<Task> = [];
-
-  fetch(process.env.VITE_APIURL + "tasks/list/filtered", {
+  return fetch(process.env.VITE_APIURL + "tasks/list/filtered", {
     method: "POST",
     headers: new Headers({
       "Content-type": "application/json",
@@ -80,12 +78,7 @@ export function getTasksFilters(filters: string) {
       if (!response.ok) throw new Error(JSON.stringify(await response.json()));
       return response.json();
     })
-    .then((res) => {
-      tasks = res;
-    })
     .catch((err) => sessionStorage.setItem("error", err + " from Task by Filters"));
-
-  return tasks;
 }
 // Enpoint to get the Collections of the user
 export async function getCollections() {
