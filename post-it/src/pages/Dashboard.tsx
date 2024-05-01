@@ -1,9 +1,8 @@
-import Sidebar from "../components/Sidebar";
-
 import { useState, useEffect } from "react";
 import Task from "../components/Task";
 import TaskList from "../components/TaskList";
 import Header from "../components/Header";
+import { MainLayout } from "../layout/MainLayout";
 import { getCategories, getCollections, getPriorities } from "../api/featchApi";
 
 function Dashboard() {
@@ -24,8 +23,7 @@ function Dashboard() {
   }, []);
 
   return (
-    <div className="dashboard">
-      <Sidebar />
+    <MainLayout>
       <main className="taskList">
         {task.length != 0 ? (
           <div className="todayTask">
@@ -51,7 +49,7 @@ function Dashboard() {
         ) : undefined}
         {task.length == 0 && task2.length == 0 ? <div className="noTasks">Great!! You Dont Have Any Task For Today Or Tomorrow</div> : undefined}
       </main>
-    </div>
+    </MainLayout>
   );
 }
 
