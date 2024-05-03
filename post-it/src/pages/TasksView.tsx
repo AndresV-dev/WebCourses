@@ -17,16 +17,18 @@ export default function TasksView() {
 
   useEffect(() => {
     getTasksFilters(JSON.stringify(filters)).then((data) => setTask(data));
+    console.log("category: [" + state.categoryId + "] and collection: [" + state.collectionId + "]");
   }, []);
   return (
     <MainLayout>
-      <div>
-        {task.length == 0 ? (
-          <div className="todayTask">
-            <Header label="general" getTask={() => {}} />
-            <TaskList tasks={task} />
-          </div>
-        ) : undefined}
+      <div className="todayTask">
+        <Header
+          label="general"
+          getTask={(task) => {
+            setTask(task);
+          }}
+        />
+        <TaskList tasks={task} />
       </div>
     </MainLayout>
   );

@@ -1,4 +1,4 @@
-import { Task, User, UserTaskCollections } from "../types";
+import { User, UserTaskCollections } from "../types";
 import { parseJsonUnd, stringifyJson } from "../util/functions";
 
 let token = parseJsonUnd(sessionStorage.user)?.token || sessionStorage.token;
