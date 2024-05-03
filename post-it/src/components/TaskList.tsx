@@ -8,7 +8,7 @@ interface TaskListProps {
 export default function TaskList(props: TaskListProps) {
   console.log(props.tasks);
   return (
-    <div className="todayTasks">
+    <div className="taskContainer">
       {props.tasks.map((task, i) => {
         return <Task key={i} task={task} />;
       })}

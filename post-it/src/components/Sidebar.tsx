@@ -74,12 +74,12 @@ function Sidebar(props: SidebarProps) {
         {collections?.map((collection, i) => {
           return (
             <ul key={`collection ${i}`} className="links">
-              <Link className="collection" key={`name-${collection.name}`} to={"/my-collections/" + collection.name} state={{ collectionId: collection.id, test: JSON.stringify(collection) }}>
+              <Link className="collection" key={`name-${collection.name}`} to={"/tasks/" + collection.name} state={{ collectionId: collection.id }}>
                 {collection.name}
               </Link>
               {collection.categories?.map((category: Category, index: number) => {
                 return (
-                  <Link to={"/" + collection.name + "/" + category.name} key={`category ${index}`} className="category">
+                  <Link to={"/tasks/" + collection.name + "/" + category.name} key={`category ${index}`} state={{ collectionId: collection.id, categoryId: category.id }} className="category">
                     {category.name}
                   </Link>
                 );

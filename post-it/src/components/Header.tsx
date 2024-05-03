@@ -13,7 +13,6 @@ interface HeaderProps {
 
 export default function Header(props: HeaderProps) {
   const [selectedFilterOptions, setSelectedFilterOptions] = useState<Array<any>>([]);
-  const [tasks, setTasks] = useState<Array<Task>>([]);
   const [comboIsShown, setComboIsShown] = useState(false);
   const [filterOptions] = useState([
     { id: "category", name: "Category" },
@@ -35,8 +34,7 @@ export default function Header(props: HeaderProps) {
       endAt: props.label === "Today" ? formatDate(new Date(), false) : props.label === "Tomorrow" ? formatDate(tomorrow, false) : undefined,
     });
 
-    getTasksFilters(body).then((data) => setTasks(data));
-    props.getTask(tasks);
+    getTasksFilters(body).then((data) => props.getTask(data));
   }
 
   function optionHandler(filter: string) {
