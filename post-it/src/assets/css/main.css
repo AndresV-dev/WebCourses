@@ -47,6 +47,11 @@ body {
     font-size: medium;
 }
 /*                  Sidebar Styles              */
+.mainPage {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    height: 100vh;
+}
 .sidebar {
     background-color: var(--secundary-color);
     width: max-content;
@@ -225,10 +230,6 @@ body {
 .todayTask{
     display: flex;
     flex-direction: column;
-}
-.taskList {
-    width: 60vw;
-    padding-left: 10vw;
 }
 
 .task {

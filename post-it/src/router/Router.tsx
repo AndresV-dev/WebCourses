@@ -20,7 +20,11 @@ export default createBrowserRouter([
     Component: Dashboard,
   },
   {
-    path: "my-collections/:collection",
+    path: "tasks/:collection",
+    Component: TasksView,
+  },
+  {
+    path: "tasks/:collection/:category",
     Component: TasksView,
   },
   {

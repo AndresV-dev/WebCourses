@@ -7,10 +7,10 @@ interface MainLayoutProps {
 
 export const MainLayout: FC<MainLayoutProps> = ({ children }) => {
   return (
-    <>
+    <div className="mainPage">
       {<Sidebar />}
       {children}
       {/**Footer */}
-    </>
+    </div>
   );
 };
