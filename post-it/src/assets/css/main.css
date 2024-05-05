@@ -46,6 +46,32 @@ body {
     background-color: var(--principal-color);
     font-size: medium;
 }
+/*                  404 Page Not Found Styles   */
+.PNF-container {
+    display: flex;
+    flex-direction: column;
+    width: 100vw;
+    height: 100vh;
+    align-items: center;
+    justify-content: center;
+}
+
+.PNF-container p {
+    color: #000;
+    font-size: 24px;
+    letter-spacing: .2px;
+    margin: 0;
+}
+
+.handle {
+    background: #ffe500;
+    width: 14px;
+    height: 30px;
+    top: 0;
+    left: 0;
+    margin-top: 1px;
+    position: absolute;
+  }
 /*                  Sidebar Styles              */
 .mainPage {
     display: grid;
