@@ -20,6 +20,10 @@ export default createBrowserRouter([
     Component: Dashboard,
   },
   {
+    path: "tasks",
+    Component: TasksView,
+  },
+  {
     path: "tasks/:collection",
     Component: TasksView,
   },
