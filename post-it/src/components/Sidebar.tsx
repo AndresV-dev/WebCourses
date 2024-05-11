@@ -1,6 +1,7 @@
-import { useEffect, useState } from "react";
+import { MouseEventHandler, useEffect, useState } from "react";
 import { Category, User, UserTaskCollections } from "../types";
 import { MdCollections, MdOutlineAddToPhotos } from "react-icons/md";
+import { FaAngleDown } from "react-icons/fa6";
 import { parseJson } from "../util/functions";
 import { logout } from "../api/featchApi";
 import Button from "./Button";
@@ -12,6 +13,7 @@ interface SidebarProps {}
 function Sidebar(props: SidebarProps) {
   const navigate = useNavigate();
   const [collections, setCollections] = useState<Array<UserTaskCollections>>();
+  const [showList, setShowList] = useState(false);
   const [user, setUser] = useState<User>();
   const [isShownTask, setIsShownTask] = useState(false);
   const [isShownCollection, setIsShownCollection] = useState(false);
@@ -27,6 +29,10 @@ function Sidebar(props: SidebarProps) {
   const logoutFunction = () => {
     logout();
     navigate(`/login`);
+  };
+
+  const showListFunction = (id: number) => {
+    document.getElementById("collection" + id)?.classList.toggle("show");
   };
   return (
     <nav className="sidebar">
@@ -73,18 +79,25 @@ function Sidebar(props: SidebarProps) {
         }
         {collections?.map((collection, i) => {
           return (
-            <ul key={`collection ${i}`} className="links">
-              <Link className="collection" key={`name-${collection.name}`} to={"/tasks/" + collection.name} state={{ collectionId: collection.id }}>
+            <div className="collection dropdown" key={`name-${collection.name}`}>
+              <Link to={"/tasks/" + collection.name} state={{ collectionId: collection.id }}>
                 {collection.name}
               </Link>
-              {collection.categories?.map((category: Category, index: number) => {
-                return (
-                  <Link to={"/tasks/" + collection.name + "/" + category.name} key={`category ${index}`} state={{ collectionId: collection.id, categoryId: category.id }} className="category">
-                    {category.name}
-                  </Link>
-                );
-              })}
-            </ul>
+              {collection.categories?.length > 0 ? (
+                <button onClick={() => showListFunction(collection.id)} name={`collection${collection.id}`} className="dropbtn">
+                  <FaAngleDown />
+                </button>
+              ) : undefined}
+              <div className={`${showList ? "show" : ""} dropdown-content`} id={`collection${collection.id}`}>
+                {collection.categories?.map((category: Category, index: number) => {
+                  return (
+                    <Link to={"/tasks/" + collection.name + "/" + category.name} key={`category ${index}`} state={{ collectionId: collection.id, categoryId: category.id }} className="category">
+                      {category.name}
+                    </Link>
+                  );
+                })}
+              </div>
+            </div>
           );
         })}
       </section>
