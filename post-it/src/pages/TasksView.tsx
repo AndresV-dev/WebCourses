@@ -1,10 +1,11 @@
 import { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
-import { Task } from "../types";
+import { AvailableInfoType, Task } from "../types";
 import TaskList from "../components/TaskList";
 import Header from "../components/Header";
+import AvailableInfo from "../components/AvailableInfo";
 import { MainLayout } from "../layout/MainLayout";
-import { getTasksFilters } from "../api/featchApi";
+import { getTasksFilters, getTasksCharts } from "../api/featchApi";
 
 export default function TasksView() {
   let { state } = useLocation();
@@ -14,14 +15,17 @@ export default function TasksView() {
   };
 
   const [task, setTask] = useState<Array<Task>>([]);
-
+  const [infoToCards, setinfoToCards] = useState<Array<AvailableInfoType>>([]);
   useEffect(() => {
+    getTasksCharts(JSON.stringify(filters)).then((data) => setinfoToCards(data));
     getTasksFilters(JSON.stringify(filters)).then((data) => setTask(data));
-    console.log("category: [" + state.categoryId + "] and collection: [" + state.collectionId + "]");
-  }, []);
+  }, [state]);
+
+  console.log("category: [" + state.categoryId + "] and collection: [" + state.collectionId + "]");
   return (
     <MainLayout>
       <div className="todayTask">
+        <AvailableInfo lista={infoToCards} />
         <Header
           label="general"
           getTask={(task) => {
