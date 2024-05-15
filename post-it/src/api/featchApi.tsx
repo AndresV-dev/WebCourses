@@ -194,3 +194,21 @@ export function logout() {
 
   console.log("Logged Out");
 }
+
+// Endpoint to get Charts of Tasks for the taskView
+export function getTasksCharts(filters: string) {
+  return fetch(process.env.VITE_APIURL + "tasks/charts", {
+    method: "POST",
+    headers: new Headers({
+      "Content-type": "application/json",
+      Accept: "application/json",
+      Authorization: "Bearer " + (token !== undefined ? token : process.env.VITE_TOKEN),
+    }),
+    body: filters,
+  })
+    .then(async (response) => {
+      if (!response.ok) throw new Error(JSON.stringify(await response.json()));
+      return response.json();
+    })
+    .catch((err) => sessionStorage.setItem("error", err + " from Task by Filters"));
+}

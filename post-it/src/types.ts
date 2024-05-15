@@ -50,6 +50,12 @@ export interface TaskPriority {
     name: string
 }
 
+export interface AvailableInfoType {
+    collection: string,
+    category: string, 
+    registers: number
+}
+
 export enum Role {
     'ADMIN',
     'USER'
