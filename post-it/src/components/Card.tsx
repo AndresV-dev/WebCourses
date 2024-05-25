@@ -6,7 +6,7 @@ interface CardProps {
   collection?: string;
   category?: string;
   registers?: number;
-  key?: number;
+  keyIndex?: number;
 }
 
 export default function Card(props: CardProps) {
@@ -15,11 +15,11 @@ export default function Card(props: CardProps) {
       case "TaskChart":
         return (
           <div className="cardComponent">
-            <div key={props.key}>
-              <span>{props.category}</span>
-              {props.collection !== undefined ? <span>{props.collection}</span> : undefined}
+            <div key={props.keyIndex} className="infoCard">
+              <span className="title">{props.category}</span>
+              {props.collection !== undefined ? <span className="subtitle">{props.collection}</span> : undefined}
             </div>
-            <div>
+            <div className="registersCard">
               <span>{props.registers}</span>
             </div>
           </div>
@@ -31,5 +31,6 @@ export default function Card(props: CardProps) {
     }
   }
 
+  console.log("from Card" + JSON.stringify(props));
   return getTypeOfCard(props.type);
 }

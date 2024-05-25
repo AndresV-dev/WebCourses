@@ -46,6 +46,14 @@ body {
     background-color: var(--principal-color);
     font-size: medium;
 }
+.title {
+    color: var(--principal-text-color);
+    font-weight: 600;
+}
+.subtitle {
+    color: var(--secundary-color);
+    padding-left: 2rem;
+}
 /*                  404 Page Not Found Styles   */
 .PNF-container {
     display: flex;
@@ -71,6 +79,29 @@ body {
     left: 0;
     margin-top: 1px;
     position: absolute;
+  }
+  /*                Card Styles                 */
+.cardComponent {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: 1rem;
+    padding: 1rem;
+
+    width: 12rem;
+    height: 4rem;
+    border: solid #000;
+    border-radius: 1rem;
+  }
+  .infoCard {
+    display: grid;
+    font-size: medium;
+    grid-template-rows: 1fr 1fr;
+  }
+  .registersCard{
+    font-size: x-large;
+    font-weight: bolder;
+    align-self: center;
+    justify-self: center;
   }
 /*                  Sidebar Styles              */
 .mainPage {
@@ -291,6 +322,7 @@ body {
 .todayTask{
     display: flex;
     flex-direction: column;
+    padding:  2rem;
 }
 
 .task {

@@ -17,7 +17,7 @@ export default function TasksView() {
   const [task, setTask] = useState<Array<Task>>([]);
   const [infoToCards, setinfoToCards] = useState<Array<AvailableInfoType>>([]);
   useEffect(() => {
-    getTasksCharts(JSON.stringify(filters)).then((data) => setinfoToCards(data));
+    getTasksCharts(JSON.stringify(state.categoryId != undefined ? { categories: true } : { categories: false })).then((data) => setinfoToCards(data));
     getTasksFilters(JSON.stringify(filters)).then((data) => setTask(data));
   }, [state]);
 
