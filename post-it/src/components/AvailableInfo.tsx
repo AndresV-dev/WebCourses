@@ -1,4 +1,5 @@
-import { AvailableInfoType } from "../types";
+import { useState } from "react";
+import { AvailableInfoType, UserTaskCollections } from "../types";
 import Button from "./Button";
 import Card from "./Card";
 
@@ -7,20 +8,20 @@ interface AvailableInfoProps {
 }
 
 export default function AvailableInfo(props: AvailableInfoProps) {
-  console.log(props.lista);
+  const [collections, setCollections] = useState<Array<UserTaskCollections>>(JSON.parse(sessionStorage.collections));
+
   return (
     <>
       {props.lista !== undefined && props.lista.length > 0 ? (
-        <div>
+        <div className="chartsContainer">
           {/*
           Create a list with some divs to show info about something, Example Info about tasks available for each    category/collection
           */}
-          {props.lista.map((info, i) => {
-            if (i == 3) return <Button label={"+" + (props.lista.length - i)} type="button" />;
+          {collections.map((col, i) => {
+            if (i == 5) return <Button label={"+" + (collections.length - i)} type="button" />;
 
-            if (i > 3) return undefined;
-
-            return <Card key={i} type="TaskChart" collection={info.collection} category={info.category} registers={info.registers} keyIndex={i} />;
+            if (i > 5) return undefined;
+            return <Card key={i} type="TaskChart" collection={col.name} category={col.categories.length != 0 ? col.categories[0].name : ""} registers={props.lista.find((collection) => collection.collection === col.name)?.registers || 0} keyIndex={i} />;
           })}
         </div>
       ) : (
