@@ -15,10 +15,16 @@ export default function Card(props: CardProps) {
       case "TaskChart":
         return (
           <div className="cardComponent">
-            <div key={props.keyIndex} className="infoCard">
-              <span className="title">{props.category}</span>
-              {props.collection !== undefined ? <span className="subtitle">{props.collection}</span> : undefined}
-            </div>
+            {props.collection != undefined && props.category != "" ? (
+              <div key={props.keyIndex} className="infoCard">
+                <span className="title">{props.category}</span>
+                <span className="subtitle">{props.collection}</span>
+              </div>
+            ) : (
+              <div key={props.keyIndex} className="cardNoCat">
+                <span className="title">{props.collection}</span>
+              </div>
+            )}
             <div className="registersCard">
               <span>{props.registers}</span>
             </div>
@@ -30,7 +36,5 @@ export default function Card(props: CardProps) {
         return <></>;
     }
   }
-
-  console.log("from Card" + JSON.stringify(props));
   return getTypeOfCard(props.type);
 }

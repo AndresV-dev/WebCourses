@@ -46,14 +46,6 @@ body {
     background-color: var(--principal-color);
     font-size: medium;
 }
-.title {
-    color: var(--principal-text-color);
-    font-weight: 600;
-}
-.subtitle {
-    color: var(--secundary-color);
-    padding-left: 2rem;
-}
 /*                  404 Page Not Found Styles   */
 .PNF-container {
     display: flex;
@@ -86,22 +78,52 @@ body {
     grid-template-columns: 2fr 1fr;
     gap: 1rem;
     padding: 1rem;
-
+    background-color: var(--details-color);
+    cursor: pointer;
     width: 12rem;
     height: 4rem;
     border: solid #000;
     border-radius: 1rem;
   }
+  .cardComponent:hover {
+    background-color: var(--hover-color);
+    color: #ffe500;
+  }
+  .cardComponent .title {
+    color: var(--principal-text-color);
+    font-weight: 600;
+}
+.cardComponent .subtitle {
+    color: var(--secundary-color);
+    padding-left: 2rem;
+}
   .infoCard {
     display: grid;
     font-size: medium;
     grid-template-rows: 1fr 1fr;
+  }
+  .cardNoCat {
+    display: flex;
+    font-size: large;
+    flex-direction: column;
+    justify-content: center;
   }
   .registersCard{
     font-size: x-large;
     font-weight: bolder;
     align-self: center;
     justify-self: center;
+  }
+  .chartsContainer {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 1rem;
+  }
+  .chartsContainera {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(15rem, 1fr));
+    gap: 1rem;
   }
 /*                  Sidebar Styles              */
 .mainPage {
