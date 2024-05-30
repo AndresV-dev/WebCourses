@@ -5,6 +5,7 @@
 
     /* Variables*/
     --principal-color: #fff;
+    --hover-color: #66a6ff;
     --secundary-color: #9dc6ff;
     --principal-text-color: #000;
     --details-color: rgb(3, 176, 229);
@@ -78,23 +79,28 @@ body {
     grid-template-columns: 2fr 1fr;
     gap: 1rem;
     padding: 1rem;
-    background-color: var(--details-color);
+    background-color: var(--secundary-color);
     cursor: pointer;
     width: 12rem;
-    height: 4rem;
-    border: solid #000;
+    height: 2rem;
     border-radius: 1rem;
+    border: solid transparent;
   }
   .cardComponent:hover {
     background-color: var(--hover-color);
-    color: #ffe500;
+    border: solid var(--secundary-color);
   }
   .cardComponent .title {
-    color: var(--principal-text-color);
+    color: rgb(0, 129, 168);
     font-weight: 600;
+    text-wrap: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 .cardComponent .subtitle {
-    color: var(--secundary-color);
+    color: #4252ff;
+    text-wrap: nowrap;
+    text-overflow: ellipsis;
     padding-left: 2rem;
 }
   .infoCard {
@@ -118,11 +124,6 @@ body {
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
-    gap: 1rem;
-  }
-  .chartsContainera {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(15rem, 1fr));
     gap: 1rem;
   }
 /*                  Sidebar Styles              */
@@ -237,7 +238,7 @@ body {
   }
   
   .basic-button:hover {
-    background-color: #235fd5;
+    background-color: #5a91ff;
     text-decoration: none;
     transition-duration: 0.1s;
   }
@@ -315,7 +316,7 @@ body {
 .header-dashboard {
     display: flex;
     justify-content: space-between;
-    padding-top: 8rem;
+    padding-top: 4rem;
 }
 .filter {
     display: flex;
@@ -545,23 +546,49 @@ form .relations {
 
 }
 @media(width < 1400px) {
-    body {
-        font-size: small;
-    }
+
     .header-dashboard {
-        padding-top: 6rem;
+        padding-top: 2.5rem;
     }
     .dashboard {
         grid-template-columns: 10rem 1fr;/* Size of Navbar and 1 rem for padding*/
+    }
+    .cardComponent {
+        padding: 0.5rem;
+        width: 10rem;
+        height: 2rem;
+        padding: 0.5rem;
+        border-radius: 0.5rem;
+    }
+    .cardComponent .title {
+        font-size: medium;
+    }
+    .cardComponent .subtitle {
+        font-size: small;
     }
 }
 
 @media(width < 768px) {
     .header-dashboard {
-        padding-top: 4rem;
+        padding-top: 1rem;
     }
     .dashboard {
         grid-template-columns: 6rem 1fr;/* Size of Navbar and 1 rem for padding*/
+    }
+    .cardComponent {
+        padding: 0.75rem;
+        width: 8rem;
+        height: 1.5rem;
+        border-radius: 0.25rem;
+    }   
+     .cardComponent .title {
+        font-size: small;
+    }
+    .cardComponent .subtitle {
+        font-size: small;
+    }
+    .cardComponent .registersCard {
+        font-size: medium;
     }
 }
 
