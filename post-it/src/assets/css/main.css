@@ -225,7 +225,7 @@ body {
     line-height: 20px;
     list-style: none;
     padding: 6px 16px;
-    position: relative;
+/*    position: relative;*/
     transition: background-color 0.2s cubic-bezier(0.3, 0, 0.5, 1);
     user-select: none;
     -webkit-user-select: none;
@@ -322,6 +322,8 @@ body {
     display: grid;
     grid-template-columns: 1fr 1fr;
     align-content: center;
+    
+    justify-items: center;
 }
 .filter {
     display: flex;
@@ -435,6 +437,11 @@ form .relations {
 
 .staticModal {
     border: solid #4252ff;
+    width: 50rem;
+    justify-self: center;
+}
+.staticModal .modal-button {
+    display: none;
 }
 
 /*              Input Basic Style         */
