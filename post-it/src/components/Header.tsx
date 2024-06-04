@@ -5,6 +5,7 @@ import Select from "../components/Select";
 import Button from "../components/Button";
 import formatDate from "../util/formatter";
 import { getTasksFilters } from "../api/featchApi";
+import Modal from "./Modal";
 
 interface HeaderProps {
   getTask: (task: Task[]) => void;
@@ -54,26 +55,29 @@ export default function Header(props: HeaderProps) {
 
   return (
     <header className="header-dashboard">
-      <h1>{props.label}</h1>
-      <div className="filter">
-        <h2>Sort By:</h2>
-        <div>
-          <Select
-            name="sort"
-            id={"filterOptions"}
-            defaultValue={"option"}
-            onChange={(e) => {
-              optionHandler(e.target.options[e.target.selectedIndex].value);
-              setFilter({ ...filter, sortBy: e.target.options[e.target.selectedIndex].value });
-            }}
-            options={filterOptions}
-          />
+      <div className="header-container">
+        <h1>{props.label}</h1>
+        <div className="filter">
+          <h2>Sort By:</h2>
+          <div>
+            <Select
+              name="sort"
+              id={"filterOptions"}
+              defaultValue={"option"}
+              onChange={(e) => {
+                optionHandler(e.target.options[e.target.selectedIndex].value);
+                setFilter({ ...filter, sortBy: e.target.options[e.target.selectedIndex].value });
+              }}
+              options={filterOptions}
+            />
 
-          <Select className={comboIsShown ? "" : "isHidden"} name="options" defaultValue="option" id={"selectedFilterOptions"} onChange={(e) => setFilter({ ...filter, value: e.target.options[e.target.selectedIndex].value })} options={selectedFilterOptions} />
+            <Select className={comboIsShown ? "" : "isHidden"} name="options" defaultValue="option" id={"selectedFilterOptions"} onChange={(e) => setFilter({ ...filter, value: e.target.options[e.target.selectedIndex].value })} options={selectedFilterOptions} />
 
-          <Button label={"Search"} type="button" className={"search-button"} onClick={() => searchTask()} />
+            <Button label={"Search"} type="button" className={"search-button"} onClick={() => searchTask()} />
+          </div>
         </div>
       </div>
+      <Modal content="StaticModal" handleClose={() => {}} />
     </header>
   );
 }
