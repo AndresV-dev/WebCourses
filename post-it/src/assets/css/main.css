@@ -314,9 +314,14 @@ body {
     gap: 1rem;
 }
 .header-dashboard {
-    display: flex;
-    justify-content: space-between;
-    padding-top: 4rem;
+    display: grid;
+    grid-template-rows: 10rem 1fr;
+    padding: 4rem;
+}
+.header-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    align-content: center;
 }
 .filter {
     display: flex;
@@ -389,6 +394,11 @@ body {
     padding: 2rem;
 }
 
+.modal-header {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    padding: 1rem;
+}
 .isHidden {
     display: none;
 }
@@ -421,7 +431,11 @@ form .relations {
     text-align: center;
     grid-template-columns: 1fr;
 }
-/*              Link Basic Style         */
+/*              Static Modal Styles       */
+
+.staticModal {
+    border: solid #4252ff;
+}
 
 /*              Input Basic Style         */
 .inputContainer {
@@ -548,7 +562,9 @@ form .relations {
 @media(width < 1400px) {
 
     .header-dashboard {
-        padding-top: 2.5rem;
+        padding: 2.5rem;
+        justify-content: center;
+
     }
     .dashboard {
         grid-template-columns: 10rem 1fr;/* Size of Navbar and 1 rem for padding*/
@@ -570,7 +586,7 @@ form .relations {
 
 @media(width < 768px) {
     .header-dashboard {
-        padding-top: 1rem;
+        padding: 1rem;
     }
     .dashboard {
         grid-template-columns: 6rem 1fr;/* Size of Navbar and 1 rem for padding*/

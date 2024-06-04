@@ -9,7 +9,7 @@ import { Category, TaskPriority, User, UserTaskCollections } from "../types";
 interface ModalProps {
   content: string;
   className?: String;
-  isShown: boolean;
+  isShown?: boolean;
   handleClose: () => void;
 }
 
@@ -87,16 +87,20 @@ export default function Modal(props: ModalProps) {
       [e.target.name]: e.target.value,
     });
   };
+
   function selectContent(content: string) {
     switch (content) {
       case "createTask":
+      case "StaticModal":
         return (
           <div className="modalContainer">
-            <div className="modal-button">
-              <Button label={"X"} type="button" onClick={props.handleClose} />
-            </div>
-            <div className="title">
-              <h3>Add New Task</h3>
+            <div className="modal-header">
+              <div className="title">
+                <h3>Add New Task</h3>
+              </div>
+              <div className="modal-button">
+                <Button label={"X"} type="button" onClick={props.handleClose} />
+              </div>
             </div>
             <form onSubmit={handleSubmitTask}>
               <div className="field">
@@ -177,10 +181,10 @@ export default function Modal(props: ModalProps) {
             </form>
           </div>
         );
-
       default:
         return <div>There Is Not a Modal For This Required Content</div>;
     }
   }
-  return <div className={`modalBackground ${props.className || ""} ${props.isShown ? "" : "isHidden"}`}>{selectContent(props.content)}</div>;
+
+  return props.content == "StaticModal" ? <div className="staticModal">{selectContent(props.content)}</div> : <div className={`modalBackground ${props.className || ""} ${props.isShown ? "" : "isHidden"}`}>{selectContent(props.content)}</div>;
 }
