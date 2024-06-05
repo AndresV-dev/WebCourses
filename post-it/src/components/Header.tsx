@@ -10,11 +10,13 @@ import Modal from "./Modal";
 interface HeaderProps {
   getTask: (task: Task[]) => void;
   label: string;
+  isShownModal?: boolean;
 }
 
 export default function Header(props: HeaderProps) {
   const [selectedFilterOptions, setSelectedFilterOptions] = useState<Array<any>>([]);
   const [comboIsShown, setComboIsShown] = useState(false);
+  const [isShownModal, setisShownModal] = useState(props.isShownModal);
   const [filterOptions] = useState([
     { id: "category", name: "Category" },
     { id: "priority", name: "Priority" },
@@ -77,7 +79,13 @@ export default function Header(props: HeaderProps) {
           </div>
         </div>
       </div>
-      <Modal content="StaticModal" handleClose={() => {}} />
+      {isShownModal ? (
+        <Modal content="StaticModal" handleClose={() => {}} />
+      ) : (
+        <div style={{ display: "flex", justifyContent: "space-evenly" }}>
+          You Don't have any Task Now, Please Do a Search or Try and Generate a new Task <Button label={"Create New Task"} className={"search-button"} type="button" onClick={() => setisShownModal(!isShownModal)} />
+        </div>
+      )}
     </header>
   );
 }
