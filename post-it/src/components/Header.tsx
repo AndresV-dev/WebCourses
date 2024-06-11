@@ -11,6 +11,7 @@ interface HeaderProps {
   getTask: (task: Task[]) => void;
   label: string;
   isShownModal?: boolean;
+  shownText?: boolean;
 }
 
 export default function Header(props: HeaderProps) {
@@ -81,10 +82,12 @@ export default function Header(props: HeaderProps) {
       </div>
       {isShownModal ? (
         <Modal content="StaticModal" handleClose={() => {}} />
-      ) : (
-        <div style={{ display: "flex", justifyContent: "space-evenly" }}>
+      ) : props.shownText ? (
+        <div className="noTasksList">
           You Don't have any Task Now, Please Do a Search or Try and Generate a new Task <Button label={"Create New Task"} className={"search-button"} type="button" onClick={() => setisShownModal(!isShownModal)} />
         </div>
+      ) : (
+        <></>
       )}
     </header>
   );
