@@ -31,6 +31,7 @@ export default function TasksView() {
           getTask={(task) => {
             setTask(task);
           }}
+          shownText={task.length == 0}
         />
         <TaskList tasks={task} />
       </div>
