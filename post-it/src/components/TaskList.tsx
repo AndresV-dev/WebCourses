@@ -6,9 +6,11 @@ interface TaskListProps {
 }
 
 export default function TaskList(props: TaskListProps) {
-  <div className="taskContainer">
-    {props.tasks.map((task, i) => {
-      return <Task key={i} task={task} />;
-    })}
-  </div>;
+  return (
+    <div className="taskContainer">
+      {props.tasks.map((task, i) => {
+        return <Task key={i} task={task} />;
+      })}
+    </div>
+  );
 }
