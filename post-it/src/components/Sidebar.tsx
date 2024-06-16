@@ -41,7 +41,7 @@ function Sidebar(props: SidebarProps) {
           <li id="userImage">
             <img src={user?.userImage || process.env.VITE_USERIMAGEURL} alt="User Profile Image" />
           </li>
-          <Link id="username" to={"/user/" + (user?.username || process.env.VITE_USERNAME)}>
+          <Link id="username" to={"/user/" + (user?.username || process.env.VITE_USERNAME)} state={{ user }}>
             {user?.username || process.env.VITE_USERNANE}
           </Link>
         </ul>
