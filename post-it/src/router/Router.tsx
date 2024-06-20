@@ -5,7 +5,7 @@ import Dashboard from "../pages/Dashboard";
 import Login from "../pages/Login";
 import NotFoundPage from "../pages/NotFoundPage";
 import TasksView from "../pages/TasksView";
-import Perfil from "../pages/Perfil";
+import Others from "../pages/Others";
 
 export default createBrowserRouter([
   {
@@ -33,8 +33,8 @@ export default createBrowserRouter([
     Component: TasksView,
   },
   {
-    path: "user/:username",
-    Component: Perfil,
+    path: "tasks/others",
+    Component: Others,
   },
   {
     path: "*",
