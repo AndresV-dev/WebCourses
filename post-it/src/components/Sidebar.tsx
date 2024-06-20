@@ -13,7 +13,7 @@ interface SidebarProps {}
 function Sidebar(props: SidebarProps) {
   const navigate = useNavigate();
   const [collections, setCollections] = useState<Array<UserTaskCollections>>();
-  const [showList, setShowList] = useState(false);
+  const showList = useState(false);
   const [user, setUser] = useState<User>();
   const [isShownTask, setIsShownTask] = useState(false);
   const [isShownCollection, setIsShownCollection] = useState(false);
@@ -41,7 +41,7 @@ function Sidebar(props: SidebarProps) {
           <li id="userImage">
             <img src={user?.userImage || process.env.VITE_USERIMAGEURL} alt="User Profile Image" />
           </li>
-          <Link id="username" to={"/user/" + (user?.username || process.env.VITE_USERNAME)} state={{ user }}>
+          <Link id="username" to={"/user/" + (user?.id || process.env.VITE_USERID)} state={{ user }}>
             {user?.username || process.env.VITE_USERNANE}
           </Link>
         </ul>
@@ -53,10 +53,10 @@ function Sidebar(props: SidebarProps) {
           <Link id="dashboard" to={"/dashboard"}>
             Dashboard
           </Link>
-          <Link id="search" to={"/search"}>
+          <Link id="search" to={"/tasks/search"} state={{}}>
             Search
           </Link>
-          <Link id="otherDays" to={"/others"}>
+          <Link id="otherDays" to={"/tasks/others"} state={{}}>
             Other Days
           </Link>
         </ul>
@@ -77,7 +77,7 @@ function Sidebar(props: SidebarProps) {
             </div>
           </div>
         }
-        {collections?.map((collection, i) => {
+        {collections?.map((collection) => {
           return (
             <div className="collection dropdown" key={`name-${collection.name}`}>
               <Link to={"/tasks/" + collection.name} state={{ collectionId: collection.id }}>

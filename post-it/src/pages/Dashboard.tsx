@@ -47,7 +47,7 @@ function Dashboard() {
             <TaskList tasks={task2} />
           </div>
         ) : undefined}
-        {task.length == 0 && task2.length == 0 ? <div className="noTasks">Great!! You Dont Have Any Task For Today Or Tomorrow</div> : undefined}
+        {task.length == 0 && task2.length == 0 ? <div className="noTasks">Great!! You Dont Have Any Task For Today </div> : undefined}
       </main>
     </MainLayout>
   );
