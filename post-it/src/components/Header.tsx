@@ -10,6 +10,7 @@ import Modal from "./Modal";
 interface HeaderProps {
   getTask: (task: Task[]) => void;
   label: string;
+  greaterThanToday?: boolean;
   isShownModal?: boolean;
   shownText?: boolean;
 }
@@ -29,16 +30,24 @@ export default function Header(props: HeaderProps) {
     value: "",
   });
 
-  function searchTask() {
-    let today = new Date();
-    let tomorrow = new Date();
-    tomorrow.setDate(today.getDate() + 1);
-    let body = JSON.stringify({
-      [filter.sortBy]: filter.value,
-      endAt: props.label === "Today" ? formatDate(new Date(), false) : props.label === "Tomorrow" ? formatDate(tomorrow, false) : undefined,
-    });
+  function searchTask(dated: string) {
+    let body = "";
+    if (dated != "today") {
+      body = JSON.stringify({
+        [filter.sortBy]: filter.value,
+        createdAt: formatDate(new Date(), false),
+      });
+    } else {
+      let today = new Date();
+      let tomorrow = new Date();
+      tomorrow.setDate(today.getDate() + 1);
+      body = JSON.stringify({
+        [filter.sortBy]: filter.value,
+        endAt: props.label === "Today" ? formatDate(new Date(), false) : props.label === "Tomorrow" ? formatDate(tomorrow, false) : undefined,
+      });
+    }
 
-    getTasksFilters(body).then((data) => props.getTask(data));
+    getTasksFilters(body).then((data) => props.getTask(data || []));
   }
 
   function optionHandler(filter: string) {
@@ -76,7 +85,7 @@ export default function Header(props: HeaderProps) {
 
             <Select className={comboIsShown ? "" : "isHidden"} name="options" defaultValue="option" id={"selectedFilterOptions"} onChange={(e) => setFilter({ ...filter, value: e.target.options[e.target.selectedIndex].value })} options={selectedFilterOptions} />
 
-            <Button label={"Search"} type="button" className={"search-button"} onClick={() => searchTask()} />
+            <Button label={"Search"} type="button" className={"search-button"} onClick={() => searchTask(props.greaterThanToday ? "greater" : "today")} />
           </div>
         </div>
       </div>
