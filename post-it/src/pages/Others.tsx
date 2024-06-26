@@ -28,7 +28,7 @@ export default function Others() {
       <div className="todayTask">
         <AvailableInfo lista={infoToCards} />
         <Header
-          label="All Available Tasks"
+          label="Search Tasks"
           greaterThanToday={true}
           getTask={(task) => {
             setTask(task);

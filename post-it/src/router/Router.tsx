@@ -21,7 +21,7 @@ export default createBrowserRouter([
     Component: Dashboard,
   },
   {
-    path: "tasks",
+    path: "tasks/search",
     Component: TasksView,
   },
   {
