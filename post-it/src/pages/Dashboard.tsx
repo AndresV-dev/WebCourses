@@ -3,18 +3,21 @@ import Task from "../components/Task";
 import TaskList from "../components/TaskList";
 import Header from "../components/Header";
 import { MainLayout } from "../layout/MainLayout";
-import { getCategories, getCollections, getPriorities } from "../api/featchApi";
+import { getCategories, getCollections, getPriorities, getTasksCharts } from "../api/featchApi";
+import AvailableInfo from "../components/AvailableInfo";
+import { AvailableInfoType } from "../types";
 
 function Dashboard() {
   const [task, setTask] = useState<Array<Task>>([]);
   const [task2, setTask2] = useState<Array<Task>>([]);
+  const [infoToCards, setinfoToCards] = useState<Array<AvailableInfoType>>([]);
 
   if (sessionStorage.error !== null && sessionStorage.error !== undefined) {
     sessionStorage.removeItem("error");
   }
 
   useEffect(() => {
-    console.log(sessionStorage.user);
+    getTasksCharts(JSON.stringify({ categories: false })).then((data) => setinfoToCards(data));
     if (sessionStorage.user != undefined) {
       if (sessionStorage.categories === undefined) getCategories();
       if (sessionStorage.collections === undefined) getCollections();
@@ -25,6 +28,7 @@ function Dashboard() {
   return (
     <MainLayout>
       <main className="taskList">
+        <AvailableInfo lista={infoToCards} />
         {task.length != 0 ? (
           <div className="todayTask">
             <Header
