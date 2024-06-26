@@ -9,7 +9,8 @@
     --secundary-color: #9dc6ff;
     --principal-text-color: #000;
     --details-color: rgb(3, 176, 229);
-    --font-text-default: 'Times New Roman'
+    --font-text-default: 'Times New Roman';
+    --general-padding: 2rem;
 }
 
 a {
@@ -125,6 +126,8 @@ body {
     flex-wrap: wrap;
     justify-content: center;
     gap: 1rem;
+    flex: 0 1 auto;
+    padding: var(--general-padding);
   }
 /*                  Sidebar Styles              */
 .mainPage {
@@ -342,13 +345,19 @@ body {
     margin-bottom: 0.4rem;
 }
 .noTasks {
-    height: 100vh;
     display: flex;
+    flex: 1 1 auto;
     align-items: center;
     justify-content: center;
     font-size: larger;
 }
+.taskList{
+    display: flex;
+    flex-flow: column;
+    height: 100vh;
+}
 .noTasksList {
+    height: 100vh;
     display: flex;
     flex-direction: column;
     align-items: center;
