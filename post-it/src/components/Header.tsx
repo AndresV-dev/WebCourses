@@ -1,5 +1,5 @@
-import { useState } from "react";
-import { Task } from "../types";
+import { useEffect, useState } from "react";
+import { SearchUtil, Task } from "../types";
 
 import Select from "../components/Select";
 import Button from "../components/Button";
@@ -13,17 +13,27 @@ interface HeaderProps {
   greaterThanToday?: boolean;
   isShownModal?: boolean;
   shownText?: boolean;
+  showCombo?: boolean;
+  search?: SearchUtil;
 }
 
 export default function Header(props: HeaderProps) {
   const [selectedFilterOptions, setSelectedFilterOptions] = useState<Array<any>>([]);
-  const [comboIsShown, setComboIsShown] = useState(false);
+  const [comboIsShown, setComboIsShown] = useState(props.showCombo || false);
   const [isShownModal, setisShownModal] = useState(props.isShownModal);
   const [filterOptions] = useState([
     { id: "category", name: "Category" },
     { id: "priority", name: "Priority" },
     { id: "collection", name: "Collection" },
   ]);
+
+  useEffect(() => {
+    if (props.showCombo && props.search != undefined) {
+      filter.sortBy = props.search.category != "undefined" ? "category" : "collection";
+      filter.value = props.search.category != "undefined" ? props.search.category : props.search.collection;
+      optionHandler(props.search.category != "undefined" ? "category" : "collection");
+    }
+  }, [props.search]);
 
   const [filter, setFilter] = useState({
     sortBy: "",
@@ -33,6 +43,7 @@ export default function Header(props: HeaderProps) {
   function searchTask(dated: string) {
     let body = "";
     if (dated != "today") {
+      console.log(dated);
       body = JSON.stringify({
         [filter.sortBy]: filter.value,
         createdAt: formatDate(new Date(), false),
@@ -65,6 +76,7 @@ export default function Header(props: HeaderProps) {
     setComboIsShown(true);
   }
 
+  console.log(props.search);
   return (
     <header className="header-dashboard">
       <div className="header-container">
@@ -75,7 +87,7 @@ export default function Header(props: HeaderProps) {
             <Select
               name="sort"
               id={"filterOptions"}
-              defaultValue={"option"}
+              defaultValue={props.search ? (props.search.category != "undefined" ? "category" : "collection") : "option"}
               onChange={(e) => {
                 optionHandler(e.target.options[e.target.selectedIndex].value);
                 setFilter({ ...filter, sortBy: e.target.options[e.target.selectedIndex].value });
@@ -83,7 +95,7 @@ export default function Header(props: HeaderProps) {
               options={filterOptions}
             />
 
-            <Select className={comboIsShown ? "" : "isHidden"} name="options" defaultValue="option" id={"selectedFilterOptions"} onChange={(e) => setFilter({ ...filter, value: e.target.options[e.target.selectedIndex].value })} options={selectedFilterOptions} />
+            <Select className={comboIsShown ? "" : "isHidden"} name="options" defaultValue={props.search ? (props.search.category != "undefined" ? props.search.category : props.search.collection) : "option"} id={"selectedFilterOptions"} onChange={(e) => setFilter({ ...filter, value: e.target.options[e.target.selectedIndex].value })} options={selectedFilterOptions} />
 
             <Button label={"Search"} type="button" className={"search-button"} onClick={() => searchTask(props.greaterThanToday ? "greater" : "today")} />
           </div>

@@ -21,7 +21,7 @@ export default function AvailableInfo(props: AvailableInfoProps) {
             if (i == 5) return <Button label={"+" + (collections.length - i)} type="button" />;
 
             if (i > 5) return undefined;
-            return <Card key={i} type="TaskChart" collection={col.name} category={col.categories.length != 0 ? col.categories[0].name : ""} registers={props.lista.find((collection) => collection.collection === col.name)?.registers || 0} keyIndex={i} />;
+            return <Card key={i} type="TaskChart" collection={col} category={col.categories.length != 0 ? col.categories[0] : undefined} registers={props.lista.find((collection) => collection.collection === col.name)?.registers || 0} keyIndex={i} />;
           })}
         </div>
       ) : (
