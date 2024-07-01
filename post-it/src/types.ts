@@ -56,6 +56,11 @@ export interface AvailableInfoType {
     registers: number
 }
 
+export interface SearchUtil{
+    collection: string;
+    category: string;
+}
+
 export enum Role {
     'ADMIN',
     'USER'

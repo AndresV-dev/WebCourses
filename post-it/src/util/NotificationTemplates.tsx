@@ -1,7 +1,6 @@
 export function error(json: string, isVisible: boolean) {
   const jsonData = JSON.parse(json);
 
-  console.log(isVisible);
   return (
     <>
       <div className={``}>
