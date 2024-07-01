@@ -18,10 +18,12 @@ export default function TasksView() {
   const [infoToCards, setinfoToCards] = useState<Array<AvailableInfoType>>([]);
   useEffect(() => {
     getTasksCharts(JSON.stringify(state.categoryId != undefined ? { categories: true } : { categories: false })).then((data) => setinfoToCards(data));
-    getTasksFilters(JSON.stringify(filters)).then((data) => setTask(data));
+
+    if (state.searchUtilData === undefined) {
+      getTasksFilters(JSON.stringify(filters)).then((data) => setTask(data));
+    }
   }, [state]);
 
-  console.log("category: [" + state.categoryId + "] and collection: [" + state.collectionId + "]");
   return (
     <MainLayout>
       <div className="todayTask">
@@ -32,6 +34,8 @@ export default function TasksView() {
             setTask(task);
           }}
           shownText={task.length == 0}
+          search={state.searchUtilData}
+          showCombo={state.searchUtilData != undefined}
         />
         <TaskList tasks={task} />
       </div>
