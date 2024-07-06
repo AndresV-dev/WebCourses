@@ -8,7 +8,7 @@ interface AvailableInfoProps {
 }
 
 export default function AvailableInfo(props: AvailableInfoProps) {
-  const [collections, setCollections] = useState<Array<UserTaskCollections>>(JSON.parse(sessionStorage.collections));
+  const [collections] = useState<Array<UserTaskCollections>>(JSON.parse(sessionStorage.collections));
 
   return (
     <>

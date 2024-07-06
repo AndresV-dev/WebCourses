@@ -32,6 +32,7 @@ export default function Header(props: HeaderProps) {
       filter.sortBy = props.search.category != "undefined" ? "category" : "collection";
       filter.value = props.search.category != "undefined" ? props.search.category : props.search.collection;
       optionHandler(props.search.category != "undefined" ? "category" : "collection");
+      searchTask("today");
     }
   }, [props.search]);
 
@@ -43,7 +44,6 @@ export default function Header(props: HeaderProps) {
   function searchTask(dated: string) {
     let body = "";
     if (dated != "today") {
-      console.log(dated);
       body = JSON.stringify({
         [filter.sortBy]: filter.value,
         createdAt: formatDate(new Date(), false),
@@ -76,7 +76,6 @@ export default function Header(props: HeaderProps) {
     setComboIsShown(true);
   }
 
-  console.log(props.search);
   return (
     <header className="header-dashboard">
       <div className="header-container">

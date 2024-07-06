@@ -9,7 +9,6 @@ interface SelectProps {
 }
 
 export default function Select(props: SelectProps) {
-  console.log(props);
   return (
     <select name={props.name} value={props.defaultValue} id={props.id} onChange={props.onChange} className={`comboOptions ${props.className || ""}`} required={props.required || false}>
       <option value="option" hidden>
