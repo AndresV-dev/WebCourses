@@ -79,9 +79,13 @@ export default function Header(props: HeaderProps) {
   return (
     <header className="header-dashboard">
       <div className="header-container">
-        <h1>{props.label}</h1>
+        <div className="header-title">
+          <h1>{props.label}</h1>
+        </div>
         <div className="filter">
-          <h2>Sort By:</h2>
+          <div className="search-title">
+            <h2>Sort By:</h2>
+          </div>
           <div>
             <Select
               name="sort"
