@@ -11,6 +11,7 @@
     --details-color: rgb(3, 176, 229);
     --font-text-default: 'Times New Roman';
     --general-padding: 2rem;
+    --subtitle-tag-color: #4252ff;
 }
 
 a {
@@ -99,7 +100,7 @@ body {
     text-overflow: ellipsis;
 }
 .cardComponent .subtitle {
-    color: #4252ff;
+    color: var(--subtitle-tag-color);
     text-wrap: nowrap;
     text-overflow: ellipsis;
     padding-left: 2rem;
@@ -147,12 +148,17 @@ body {
     font-size: medium;
     font-weight: 550;
 }
+.collection-tag:hover{
+    color: var(--subtitle-tag-color);
+}
 .category {
     margin-left: 0.5rem;
     font-size: small;
     font-weight: 100;
 }
-
+.category-tag:hover{
+    color: var(--details-color);
+}
 .user {
     display: flex;
     flex-direction: column;
@@ -325,17 +331,19 @@ body {
     display: grid;
     grid-template-columns: 1fr 1fr;
     align-content: center;
-    
     justify-items: center;
 }
+.header-title {
+    width: 12rem;
+}
 .filter {
+    width: 19rem;
     display: flex;
     flex-direction: row;
     align-items: center;
-    gap: 1rem;
 }
-.filter h3 {
-    font-size: larger;
+.filter h2 {
+    margin-right: 1rem;
 }
 .filter div{
     display: flex;
@@ -582,11 +590,13 @@ form .relations {
 
 }
 @media(width < 1400px) {
-
     .header-dashboard {
         padding: 2.5rem;
         justify-content: center;
-
+    }
+    .header-container {
+        font-size: small;
+        justify-items: flex-start;
     }
     .dashboard {
         grid-template-columns: 10rem 1fr;/* Size of Navbar and 1 rem for padding*/
@@ -607,12 +617,14 @@ form .relations {
 }
 
 @media(width < 768px) {
-    .header-dashboard {
+/*    .header-dashboard {
         padding: 1rem;
     }
+*/
     .dashboard {
         grid-template-columns: 6rem 1fr;/* Size of Navbar and 1 rem for padding*/
     }
+/*
     .cardComponent {
         padding: 0.75rem;
         width: 8rem;
@@ -628,6 +640,7 @@ form .relations {
     .cardComponent .registersCard {
         font-size: medium;
     }
+*/
 }
 
 /**/
