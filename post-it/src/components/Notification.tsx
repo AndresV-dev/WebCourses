@@ -1,10 +1,11 @@
 import { useEffect, useState } from "react";
-import { error, loggedOut } from "../util/NotificationTemplates";
+import { error, loggedOut, welcome } from "../util/NotificationTemplates";
 
 interface NotificationProps {
   template: string;
   json?: string | undefined;
   isVisible: boolean;
+  classNames?: string;
   onClick?: () => void;
 }
 
@@ -22,13 +23,15 @@ export default function Notification(props: NotificationProps) {
   function notification(template: string) {
     switch (template) {
       case "error":
-        return error(infoNoti, props.isVisible);
+        return error(infoNoti);
       case "loggedout":
         return loggedOut();
+      case "welcome":
+        return welcome(infoNoti);
       default:
         return <></>;
     }
   }
 
-  return <div className={`${props.isVisible ? "showNotification" : ""} notiContainer`}>{notification(props.template)}</div>;
+  return <div className={`${props.isVisible ? "showNotification" : ""} notiContainer ${props.classNames}`}>{notification(props.template)}</div>;
 }

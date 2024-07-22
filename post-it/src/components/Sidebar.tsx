@@ -8,9 +8,10 @@ import Button from "./Button";
 import Modal from "./Modal";
 import { Link, useNavigate } from "react-router-dom";
 
-interface SidebarProps {}
+//interface SidebarProps {}
 
-function Sidebar(props: SidebarProps) {
+//function Sidebar(props: SidebarProps) {
+function Sidebar() {
   const navigate = useNavigate();
   const [collections, setCollections] = useState<Array<UserTaskCollections>>();
   const showList = useState(false);
