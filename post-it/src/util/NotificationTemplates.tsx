@@ -1,4 +1,4 @@
-export function error(json: string, isVisible: boolean) {
+export function error(json: string) {
   const jsonData = JSON.parse(json);
 
   return (
@@ -17,6 +17,22 @@ export function loggedOut() {
     <>
       <div className={``}>
         <p>You Has Been Logged Out Successfully</p>
+      </div>
+    </>
+  );
+}
+
+export function welcome(json: string) {
+  const jsonData = JSON.parse(json);
+  return (
+    <>
+      <div>
+        <p>
+          Hi There, <b>{jsonData.username}</b>!
+        </p>
+        <p>
+          Welcome to <b>Post It</b>
+        </p>
       </div>
     </>
   );
