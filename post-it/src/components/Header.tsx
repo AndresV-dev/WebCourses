@@ -9,6 +9,8 @@ import Modal from "./Modal";
 
 interface HeaderProps {
   getTask: (task: Task[]) => void;
+  page: number;
+  size: number;
   label: string;
   greaterThanToday?: boolean;
   isShownModal?: boolean;
@@ -55,6 +57,8 @@ export default function Header(props: HeaderProps) {
       body = JSON.stringify({
         [filter.sortBy]: filter.value,
         endAt: props.label === "Today" ? formatDate(new Date(), false) : props.label === "Tomorrow" ? formatDate(tomorrow, false) : undefined,
+        page: props.page === 0,
+        size: props.size === 10,
       });
     }
 

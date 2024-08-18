@@ -17,7 +17,10 @@ export default function Others() {
   };
 
   const [task, setTask] = useState<Array<Task>>([]);
+  const [page, setPage] = useState(0);
+  const [size, setSize] = useState(10);
   const [infoToCards, setinfoToCards] = useState<Array<AvailableInfoType>>([]);
+
   useEffect(() => {
     getTasksCharts(JSON.stringify(state.categoryId != undefined ? { categories: true } : { categories: false })).then((data) => setinfoToCards(data));
     getTasksFilters(JSON.stringify(filters)).then((data) => setTask(data));
@@ -27,15 +30,8 @@ export default function Others() {
     <MainLayout>
       <div className="todayTask">
         <AvailableInfo lista={infoToCards} />
-        <Header
-          label="Search Tasks"
-          greaterThanToday={true}
-          getTask={(task) => {
-            setTask(task);
-          }}
-          shownText={task.length == 0}
-        />
-        <TaskList tasks={task} />
+        <Header label="Search Tasks" greaterThanToday={true} getTask={(task) => setTask(task)} page={page} size={size} shownText={task.length == 0} />
+        <TaskList tasks={task} page={page} size={size} />
       </div>
     </MainLayout>
   );
