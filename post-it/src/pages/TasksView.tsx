@@ -9,13 +9,19 @@ import { getTasksFilters, getTasksCharts } from "../api/featchApi";
 
 export default function TasksView() {
   let { state } = useLocation();
+
+  const [task, setTask] = useState<Array<Task>>([]);
+  const [page, setPage] = useState(0);
+  const [size, setSize] = useState(10);
+  const [infoToCards, setinfoToCards] = useState<Array<AvailableInfoType>>([]);
+
   let filters = {
     collection: state.collectionId || 0,
     category: state.categoryId || 0,
+    page,
+    size,
   };
 
-  const [task, setTask] = useState<Array<Task>>([]);
-  const [infoToCards, setinfoToCards] = useState<Array<AvailableInfoType>>([]);
   useEffect(() => {
     getTasksCharts(JSON.stringify(state.categoryId != undefined ? { categories: true } : { categories: false })).then((data) => setinfoToCards(data));
 
@@ -28,16 +34,8 @@ export default function TasksView() {
     <MainLayout>
       <div className="todayTask">
         <AvailableInfo lista={infoToCards} />
-        <Header
-          label="general"
-          getTask={(task) => {
-            setTask(task);
-          }}
-          shownText={task.length == 0}
-          search={state.searchUtilData}
-          showCombo={state.searchUtilData != undefined}
-        />
-        <TaskList tasks={task} />
+        <Header label="general" getTask={(task) => setTask(task)} page={page} size={size} shownText={task.length == 0} search={state.searchUtilData} showCombo={state.searchUtilData != undefined} />
+        <TaskList tasks={task} setPage={(page) => setPage(page)} setSize={(size) => setSize(size)} />
       </div>
     </MainLayout>
   );
