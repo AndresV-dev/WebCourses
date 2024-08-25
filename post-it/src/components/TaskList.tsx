@@ -4,6 +4,8 @@ import Button from "./Button";
 
 interface TaskListProps {
   tasks: TaskType[];
+  page: number;
+  size: number;
   setPage: (page: number) => void;
   setSize: (size: number) => void;
 }
@@ -14,7 +16,11 @@ export default function TaskList(props: TaskListProps) {
       {props.tasks.map((task, i) => {
         return <Task key={i} task={task} />;
       })}
-      <Button label={"<"} type="button" />
+      <div>
+        <Button label={"<"} type="button" onClick={() => props.setPage(props.page - 1)} />
+        <label htmlFor="size">page {props.page}</label>
+        <Button label={">"} type="button" onClick={() => props.setPage(props.page + 1)} />
+      </div>
     </div>
   );
 }
