@@ -35,7 +35,7 @@ export default function TasksView() {
       <div className="todayTask">
         <AvailableInfo lista={infoToCards} />
         <Header label="general" getTask={(task) => setTask(task)} page={page} size={size} shownText={task.length == 0} search={state.searchUtilData} showCombo={state.searchUtilData != undefined} />
-        <TaskList tasks={task} setPage={(page) => setPage(page)} setSize={(size) => setSize(size)} />
+        <TaskList tasks={task} page={page} size={size} setPage={(page) => setPage(page)} setSize={(size) => setSize(size)} />
       </div>
     </MainLayout>
   );
