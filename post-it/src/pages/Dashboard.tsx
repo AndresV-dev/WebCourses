@@ -52,13 +52,13 @@ function Dashboard() {
         {task.length != 0 ? (
           <div className="todayTask">
             <Header label="Today" getTask={(task) => setTask(task)} page={page} size={size} />
-            <TaskList tasks={task} page={page} size={size} />
+            <TaskList tasks={task} page={page} size={size} setPage={(page) => setPage(page)} setSize={(size) => setSize(size)} />
           </div>
         ) : undefined}
         {task2.length != 0 ? (
           <div className="tomorrowTask">
             <Header label="Tomorrow" getTask={(task2) => setTask2(task2)} page={page2} size={size2} />
-            <TaskList tasks={task2} page={page2} size={size2} />
+            <TaskList tasks={task2} page={page2} size={size2} setPage={(page2) => setPage2(page2)} setSize={(size2) => setSize2(size2)} />
           </div>
         ) : undefined}
         {task.length == 0 && task2.length == 0 ? <div className="noTasks">Great!! You Dont Have Any Task For Today </div> : undefined}
