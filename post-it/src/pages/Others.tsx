@@ -31,7 +31,7 @@ export default function Others() {
       <div className="todayTask">
         <AvailableInfo lista={infoToCards} />
         <Header label="Search Tasks" greaterThanToday={true} getTask={(task) => setTask(task)} page={page} size={size} shownText={task.length == 0} />
-        <TaskList tasks={task} page={page} size={size} />
+        <TaskList tasks={task} page={page} size={size} setPage={(page) => setPage(page)} setSize={(size) => setSize(size)} />
       </div>
     </MainLayout>
   );
