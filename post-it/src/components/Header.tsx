@@ -45,10 +45,12 @@ export default function Header(props: HeaderProps) {
 
   function searchTask(dated: string) {
     let body = "";
-    if (dated != "today") {
+    if (dated != "today" && dated != "tomorrow") {
       body = JSON.stringify({
         [filter.sortBy]: filter.value,
         createdAt: formatDate(new Date(), false),
+        page: props.page === 0,
+        size: props.size === 10,
       });
     } else {
       let today = new Date();
@@ -56,7 +58,7 @@ export default function Header(props: HeaderProps) {
       tomorrow.setDate(today.getDate() + 1);
       body = JSON.stringify({
         [filter.sortBy]: filter.value,
-        endAt: props.label === "Today" ? formatDate(new Date(), false) : props.label === "Tomorrow" ? formatDate(tomorrow, false) : undefined,
+        endAt: props.label === "today" ? formatDate(new Date(), false) : props.label === "tomorrow" ? formatDate(tomorrow, false) : undefined,
         page: props.page === 0,
         size: props.size === 10,
       });
