@@ -49,7 +49,7 @@ function Dashboard() {
         {task.length != 0 ? (
           <div className="todayTask">
             <Header label="Today" getTask={(task) => setTask(task)} page={page} size={size} />
-            <TaskList tasks={task} page={page} size={size} setPage={(page) => setPage(page)} setSize={(size) => setSize(size)} />
+            <TaskList options={true} tasks={task} page={page} size={size} setPage={(page) => setPage(page)} setSize={(size) => setSize(size)} />
           </div>
         ) : undefined}
       </main>
