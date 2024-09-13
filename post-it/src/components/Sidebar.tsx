@@ -36,7 +36,7 @@ function Sidebar() {
     document.getElementById("collection" + id)?.classList.toggle("show");
   };
   return (
-    <nav className="sidebar">
+    <nav className="sidebar side-component">
       <section className="userSection">
         <ul className="user">
           <li id="userImage">
@@ -56,6 +56,9 @@ function Sidebar() {
           </Link>
           <Link id="search" to={"/tasks/search"} state={{}}>
             Search
+          </Link>
+          <Link id="deleteTasks" to={"/tasks/delete"} state={{}}>
+            Delete Tasks
           </Link>
           <Link id="otherDays" to={"/tasks/others"} state={{}}>
             Other Days
