@@ -8,7 +8,7 @@ import Notification from "../components/Notification";
 import { AvailableInfoType, User, Task as TaskType } from "../types";
 import { parseJson } from "../util/functions";
 
-function Dashboard() {
+function DeleteTask() {
   const [task, setTask] = useState<Array<TaskType>>([]);
   const [infoToCards, setinfoToCards] = useState<Array<AvailableInfoType>>([]);
   const [page, setPage] = useState(0);
@@ -57,4 +57,4 @@ function Dashboard() {
   );
 }
 
-export default Dashboard;
+export default DeleteTask;

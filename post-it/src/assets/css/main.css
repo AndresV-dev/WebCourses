@@ -5,13 +5,17 @@
 
     /* Variables*/
     --principal-color: #fff;
-    --hover-color: #66a6ff;
     --secundary-color: #9dc6ff;
+    --hover-color: #66a6ff;
     --principal-text-color: #000;
     --details-color: rgb(3, 176, 229);
-    --font-text-default: 'Times New Roman';
     --general-padding: 2rem;
     --subtitle-tag-color: #4252ff;
+    /* Text Font Variables*/
+    --font-text-default: 'Times New Roman';
+    --title-text-size: 15px;
+    --subtitle-text-size: 12px;
+    --text-size: 12px;
 }
 
 a {
@@ -36,7 +40,10 @@ ul a:hover {
 }
 
 nav {
-    position: sticky;
+    grid-column: 1; /* first column */
+    grid-row: 1 / -1; /* from top to bottom */
+    position: sticky; /* make it sticky */
+    top: 0; /* anchor to top */
 }
 
 img {
@@ -133,8 +140,9 @@ body {
 /*                  Sidebar Styles              */
 .mainPage {
     display: grid;
-    grid-template-columns: auto 1fr;
-    height: 100vh;
+    grid-template-columns: auto 1fr; /* sidebar and main content */
+    grid-template-rows: 1fr; /* auto-height for main content */
+    height: 100vh; /* full viewport height */
 }
 .sidebar {
     background-color: var(--secundary-color);
@@ -142,7 +150,6 @@ body {
     display: grid;
     grid-template-rows: 7rem 10rem 3fr 0.5fr;
 }
-  
 .collection {
     font-family: var(--font-text-default), Times, serif;
     font-size: medium;
@@ -233,7 +240,7 @@ body {
     font-weight: 500;
     line-height: 20px;
     list-style: none;
-    padding: 6px 16px;
+    padding: 2px 10px;
 /*    position: relative;*/
     transition: background-color 0.2s cubic-bezier(0.3, 0, 0.5, 1);
     user-select: none;
@@ -286,6 +293,9 @@ body {
 .btn-add:hover {
     color: var(--details-color);
     background-color: var(--secundary-color);
+}
+form {
+    padding-top: 2rem;
 }
 .collectionsTitle {
     display: flex;
@@ -376,6 +386,7 @@ body {
     display: flex;
     flex-direction: column;
     padding:  2rem;
+    overflow-y: auto;
 }
 
 .task {
@@ -386,10 +397,10 @@ body {
     padding: 2rem 0 0 3rem;
 }
 .task-title {
-    font-size: large;
+    font-size: var(--title-text-size);
 }
 .task-description {
-    font-size: small;
+    font-size: var(--subtitle-text-size);
     padding-left: 1rem;
 }
 .task-date {
@@ -446,8 +457,8 @@ form .relations {
 .field {
     display: grid;
     grid-template-columns: 1fr 3fr;
-    padding: 0.3rem 1rem;
-    font-size: medium;
+    padding-top: 1rem;
+    font-size: var(--title-text-size); /* 15px*/
     width: 100%;
 }
 
