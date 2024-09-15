@@ -5,6 +5,7 @@ import Dashboard from "../pages/Dashboard";
 import Login from "../pages/Login";
 import NotFoundPage from "../pages/NotFoundPage";
 import TasksView from "../pages/TasksView";
+import DeleteTask from "../pages/DeleteTasks";
 import Others from "../pages/Others";
 
 export default createBrowserRouter([
@@ -31,6 +32,10 @@ export default createBrowserRouter([
   {
     path: "tasks/:collection/:category",
     Component: TasksView,
+  },
+  {
+    path: "task/delete",
+    Component: DeleteTask,
   },
   {
     path: "tasks/others",

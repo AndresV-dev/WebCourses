@@ -136,11 +136,13 @@ export default function Modal(props: ModalProps) {
       case "createCollection":
         return (
           <div className="modalContainer">
-            <div className="modal-button">
-              <Button label={"X"} type="button" onClick={props.handleClose} />
-            </div>
-            <div className="title">
-              <h3>Add New Collection</h3>
+            <div className="modal-header">
+              <div className="title">
+                <h3>Add New Collection</h3>
+              </div>
+              <div className="modal-button">
+                <Button label={"X"} type="button" onClick={props.handleClose} />
+              </div>
             </div>
             <form onSubmit={handleSubmitCollection}>
               <div className="field">
@@ -158,15 +160,17 @@ export default function Modal(props: ModalProps) {
       case "createCategory":
         return (
           <div className="modalContainer">
-            <div className="modal-button">
-              <Button label={"X"} type="button" onClick={props.handleClose} />
-            </div>
-            <div className="title">
-              <h3>Add New Category</h3>
+            <div className="modal-header">
+              <div className="title">
+                <h3>Add New Category</h3>
+              </div>
+              <div className="modal-button">
+                <Button label={"X"} type="button" onClick={props.handleClose} />
+              </div>
             </div>
             <form onSubmit={handleSubmitCategory}>
               <div className="collections">
-                <label htmlFor="collections">Collection</label>
+                <label htmlFor="collections">Collection: </label>
                 <Select id={"collection_id"} name="collection_id" key={1} defaultValue="option" options={myCollections} onChange={handleChangeCategoryData} required={true} />
               </div>
               <div className="field">
