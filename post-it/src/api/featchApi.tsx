@@ -63,6 +63,26 @@ export function saveCategory(categoryData: string) {
     .catch((err) => alert("There was an error on Saving The Category, error:" + err));
 }
 
+// Endpoint to Delete a List of Tasks
+export function deleteTasks(tasksIds: Array<Number>) {
+  let body = JSON.stringify(tasksIds);
+
+  return fetch(process.env.VITE_APIURL + "tasks/delete", {
+    method: "POST",
+    headers: new Headers({
+      "Content-type": "application/json",
+      Accept: "application/json",
+      Authorization: "Bearer " + (token !== undefined ? token : process.env.VITE_TOKEN),
+    }),
+    body,
+  })
+    .then(async (response) => {
+      if (!response.ok) throw new Error(JSON.stringify(await response.json()));
+      return response.json();
+    })
+    .catch((err) => sessionStorage.setItem("error", err + " from Delete Tasks Endpoint"));
+}
+
 // Endpoint to Get a TaskList with filters
 export function getTasksFilters(filters: string) {
   return fetch(process.env.VITE_APIURL + "tasks/list/filtered", {
