@@ -10,7 +10,7 @@ interface SelectProps {
 
 export default function Select(props: SelectProps) {
   return (
-    <select name={props.name} value={props.defaultValue} id={props.id} onChange={props.onChange} className={`comboOptions ${props.className || ""}`} required={props.required || false}>
+    <select name={props.name} defaultValue={props.defaultValue} id={props.id} onChange={props.onChange} className={`comboOptions ${props.className || ""}`} required={props.required || false}>
       <option value="option" hidden>
         ------ Select an Option ------
       </option>
