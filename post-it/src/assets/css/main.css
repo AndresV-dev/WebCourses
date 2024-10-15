@@ -326,6 +326,16 @@ form {
   top: -155%; 
   transform: translateX(-10%); 
 }
+.navigation {
+    display: flex;
+    gap: 0.5rem;
+}
+
+.bottom-navigation {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 1rem;
+}
 /*              Dashboard Styles            */
 .dashboard {
     display: grid;
@@ -334,7 +344,7 @@ form {
 }
 .header-dashboard {
     display: grid;
-    grid-template-rows: 10rem 1fr;
+    grid-template-rows: 2rem 1fr;
     padding: 4rem;
 }
 .header-container {
@@ -394,7 +404,7 @@ form {
     border-bottom-right-radius: 10px ;
     display: flex;
     flex-direction: column;
-    padding: 2rem 0 0 3rem;
+    padding: 1rem 0 0 3rem;
 }
 .task-title {
     font-size: var(--title-text-size);
@@ -405,6 +415,7 @@ form {
 }
 .task-date {
     padding: 0.5rem 0 0 1rem;
+    font-size: var(--subtitle-text-size);
 }
 .task-category {
     align-self: flex-end;
@@ -593,6 +604,15 @@ form .relations {
     right: 0;
     transition: 0.2s ease-in ;
     transform:  translateX(-10%)
+}
+
+.comboOptions {
+    width: auto;
+    text-align: center;
+}
+
+.combo-size {
+    width: 2rem;
 }
 
 .welcomeMessage {
