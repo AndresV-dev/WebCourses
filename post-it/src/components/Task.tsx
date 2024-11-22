@@ -3,7 +3,8 @@ import Button from "./Button";
 
 interface TaskData {
   task: TaskType;
-  delete: Boolean;
+  className?: string;
+  delete?: Boolean;
   getTaskdeleteIds: (ids: number[]) => void;
 }
 
@@ -12,7 +13,7 @@ function Task(props: TaskData) {
   const taskIds: number[] = [];
 
   return (
-    <div className={"task " + props.task.status}>
+    <div className={"task " + props.task.status + " " + props.className}>
       <div>
         {props.delete ? (
           <Button
