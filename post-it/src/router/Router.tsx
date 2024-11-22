@@ -34,7 +34,7 @@ export default createBrowserRouter([
     Component: TasksView,
   },
   {
-    path: "task/delete",
+    path: "tasks/delete",
     Component: DeleteTask,
   },
   {

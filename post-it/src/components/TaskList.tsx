@@ -7,15 +7,18 @@ import Select from "./Select";
 interface TaskListProps {
   options?: boolean;
   tasks: TaskType[];
+  delete?: boolean;
+  className?: string;
   page: number;
   size: number;
   setPage: (page: number) => void;
   setSize: (size: number) => void;
 }
 
-export default function TaskList(props: TaskListProps) {
+function TaskList(props: TaskListProps) {
   const ids: number[] = [];
 
+  console.log(props);
   function addTaskIdDelete(id: number) {
     ids.push(id);
   }
@@ -23,7 +26,7 @@ export default function TaskList(props: TaskListProps) {
   return (
     <div className="taskContainer">
       {props.tasks.map((task, i) => {
-        return <Task key={i} task={task} delete={true} getTaskdeleteIds={(taskDeleteIds) => addTaskIdDelete(taskDeleteIds[0])} />;
+        return <Task key={i} task={task} delete={props.delete || false} className={props.className || ""} getTaskdeleteIds={(taskDeleteIds) => addTaskIdDelete(taskDeleteIds[0])} />;
       })}
       <div className="bottom-navigation">
         <Button label={"Delete Tasks"} type="button" key={"delTask"} name="delTask" onClick={() => deleteTasks(ids).then((data) => alert(JSON.stringify(data)))}></Button>
@@ -64,3 +67,5 @@ export default function TaskList(props: TaskListProps) {
     </div>
   );
 }
+
+export default TaskList;
