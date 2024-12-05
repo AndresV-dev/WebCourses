@@ -19,7 +19,6 @@ function DeleteTask() {
 
   useEffect(() => {
     getTasksCharts(JSON.stringify({ categories: false })).then((data) => setinfoToCards(data));
-    console.log("Hellows");
     getTasksFilters(JSON.stringify({ page, size })).then((data) => setTask(data));
     if (sessionStorage.user != undefined) {
       if (sessionStorage.categories === undefined) getCategories();
