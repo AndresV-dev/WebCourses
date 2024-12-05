@@ -18,7 +18,6 @@ interface TaskListProps {
 function TaskList(props: TaskListProps) {
   const ids: number[] = [];
 
-  console.log(props);
   function addTaskIdDelete(id: number) {
     ids.push(id);
   }
